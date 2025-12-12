@@ -111,6 +111,7 @@ class AppAssets {
   static const String pickUpIcon = 'assets/images/pickup_icon.png';
   static const String loc = 'assets/images/loc.png';
   static const String location = 'assets/images/location.png';
+  static const String loginBg = 'assets/images/login.png';
 
 
 
