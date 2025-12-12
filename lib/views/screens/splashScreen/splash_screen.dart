@@ -75,7 +75,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigateToLogin() {
-      GoRouter.of(context).go(RouteNames.login);
+      GoRouter.of(context).go(RouteNames.register);
   }
 
   @override

@@ -7,6 +7,7 @@ import 'package:new_hrms_flutter/views/screens/splashScreen/splash_screen.dart';
 import 'package:new_hrms_flutter/views/screens/app_shell.dart';
 import '../../main.dart';
 import '../../views/screens/auth/login/login_screen.dart';
+import '../../views/screens/auth/register/register_screen.dart';
 import '../../views/screens/home/profile_manager.dart';
 
 class AppRouter {
@@ -28,6 +29,12 @@ class AppRouter {
         path: '/login',
         name: RouteNames.login,
         builder: (context, state) => const LoginScreen(),
+      ),
+
+      GoRoute(
+        path: '/register',
+        name: RouteNames.register,
+        builder: (context, state) =>  RegisterScreen(),
       ),
 
       GoRoute(

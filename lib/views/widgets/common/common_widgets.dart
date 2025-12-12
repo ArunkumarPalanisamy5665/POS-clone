@@ -415,6 +415,17 @@ class CommonWidgets {
       message: message,
     );
   }
+
+
+  static dynamic mediaWidth(BuildContext context) {
+    return MediaQuery.of(context).size.width;
+  }
+
+  static dynamic mediaHeight(BuildContext context) {
+    return MediaQuery.of(context).size.height;
+  }
+
+
 }
 
 extension CapExtension on String {
@@ -426,3 +437,4 @@ extension CapExtension on String {
   String get capitalizeFirstofEach =>
       split(" ").map((str) => str.inCaps).join(" ");
 }
+

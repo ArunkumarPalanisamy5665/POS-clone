@@ -63,7 +63,7 @@ class CustomTextField extends StatefulWidget {
 
     this.keyboardType = TextInputType.text,
 
-    this.cursorColor =  AppColors.primaryColor,
+    this.cursorColor = AppColors.primaryColor,
     this.fillColor = const Color(0xFFF5F5F5),
     this.borderColor = Colors.transparent,
     this.focusColor = AppColors.primaryColor,
@@ -107,81 +107,129 @@ class _CustomTextFieldState extends State<CustomTextField> {
         builder: (state) {
           final hasError = state.hasError;
 
-          return Container(
-            height: hasError ? widget.height + 10 : widget.height-10,
-            decoration: BoxDecoration(
-              color: widget.fillColor,
-              borderRadius: BorderRadius.circular(widget.borderRadius),
-            ),
-
-            child: TextFormField(
-              controller: widget.controller,
-              obscureText: widget.obscure,
-              readOnly: widget.readOnly,
-              keyboardType: widget.keyboardType,
-              onTap: widget.onTap,
-              focusNode: widget.focusNode,
-              textInputAction: widget.textInputAction,
-              cursorColor: widget.cursorColor,
-
-              onChanged: (val) => state.didChange(val),
-
-              style: widget.textStyle ??
-                  const TextStyle(
-                    fontSize: 15,
-                    color: Colors.black87,
-                  ),
-
-
-              decoration: InputDecoration(
-                errorText: state.errorText,   // <-- required
-                errorStyle: widget.errorStyle,
-
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-                labelText: widget.label,
-                hintText: widget.hint,
-                labelStyle: widget.labelStyle ??
-                    TextStyle(
-                      color: Colors.grey.shade600,
-                      fontSize: 14,
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: '${widget.label} ',
+                      style: widget.labelStyle??Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: const Color(0xFF0F172A),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        height: 1.50,
+                      ),
                     ),
-
-                hintStyle: widget.hintStyle ??
-                    TextStyle(
-                      color: Colors.grey.shade500,
-                      fontSize: 14,
+                    TextSpan(
+                      text: '*',
+                      style:  TextStyle(
+                        color: const Color(0xFFFF3636) /* System-Danger */,
+                        fontSize: 16,
+                        fontFamily: 'Instrument Sans',
+                        fontWeight: FontWeight.w600,
+                        height: 2,
+                      ),
                     ),
-
-                filled: true,
-                fillColor: widget.fillColor,
-                prefixIcon: widget.prefixIcon != null
-                    ? Icon(widget.prefixIcon, size: widget.iconSize, color: widget.iconColor)
-                    : null,
-                suffixIcon: widget.suffixIcon != null
-                    ? InkWell(
-                  onTap: widget.onSuffixTap,
-                  child: Icon(widget.suffixIcon, size: widget.iconSize, color: widget.iconColor),
-                )
-                    : null,
-
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.borderRadius),
-                  borderSide: BorderSide(color: widget.borderColor, width: widget.borderWidth),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.borderRadius),
-                  borderSide: BorderSide(color: widget.focusColor, width: widget.focusBorderWidth),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.borderRadius),
-                  borderSide: BorderSide(color: widget.errorColor, width: widget.errorBorderWidth),
-                ),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.borderRadius),
-                  borderSide: BorderSide(color: widget.errorColor, width: widget.errorBorderWidth),
+                  ],
                 ),
               ),
-            ),
+              // SizedBox(height: 10),
+              Container(
+                height: hasError ? widget.height + 10 : widget.height - 10,
+                decoration: BoxDecoration(
+                  color: widget.fillColor,
+                  borderRadius: BorderRadius.circular(widget.borderRadius),
+                ),
+
+                child: TextFormField(
+                  controller: widget.controller,
+                  obscureText: widget.obscure,
+                  readOnly: widget.readOnly,
+                  keyboardType: widget.keyboardType,
+                  onTap: widget.onTap,
+                  focusNode: widget.focusNode,
+                  textInputAction: widget.textInputAction,
+                  cursorColor: widget.cursorColor,
+                  cursorWidth: 1.2,
+                  onChanged: (val) => state.didChange(val),
+
+                  style:
+                      widget.textStyle?.copyWith(
+                        color: Colors.black.withAlpha((0.7 * 255).toInt())
+
+                      ) ??
+                      const TextStyle(fontSize: 15, color: Colors.black87),
+
+                  decoration: InputDecoration(
+                    errorText: state.errorText,
+                    // <-- required
+                    errorStyle: widget.errorStyle,
+
+                    contentPadding: EdgeInsets.only(left: 10, right: 10),
+                    // labelText: widget.label,
+                    hintText: widget.hint,
+                    labelStyle:
+                        widget.labelStyle ??
+                        TextStyle(color: Colors.grey.shade600, fontSize: 14),
+
+                    hintStyle:
+                        widget.hintStyle ??
+                        TextStyle(color: Colors.grey.shade500, fontSize: 11),
+
+                    filled: true,
+                    fillColor: widget.fillColor,
+                    prefixIcon: widget.prefixIcon != null
+                        ? Icon(
+                            widget.prefixIcon,
+                            size: widget.iconSize,
+                            color: widget.iconColor,
+                          )
+                        : null,
+                    suffixIcon: widget.suffixIcon != null
+                        ? InkWell(
+                            onTap: widget.onSuffixTap,
+                            child: Icon(
+                              widget.suffixIcon,
+                              size: widget.iconSize,
+                              color: widget.iconColor,
+                            ),
+                          )
+                        : null,
+
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(widget.borderRadius),
+                      borderSide: BorderSide(
+                        color: widget.borderColor,
+                        width: widget.borderWidth,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(widget.borderRadius),
+                      borderSide: BorderSide(
+                        color: widget.focusColor,
+                        width: widget.focusBorderWidth,
+                      ),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(widget.borderRadius),
+                      borderSide: BorderSide(
+                        color: widget.errorColor,
+                        width: widget.errorBorderWidth,
+                      ),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(widget.borderRadius),
+                      borderSide: BorderSide(
+                        color: widget.errorColor,
+                        width: widget.errorBorderWidth,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           );
         },
       ),

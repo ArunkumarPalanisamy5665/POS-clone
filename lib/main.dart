@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:new_hrms_flutter/di/app_module.dart';
-import 'package:new_hrms_flutter/views/screens/auth/login/login_screen.dart';
 import 'package:new_hrms_flutter/views/screens/auth/login/login_vm.dart';
-import 'package:new_hrms_flutter/views/screens/dashboard/home.page.dart';
+import 'package:new_hrms_flutter/views/screens/auth/register/register_vm.dart';
 import 'package:new_hrms_flutter/views/screens/dashboard/home_vm.dart';
-import 'package:new_hrms_flutter/views/screens/home/home_screen.dart';
-import 'package:new_hrms_flutter/views/screens/splashScreen/splash_screen.dart';
 import 'package:new_hrms_flutter/views/screens/splashScreen/splash_vm.dart';
-
 import 'package:provider/provider.dart';
 
-import 'views/widgets/common/common_widgets.dart';
 import 'core/routes/app_router.dart';
 import 'core/state/app_state_notifier.dart';
 import 'core/state/app_state_provider.dart';
 import 'core/theme/app_theme.dart';
+import 'views/widgets/common/common_widgets.dart';
 
 
 
@@ -35,6 +31,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => SplashVm()),
         ChangeNotifierProvider(create: (_) => LoginVm()),
         ChangeNotifierProvider(create: (_) => HomeVm()),
+        ChangeNotifierProvider(create: (_) => RegisterVm()),
         // ChangeNotifierProvider(create: (_) => ThemeProvider()),
         // ChangeNotifierProvider(create: (_) => ConnectivityProvider()),
         // ChangeNotifierProvider(create: (_) => AppLifecycleProvider()),

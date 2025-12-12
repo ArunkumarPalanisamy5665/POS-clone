@@ -113,12 +113,17 @@ class AppAssets {
   static const String location = 'assets/images/location.png';
 
 
+
+
   //on board asset
   static const String onBoardBG = 'assets/images/onBoard/bg_onboard.png';
   static const String imageBG = 'assets/images/onBoard/image_bg.png';
   static const String imageB1 = 'assets/images/onBoard/image_b1.png';
   static const String imageB2 = 'assets/images/onBoard/image_b2.png';
   static const String imageB3 = 'assets/images/onBoard/image_b3.png';
+
+  static const String loginDashBoard = 'assets/images/login_logo.png';
+  static const String loginDashBoardBG = 'assets/images/login_bg.png';
 
 
 
@@ -159,6 +164,10 @@ class AppAssets {
 
   // Person Icon
   static const String personIcon = 'assets/svg/person_icon.svg';
+  static const String googleIcon = 'assets/svg/google_icon.svg';
+  static const String facebookIcon = 'assets/svg/facebook_icon.svg';
+  static const String effOffIcon = 'assets/svg/eye-off.svg';
+  static const String posLogoIcon = 'assets/svg/pos_logo.svg';
 
   static const String tickCircle = 'assets/svg/tick_circle.svg';
 

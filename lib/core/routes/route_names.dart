@@ -6,6 +6,7 @@ class RouteNames {
   static const home = '/home';
   static const login = '/login';
   static const forgotPassword = '/forgot_password';
+  static const register = '/register';
 
   // Settings
   static const settings = '/settings';
