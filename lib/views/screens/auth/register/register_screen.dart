@@ -295,7 +295,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   const Spacer(),
 
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      vm.getPopAndPush(RouteNames.forgotPassword);
+                                    },
                                     child: Text(
                                       "Forgot Password?",
                                       style: Theme.of(context)
@@ -512,7 +514,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: () {},
+                                    onTap: () {
+                                      vm.getPopAndPush(RouteNames.login);
+                                    },
                                     child:  Text(
                                       "Sign in",
                                       style: Theme.of(context)

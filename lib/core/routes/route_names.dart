@@ -5,8 +5,9 @@ class RouteNames {
   static const splash = '/';
   static const home = '/home';
   static const login = '/login';
-  static const forgotPassword = '/forgot_password';
   static const register = '/register';
+  static const forgotPassword = '/forgot_password';
+  static const emailVerify = '/email_verify';
 
   // Settings
   static const settings = '/settings';

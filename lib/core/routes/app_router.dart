@@ -6,6 +6,8 @@ import 'package:new_hrms_flutter/views/screens/home/home_screen.dart';
 import 'package:new_hrms_flutter/views/screens/splashScreen/splash_screen.dart';
 import 'package:new_hrms_flutter/views/screens/app_shell.dart';
 import '../../main.dart';
+import '../../views/screens/auth/emailVerify/email_verify_screen.dart';
+import '../../views/screens/auth/forgotPassword/forgot_password_screen.dart';
 import '../../views/screens/auth/login/login_screen.dart';
 import '../../views/screens/auth/register/register_screen.dart';
 import '../../views/screens/home/profile_manager.dart';
@@ -35,6 +37,18 @@ class AppRouter {
         path: '/register',
         name: RouteNames.register,
         builder: (context, state) =>  RegisterScreen(),
+      ),
+
+      GoRoute(
+        path: '/forgot_password',
+        name: RouteNames.forgotPassword,
+        builder: (context, state) =>  ForgotPasswordScreen(),
+      ),
+
+      GoRoute(
+        path: '/email_verify',
+        name: RouteNames.emailVerify,
+        builder: (context, state) =>  EmailVerifyScreen(),
       ),
 
       GoRoute(

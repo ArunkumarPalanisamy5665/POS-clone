@@ -7,15 +7,16 @@ import 'package:provider/provider.dart';
 import '../../../widgets/common/custom_button.dart';
 import '../../../widgets/common/custom_button2.dart';
 import '../../../widgets/common/custom_textfield.dart';
+import 'forgot_password_vm.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class ForgotPasswordScreen extends StatefulWidget {
+  const ForgotPasswordScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
   bool hidePassword = true;
   bool hideConfirmPassword = true;
@@ -26,11 +27,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
 
-  late RegisterVm vm;
+  late ForgotPasswordVm vm;
 
   @override
   void initState() {
-    vm = context.read<RegisterVm>();
+    vm = context.read<ForgotPasswordVm>();
     super.initState();
   }
 
@@ -40,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final mw = MediaQuery.of(context).size.width;
     final mh = MediaQuery.of(context).size.height;
 
-    return Consumer<RegisterVm>(
+    return Consumer<ForgotPasswordVm>(
       builder: (context, value, child) {
         return CustomDrawer(
           backgroundColor: Colors.white,
@@ -72,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               const SizedBox(height: 40),
 
                               Text(
-                                "Hi, Welcome Back !!!",
+                                "Forgot Password",
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelLarge
@@ -86,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               const SizedBox(height: 8),
 
                               Text(
-                                "Please enter your credentials to sign in!",
+                                "Please enter your email address to receive a verification code",
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelSmall
@@ -143,105 +144,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                     ),
 
-                                    const SizedBox(height: 15),
-
-                                    // ---------------- Password ----------------
-                                    CustomTextField(
-                                      height: 50,
-                                      controller: value.passwordController,
-                                      label: "Password",
-                                      fillColor: Colors.white,
-                                      obscure: hidePassword,
-                                      borderColor: AppColors.grey.withAlpha(
-                                        (0.3 * 255).toInt(),
-                                      ),
-                                      focusColor: AppColors.grey.withAlpha(
-                                        (0.3 * 255).toInt(),
-                                      ),
-                                      cursorColor: Colors.black.withAlpha(
-                                        (0.7 * 255).toInt(),
-                                      ),
-                                      borderWidth: 0.75,
-                                      suffixIcon: hidePassword
-                                          ? Icons.visibility_off_outlined
-                                          : Icons.visibility_outlined,
-                                      onSuffixTap: () => setState(
-                                            () => hidePassword = !hidePassword,
-                                      ),
-                                      iconSize: 14,
-                                      focusNode: value.passwordNode,
-                                      nextFocusNode: value.confirmPasswordNode,
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .labelLarge
-                                          ?.copyWith(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white10,
-                                      ),
-                                      labelStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          ?.copyWith(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w600,
-                                        height: 2.5,
-                                      ),
-                                    ),
-
                                   ],
                                 ),
                               ),
 
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 20),
 
-                              Row(
-                                children: [
-                                  Checkbox(
-                                    value: true,
-                                    onChanged: (v) {},
-                                    activeColor: AppColors.primaryColor,
-                                  ),
-
-                                  Text(
-                                    "Remember Me",
-                                    style: Theme.of(context).textTheme.bodySmall
-                                        ?.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.grey.shade700,
-                                      fontSize: 13,
-                                    ),
-                                  ),
-
-                                  const Spacer(),
-
-                                  TextButton(
-                                    onPressed: () {
-                                      vm.getPopAndPush(RouteNames.forgotPassword);
-                                    },
-                                    child: Text(
-                                      "Forgot Password?",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          ?.copyWith(
-                                        color: AppColors.primaryColor,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 13,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              const SizedBox(height: 25),
 
                               CustomButton2(
                                 key: emailKey,
                                 onPressed: () {
                                   // if (_formKey.currentState?.validate() != true) {
                                   //
-                                  CustomButton2.shake(emailKey);
+                                  // CustomButton2.shake(emailKey);
+                                  vm.getPopAndPush(RouteNames.emailVerify);
                                   //   return;
                                   // }
 
@@ -249,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   // var map = {'email': email};
                                 },
 
-                                btnName: 'Sign Up',
+                                btnName: 'Send Email',
                                 isDisable: false,
                                 isAnimate: true,
                                 isBold: true,
@@ -291,138 +207,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               // ),
                               const SizedBox(height: 30),
 
-                              // Divider
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Divider(
-                                      color: Colors.black.withAlpha(
-                                        (0.2 * 255).toInt(),
-                                      ),
-                                      height: 0.03,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                    ),
-                                    child: Text(
-                                      "or continue with",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 13,
-                                        color: Colors.black.withAlpha(
-                                          (0.7 * 255).toInt(),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Divider(
-                                      color: Colors.black.withAlpha(
-                                        (0.2 * 255).toInt(),
-                                      ),
-                                      height: 0.03,
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              SizedBox(height: 25,),
-
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Expanded(
-                                    child: CustomButton2(
-                                      key: googleKey,
-                                      onPressed: () {
-                                        // if (_formKey.currentState?.validate() != true) {
-                                        //
-                                        CustomButton2.shake(googleKey);
-                                        //   return;
-                                        // }
-
-                                        // String email = value.emailController.text.trim();
-                                        // var map = {'email': email};
-                                      },
-
-                                      btnName: 'Google',
-                                      isDisable: false,
-                                      isAnimate: true,
-                                      isBold: true,
-                                      buttonHeight: mh * 0.044,
-                                      // buttonWidth: mw * 0.213,
-                                      size: ButtonSize.medium,
-                                      textSize: 14,
-                                      textColor: Colors.black,
-                                      borderRadius: BorderRadius.circular(5),
-                                      buttonColor: Theme.of(context).colorScheme.surface,
-                                      borderColor: Colors.black.withAlpha(
-                                        (0.2 * 255).toInt(),
-                                      ),
-                                      hideBackground: false,
-                                      icon: SvgPicture.asset(
-                                        AppAssets.googleIcon,
-                                        width: 20,
-                                        height: 20,
-                                      ),
-                                      iconNeed: true,
-                                      showBorder: true,
-                                    ),
-                                  ),
-                                  SizedBox(width: 20,),
-                                  Expanded(
-                                    child: CustomButton2(
-                                      key: facebookKey,
-                                      onPressed: () {
-                                        // if (_formKey.currentState?.validate() != true) {
-                                        //
-                                        CustomButton2.shake(facebookKey);
-                                        //   return;
-                                        // }
-
-                                        // String email = value.emailController.text.trim();
-                                        // var map = {'email': email};
-                                      },
-
-                                      btnName: 'Facebook',
-                                      isDisable: false,
-                                      isAnimate: true,
-                                      isBold: true,
-                                      buttonHeight: mh * 0.044,
-                                      // buttonWidth: mw * 0.213,
-                                      borderRadius: BorderRadius.circular(5),
-                                      size: ButtonSize.medium,
-                                      textSize: 14,
-                                      textColor: Colors.black,
-                                      buttonColor: Theme.of(context).colorScheme.surface,
-                                      borderColor: Colors.black.withAlpha(
-                                        (0.2 * 255).toInt(),
-                                      ),
-                                      hideBackground: false,
-                                      icon: SvgPicture.asset(
-                                        AppAssets.facebookIcon,
-                                        width: 20,
-                                        height: 20,
-                                      ),
-                                      iconNeed: true,
-                                      showBorder: true,
-                                    ),
-                                  ),
-                                ],),
-
-
-                              const SizedBox(height: 25),
-
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Don’t have an account?  ",
+                                    "Back to ",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyMedium
@@ -436,10 +225,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      vm.getPopAndPush(RouteNames.register);
+                                      vm.getPopAndPush(RouteNames.login);
                                     },
                                     child:  Text(
-                                      "Sign Up",
+                                      "Sign in",
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyMedium
