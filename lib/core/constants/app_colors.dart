@@ -5,13 +5,17 @@ class AppColors {
   static const  secondaryColor =  Color(0xFFffffff);
   static const  thirdColor =  Color(0xFFa2b2c7);
 
+  static const  greySide =  Color(0xFFf8f8f8);
   static const  greyTF =  Color(0xFF0F172A);
 
+  static const Color orange = Color(0xFFffa80b);
+  static const Color lightOrange = Color(0xFFfff3de);
 
-  // Primary Color
-  static const Color appGreen = Color(0xFF5DA168);
-  static const Color primary = Color(0xFF5DA168);
-  static const Color lightGg = Color(0xFF1ed950);
+  static const Color appGreen = Color(0xFF22b92b);
+  static const Color lightSecondaryGg = Color(0xFF4dc654);
+  static const Color lightGg = Color(0xFFeef9f1);
+
+
   static const Color transparent = Colors.transparent;
   static const Color white = Colors.white;
   static const Color white70 = Colors.white70;
@@ -53,7 +57,6 @@ class AppColors {
   static const Color info = Color(0xFF2196F3);
 
   // Accent Colors
-  static const Color orange = Color(0xFFFF9800);
   static const Color blue = Color(0xFF2196F3);
   static const Color red = Color(0xFFF44336);
   static const Color green = Color(0xFF4CAF50);

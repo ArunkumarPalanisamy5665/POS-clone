@@ -195,6 +195,24 @@ class AppAssets {
   static const String moveImageIcon = 'assets/svg/move_image_icon.svg';
   static const String deletedIcon = 'assets/svg/deleted_icon.svg';
 
+  //menu icon
+  static const String mainMenuIcon = 'assets/svg/menu/main_menu.svg';
+  static const String manageIcon = 'assets/svg/menu/manage_icon.svg';
+  static const String operationIcon = 'assets/svg/menu/operation_icon.svg';
+  static const String adminIcon = 'assets/svg/menu/admin_icon.svg';
+  static const String authIcon = 'assets/svg/menu/auth_icon.svg';
+  static const String settingsIcon = 'assets/svg/menu/settings_icon.svg';
+  static const String notifyAlertIcon = 'assets/svg/menu/notify_alert.svg';
+  static const String notificationIcon = 'assets/svg/menu/notification_icon.svg';
+  static const String reportIcon = 'assets/svg/menu/report_icon.svg';
+  static const String brightnessIcon = 'assets/svg/menu/brightness_icon.svg';
+  static const String searchIcon = 'assets/svg/menu/search_icon.svg';
+  static const String upgradeIcon = 'assets/svg/menu/upgrade_icon.svg';
+  static const String syncIcon = 'assets/svg/menu/sync_icon.svg';
+
+
+
+
   static const String icCamera = 'assets/images/ic_camera.png';
   static const String icMyLocation = 'assets/images/ic_my_location.png';
 
