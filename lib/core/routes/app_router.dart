@@ -2,6 +2,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:new_hrms_flutter/core/routes/route_names.dart';
+import 'package:new_hrms_flutter/views/screens/auth/otp/otp_screen.dart';
+import 'package:new_hrms_flutter/views/screens/dashboard/dashboard_screen.dart';
 import 'package:new_hrms_flutter/views/screens/home/home_screen.dart';
 import 'package:new_hrms_flutter/views/screens/splashScreen/splash_screen.dart';
 import 'package:new_hrms_flutter/views/screens/app_shell.dart';
@@ -30,25 +32,36 @@ class AppRouter {
       GoRoute(
         path: '/login',
         name: RouteNames.login,
-        builder: (context, state) =>  LoginScreen(),
+        builder: (context, state) => const LoginScreen(),
       ),
 
       GoRoute(
         path: '/register',
         name: RouteNames.register,
-        builder: (context, state) =>  RegisterScreen(),
+        builder: (context, state) =>  const RegisterScreen(),
       ),
 
       GoRoute(
         path: '/forgot_password',
         name: RouteNames.forgotPassword,
-        builder: (context, state) =>  ForgotPasswordScreen(),
+        builder: (context, state) =>  const ForgotPasswordScreen(),
       ),
 
       GoRoute(
         path: '/email_verify',
         name: RouteNames.emailVerify,
-        builder: (context, state) =>  EmailVerifyScreen(),
+        builder: (context, state) =>  const EmailVerifyScreen(),
+      ),
+
+      GoRoute(
+        path: '/otp',
+        name: RouteNames.otp,
+        builder: (context, state) => const OtpScreen(),
+      ),
+      GoRoute(
+        path: '/dashboard',
+        name: RouteNames.dashboard,
+        builder: (context, state) => const DashboardScreen(),
       ),
 
       GoRoute(

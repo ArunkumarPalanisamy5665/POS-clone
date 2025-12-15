@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import '../../../widgets/common/custom_button.dart';
 import '../../../widgets/common/custom_button2.dart';
 import '../../../widgets/common/custom_textfield.dart';
+import '../widgets/auth_right_panel.dart';
+import 'login_vm.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -24,23 +26,20 @@ class _LoginScreenState extends State<LoginScreen> {
   final googleKey = GlobalKey<State<StatefulWidget>>();
   final facebookKey = GlobalKey<State<StatefulWidget>>();
 
-
-
-  late RegisterVm vm;
+  late LoginVm vm;
 
   @override
   void initState() {
-    vm = context.read<RegisterVm>();
+    vm = context.read<LoginVm>();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
     final mw = MediaQuery.of(context).size.width;
     final mh = MediaQuery.of(context).size.height;
 
-    return Consumer<RegisterVm>(
+    return Consumer<LoginVm>(
       builder: (context, value, child) {
         return CustomDrawer(
           backgroundColor: Colors.white,
@@ -73,30 +72,25 @@ class _LoginScreenState extends State<LoginScreen> {
 
                               Text(
                                 "Hi, Welcome Back !!!",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelLarge
+                                style: Theme.of(context).textTheme.labelLarge
                                     ?.copyWith(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w700,
-                                ),
-
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w700,
+                                    ),
                               ),
 
                               const SizedBox(height: 8),
 
                               Text(
                                 "Please enter your credentials to sign in!",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall
+                                style: Theme.of(context).textTheme.labelSmall
                                     ?.copyWith(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black.withAlpha(
-                                    (0.7 * 255).toInt(),
-                                  ),
-                                ),
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black.withAlpha(
+                                        (0.7 * 255).toInt(),
+                                      ),
+                                    ),
                               ),
 
                               const SizedBox(height: 32),
@@ -105,8 +99,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 key: _formKey,
                                 child: Column(
                                   children: [
-
-
                                     // ---------------- Email ----------------
                                     CustomTextField(
                                       height: 50,
@@ -129,18 +121,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                           .textTheme
                                           .labelLarge
                                           ?.copyWith(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white10,
-                                      ),
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white10,
+                                          ),
                                       labelStyle: Theme.of(context)
                                           .textTheme
                                           .bodySmall
                                           ?.copyWith(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w600,
-                                        height: 2.5,
-                                      ),
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w600,
+                                            height: 2.5,
+                                          ),
                                     ),
 
                                     const SizedBox(height: 15),
@@ -166,29 +158,27 @@ class _LoginScreenState extends State<LoginScreen> {
                                           ? Icons.visibility_off_outlined
                                           : Icons.visibility_outlined,
                                       onSuffixTap: () => setState(
-                                            () => hidePassword = !hidePassword,
+                                        () => hidePassword = !hidePassword,
                                       ),
                                       iconSize: 14,
                                       focusNode: value.passwordNode,
-                                      nextFocusNode: value.confirmPasswordNode,
                                       textStyle: Theme.of(context)
                                           .textTheme
                                           .labelLarge
                                           ?.copyWith(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white10,
-                                      ),
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white10,
+                                          ),
                                       labelStyle: Theme.of(context)
                                           .textTheme
                                           .bodySmall
                                           ?.copyWith(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w600,
-                                        height: 2.5,
-                                      ),
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w600,
+                                            height: 2.5,
+                                          ),
                                     ),
-
                                   ],
                                 ),
                               ),
@@ -207,17 +197,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                     "Remember Me",
                                     style: Theme.of(context).textTheme.bodySmall
                                         ?.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.grey.shade700,
-                                      fontSize: 13,
-                                    ),
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.grey.shade700,
+                                          fontSize: 13,
+                                        ),
                                   ),
 
                                   const Spacer(),
 
                                   TextButton(
                                     onPressed: () {
-                                      vm.getPopAndPush(RouteNames.forgotPassword);
+                                      vm.getPopAndPush(
+                                        RouteNames.forgotPassword,
+                                      );
                                     },
                                     child: Text(
                                       "Forgot Password?",
@@ -225,10 +217,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                           .textTheme
                                           .bodySmall
                                           ?.copyWith(
-                                        color: AppColors.primaryColor,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 13,
-                                      ),
+                                            color: AppColors.primaryColor,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 13,
+                                          ),
                                     ),
                                   ),
                                 ],
@@ -250,7 +242,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   // var map = {'email': email};
                                 },
 
-                                btnName: 'Sign Up',
+                                btnName: 'Sign In',
                                 isDisable: false,
                                 isAnimate: true,
                                 isBold: true,
@@ -313,12 +305,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                           .textTheme
                                           .bodyMedium
                                           ?.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 13,
-                                        color: Colors.black.withAlpha(
-                                          (0.7 * 255).toInt(),
-                                        ),
-                                      ),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13,
+                                            color: Colors.black.withAlpha(
+                                              (0.7 * 255).toInt(),
+                                            ),
+                                          ),
                                     ),
                                   ),
                                   Expanded(
@@ -332,10 +324,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ],
                               ),
 
-                              SizedBox(height: 25,),
+                              SizedBox(height: 25),
 
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Expanded(
                                     child: CustomButton2(
@@ -361,7 +354,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       textSize: 14,
                                       textColor: Colors.black,
                                       borderRadius: BorderRadius.circular(5),
-                                      buttonColor: Theme.of(context).colorScheme.surface,
+                                      buttonColor: Theme.of(
+                                        context,
+                                      ).colorScheme.surface,
                                       borderColor: Colors.black.withAlpha(
                                         (0.2 * 255).toInt(),
                                       ),
@@ -375,7 +370,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       showBorder: true,
                                     ),
                                   ),
-                                  SizedBox(width: 20,),
+                                  SizedBox(width: 20),
                                   Expanded(
                                     child: CustomButton2(
                                       key: facebookKey,
@@ -400,7 +395,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       size: ButtonSize.medium,
                                       textSize: 14,
                                       textColor: Colors.black,
-                                      buttonColor: Theme.of(context).colorScheme.surface,
+                                      buttonColor: Theme.of(
+                                        context,
+                                      ).colorScheme.surface,
                                       borderColor: Colors.black.withAlpha(
                                         (0.2 * 255).toInt(),
                                       ),
@@ -414,8 +411,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       showBorder: true,
                                     ),
                                   ),
-                                ],),
-
+                                ],
+                              ),
 
                               const SizedBox(height: 25),
 
@@ -428,34 +425,33 @@ class _LoginScreenState extends State<LoginScreen> {
                                         .textTheme
                                         .bodyMedium
                                         ?.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 13,
-                                      color: Colors.black.withAlpha(
-                                        (0.7 * 255).toInt(),
-                                      ),
-                                    ),
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 13,
+                                          color: Colors.black.withAlpha(
+                                            (0.7 * 255).toInt(),
+                                          ),
+                                        ),
                                   ),
                                   GestureDetector(
                                     onTap: () {
                                       vm.getPopAndPush(RouteNames.register);
                                     },
-                                    child:  Text(
+                                    child: Text(
                                       "Sign Up",
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyMedium
                                           ?.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 13,
-                                          color: AppColors.primaryColor
-                                      ),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13,
+                                            color: AppColors.primaryColor,
+                                          ),
                                     ),
                                   ),
                                 ],
                               ),
 
                               const SizedBox(height: 25),
-
                             ],
                           ),
                         ),
@@ -464,85 +460,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
 
                   // RIGHT SIDE BLUE PANEL
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFF0C76E1),
-                        borderRadius: BorderRadius.circular(20),
-                        image: const DecorationImage(
-                          image: AssetImage(AppAssets.loginDashBoardBG),
-                          fit: BoxFit.fill
-                          ,
-                        ),
-
-                      ),
-                      margin: const EdgeInsets.all(20),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Positioned(
-                            top:  mh * 0.060,
-                            left: mh * 0.050,
-                            right: mh * 0.050,
-                            child: Column(
-                              children: [
-                                Text(
-                                  "Complete Control of Your Cafe & ",
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelLarge
-                                      ?.copyWith(
-                                    fontSize: 28,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                Text(
-                                  "Restaurant with Ease",
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelLarge
-                                      ?.copyWith(
-                                    fontSize: 28,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                SizedBox(height: 16),
-                                Text(
-                                  "From billing to inventory access everything you need\nin a single powerful dashboard.",
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelLarge
-                                      ?.copyWith(
-                                    fontSize: 12,
-                                    color: Colors.white54,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          Positioned(
-                            bottom: 0,
-                            child:  Image.asset(AppAssets.loginDashBoard, height: mh * 0.5, fit: BoxFit.contain,),
-                          ),
-
-                        ],
-                      ),
-                    ),
-                  ),
+                  const Expanded(flex: 1, child: AuthRightPanel()),
                 ],
               ),
             ),
@@ -551,5 +469,4 @@ class _LoginScreenState extends State<LoginScreen> {
       },
     );
   }
-
 }
