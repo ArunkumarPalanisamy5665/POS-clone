@@ -8,6 +8,10 @@ class RouteNames {
   static const register = '/register';
   static const forgotPassword = '/forgot_password';
   static const emailVerify = '/email_verify';
+  static const otp = '/otp';
+  static const dashboard = '/dashboard';
+
+
 
   // Settings
   static const settings = '/settings';

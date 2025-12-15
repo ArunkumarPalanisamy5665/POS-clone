@@ -8,6 +8,7 @@ import '../../../widgets/common/custom_button.dart';
 import '../../../widgets/common/custom_button2.dart';
 import '../../../widgets/common/custom_textfield.dart';
 import '../forgotPassword/forgot_password_vm.dart';
+import '../widgets/auth_right_panel.dart';
 
 class EmailVerifyScreen extends StatefulWidget {
   const EmailVerifyScreen({super.key});
@@ -25,8 +26,6 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
   final googleKey = GlobalKey<State<StatefulWidget>>();
   final facebookKey = GlobalKey<State<StatefulWidget>>();
 
-
-
   late ForgotPasswordVm vm;
 
   @override
@@ -37,7 +36,6 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final mw = MediaQuery.of(context).size.width;
     final mh = MediaQuery.of(context).size.height;
 
@@ -74,32 +72,26 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
 
                               Text(
                                 "Check your email",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelLarge
+                                style: Theme.of(context).textTheme.labelLarge
                                     ?.copyWith(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w700,
-                                ),
-
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w700,
+                                    ),
                               ),
 
                               const SizedBox(height: 8),
 
                               Text(
                                 "We have sent a password recovery instruction to your email",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall
+                                style: Theme.of(context).textTheme.labelSmall
                                     ?.copyWith(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black.withAlpha(
-                                    (0.7 * 255).toInt(),
-                                  ),
-                                ),
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black.withAlpha(
+                                        (0.7 * 255).toInt(),
+                                      ),
+                                    ),
                               ),
-
 
                               const SizedBox(height: 25),
 
@@ -109,6 +101,7 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
                                   // if (_formKey.currentState?.validate() != true) {
                                   //
                                   CustomButton2.shake(emailKey);
+                                  vm.getPopAndPush(RouteNames.otp);
                                   //   return;
                                   // }
 
@@ -140,8 +133,7 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
                                 showBorder: false,
                               ),
 
-                              SizedBox(height: 25,),
-
+                              SizedBox(height: 25),
 
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -152,34 +144,33 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
                                         .textTheme
                                         .bodyMedium
                                         ?.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 13,
-                                      color: Colors.black.withAlpha(
-                                        (0.7 * 255).toInt(),
-                                      ),
-                                    ),
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 13,
+                                          color: Colors.black.withAlpha(
+                                            (0.7 * 255).toInt(),
+                                          ),
+                                        ),
                                   ),
                                   GestureDetector(
                                     onTap: () {
                                       vm.getPopAndPush(RouteNames.login);
                                     },
-                                    child:  Text(
+                                    child: Text(
                                       "Sign in",
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyMedium
                                           ?.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 13,
-                                          color: AppColors.primaryColor
-                                      ),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13,
+                                            color: AppColors.primaryColor,
+                                          ),
                                     ),
                                   ),
                                 ],
                               ),
 
                               const SizedBox(height: 25),
-
                             ],
                           ),
                         ),
@@ -188,85 +179,7 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
                   ),
 
                   // RIGHT SIDE BLUE PANEL
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFF0C76E1),
-                        borderRadius: BorderRadius.circular(20),
-                        image: const DecorationImage(
-                          image: AssetImage(AppAssets.loginDashBoardBG),
-                          fit: BoxFit.fill
-                          ,
-                        ),
-
-                      ),
-                      margin: const EdgeInsets.all(20),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Positioned(
-                            top:  mh * 0.060,
-                            left: mh * 0.050,
-                            right: mh * 0.050,
-                            child: Column(
-                              children: [
-                                Text(
-                                  "Complete Control of Your Cafe & ",
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelLarge
-                                      ?.copyWith(
-                                    fontSize: 28,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                Text(
-                                  "Restaurant with Ease",
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelLarge
-                                      ?.copyWith(
-                                    fontSize: 28,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                SizedBox(height: 16),
-                                Text(
-                                  "From billing to inventory access everything you need\nin a single powerful dashboard.",
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelLarge
-                                      ?.copyWith(
-                                    fontSize: 12,
-                                    color: Colors.white54,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          Positioned(
-                            bottom: 0,
-                            child:  Image.asset(AppAssets.loginDashBoard, height: mh * 0.5, fit: BoxFit.contain,),
-                          ),
-
-                        ],
-                      ),
-                    ),
-                  ),
+                  const Expanded(flex: 1, child: AuthRightPanel()),
                 ],
               ),
             ),
@@ -275,5 +188,4 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
       },
     );
   }
-
 }
