@@ -160,6 +160,11 @@ class AppAssets {
   static const String editProfileIcon = 'assets/images/edit_profile_icon.png';
 
 
+  static const String dropMenu1 = 'assets/images/drop_menu_1.png';
+  static const String dropMenu2 = 'assets/images/drop_menu_2.png';
+  static const String dropMenu3 = 'assets/images/drop_menu_3.png';
+
+
   // SVG Icons (if any)
   static const String _svgPath = 'assets/svg/';
 

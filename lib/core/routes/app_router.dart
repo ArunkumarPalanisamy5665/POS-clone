@@ -6,6 +6,7 @@ import 'package:new_hrms_flutter/views/screens/auth/otp/otp_screen.dart';
 import 'package:new_hrms_flutter/views/screens/auth/resetPassword/reset_password_screen.dart';
 import 'package:new_hrms_flutter/views/screens/dashboard/dashboard_screen.dart';
 import 'package:new_hrms_flutter/views/screens/home/home_screen.dart';
+import 'package:new_hrms_flutter/views/screens/home/home_screen_two.dart';
 import 'package:new_hrms_flutter/views/screens/splashScreen/splash_screen.dart';
 import 'package:new_hrms_flutter/views/screens/app_shell.dart';
 import '../../main.dart';
@@ -13,6 +14,7 @@ import '../../views/screens/auth/emailVerify/email_verify_screen.dart';
 import '../../views/screens/auth/forgotPassword/forgot_password_screen.dart';
 import '../../views/screens/auth/login/login_screen.dart';
 import '../../views/screens/auth/register/register_screen.dart';
+import '../../views/screens/home/main_home.dart';
 import '../../views/screens/home/profile_manager.dart';
 
 class AppRouter {
@@ -74,6 +76,12 @@ class AppRouter {
         path: '/home',
         name: RouteNames.home,
         builder: (context, state) =>  HomeScreen(),
+      ),
+
+      GoRoute(
+        path: '/home_main',
+        name: RouteNames.homeMain,
+        builder: (context, state) =>  MainHome(),
       ),
 
       ShellRoute(

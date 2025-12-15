@@ -4,6 +4,7 @@ class RouteNames {
   // Authentication
   static const splash = '/';
   static const home = '/home';
+  static const homeMain = '/home_main';
   static const login = '/login';
   static const register = '/register';
   static const forgotPassword = '/forgot_password';
