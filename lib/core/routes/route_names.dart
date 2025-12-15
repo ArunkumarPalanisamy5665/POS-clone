@@ -7,6 +7,7 @@ class RouteNames {
   static const login = '/login';
   static const register = '/register';
   static const forgotPassword = '/forgot_password';
+  static const resetPassword = '/reset_password';
   static const emailVerify = '/email_verify';
   static const otp = '/otp';
   static const dashboard = '/dashboard';

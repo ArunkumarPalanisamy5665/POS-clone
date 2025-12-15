@@ -39,6 +39,8 @@ class CustomTextField extends StatefulWidget {
   final String? Function(String?)? validator;
   final VoidCallback? onTap;
   final VoidCallback? onSuffixTap;
+  final ValueChanged<String>? onChanged;
+
 
   // → NEW
   final FocusNode? focusNode;
@@ -84,6 +86,7 @@ class CustomTextField extends StatefulWidget {
     this.validator,
     this.onTap,
     this.onSuffixTap,
+    this.onChanged,
 
     this.focusNode,
     this.nextFocusNode,
@@ -122,10 +125,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
                         height: 1.50,
                       ),
                     ),
-                    TextSpan(
+                    const TextSpan(
                       text: '*',
                       style:  TextStyle(
-                        color: const Color(0xFFFF3636) /* System-Danger */,
+                        color: Color(0xFFFF3636) /* System-Danger */,
                         fontSize: 16,
                         fontFamily: 'Instrument Sans',
                         fontWeight: FontWeight.w600,
@@ -153,7 +156,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   textInputAction: widget.textInputAction,
                   cursorColor: widget.cursorColor,
                   cursorWidth: 1.2,
-                  onChanged: (val) => state.didChange(val),
+                  onChanged: (val) {
+                    state.didChange(val);
+                    widget.onChanged?.call(val);
+                  },
 
                   style:
                       widget.textStyle?.copyWith(

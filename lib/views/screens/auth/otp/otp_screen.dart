@@ -6,7 +6,7 @@ import 'package:new_hrms_flutter/views/screens/auth/otp/otp_vm.dart';
 import 'package:provider/provider.dart';
 
 import '../../../widgets/common/custom_button2.dart';
-import '../widgets/auth_right_panel.dart';
+import '../../../widgets/auth/auth_right_panel.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
@@ -150,7 +150,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             style: Theme.of(context).textTheme.labelLarge
                                 ?.copyWith(
                               fontSize: 14,
-                              fontWeight: FontWeight.w700,
+
                             ),
                           ),)
                         ],
@@ -164,7 +164,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           // if (_formKey.currentState?.validate() != true) {
                           //
                           CustomButton2.shake(emailKey);
-                          vm.getPopAndPush(RouteNames.dashboard);
+                          vm.getPopAndPush(RouteNames.resetPassword);
 
                           //   return;
                           // }

@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:new_hrms_flutter/views/screens/auth/otp/otp_vm.dart';
+import 'package:new_hrms_flutter/views/screens/auth/resetPassword/reset_password_vm.dart';
 import 'package:new_hrms_flutter/views/screens/splashScreen/splash_vm.dart';
 
 import '../views/screens/auth/emailVerify/email_verify_vm.dart';
@@ -16,4 +17,5 @@ void registerViewModelModule() {
   getIt.registerFactory<ForgotPasswordVm>(() => ForgotPasswordVm());
   getIt.registerFactory<EmailVerifyVm>(() => EmailVerifyVm());
   getIt.registerFactory<OtpVm>(() => OtpVm());
+  getIt.registerFactory<ResetPasswordVm>(() => ResetPasswordVm());
 }

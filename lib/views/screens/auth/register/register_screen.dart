@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import '../../../widgets/common/custom_button.dart';
 import '../../../widgets/common/custom_button2.dart';
 import '../../../widgets/common/custom_textfield.dart';
-import '../widgets/auth_right_panel.dart';
+import '../../../widgets/auth/auth_right_panel.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

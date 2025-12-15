@@ -8,7 +8,7 @@ import '../../../widgets/common/custom_button.dart';
 import '../../../widgets/common/custom_button2.dart';
 import '../../../widgets/common/custom_textfield.dart';
 import '../forgotPassword/forgot_password_vm.dart';
-import '../widgets/auth_right_panel.dart';
+import '../../../widgets/auth/auth_right_panel.dart';
 
 class EmailVerifyScreen extends StatefulWidget {
   const EmailVerifyScreen({super.key});

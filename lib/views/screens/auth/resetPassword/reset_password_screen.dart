@@ -2,35 +2,50 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:new_hrms_flutter/core/constants/app_export.dart';
 import 'package:new_hrms_flutter/views/screens/auth/register/register_vm.dart';
+import 'package:new_hrms_flutter/views/screens/auth/resetPassword/reset_password_vm.dart';
+import 'package:new_hrms_flutter/views/widgets/auth/step_progress_indicator.dart';
 import 'package:provider/provider.dart';
 
 import '../../../widgets/common/custom_button.dart';
 import '../../../widgets/common/custom_button2.dart';
 import '../../../widgets/common/custom_textfield.dart';
 import '../../../widgets/auth/auth_right_panel.dart';
-import 'forgot_password_vm.dart';
 
-class ForgotPasswordScreen extends StatefulWidget {
-  const ForgotPasswordScreen({super.key});
+class ResetPasswordScreen extends StatefulWidget {
+  const ResetPasswordScreen({super.key});
 
   @override
-  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+  State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
 }
 
-class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
   bool hidePassword = true;
   bool hideConfirmPassword = true;
+  int passwordStep = 0;
 
   final emailKey = GlobalKey<State<StatefulWidget>>();
   final googleKey = GlobalKey<State<StatefulWidget>>();
   final facebookKey = GlobalKey<State<StatefulWidget>>();
 
-  late ForgotPasswordVm vm;
+  late ResetPasswordVm vm;
+
+  void updatePasswordStrength(String password) {
+    int step = 0;
+
+    if (password.length >= 8) step++;
+    if (RegExp(r'[A-Za-z]').hasMatch(password)) step++;
+    if (RegExp(r'[0-9]').hasMatch(password)) step++;
+    if (RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(password)) step++;
+
+    setState(() {
+      passwordStep = step.clamp(0, 4);
+    });
+  }
 
   @override
   void initState() {
-    vm = context.read<ForgotPasswordVm>();
+    vm = context.read<ResetPasswordVm>();
     super.initState();
   }
 
@@ -39,7 +54,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     final mw = MediaQuery.of(context).size.width;
     final mh = MediaQuery.of(context).size.height;
 
-    return Consumer<ForgotPasswordVm>(
+    return Consumer<ResetPasswordVm>(
       builder: (context, value, child) {
         return CustomDrawer(
           backgroundColor: Colors.white,
@@ -71,39 +86,43 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               const SizedBox(height: 40),
 
                               Text(
-                                "Forgot Password",
+                                "Reset Password",
                                 style: Theme.of(context).textTheme.labelLarge
                                     ?.copyWith(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w700,
-                                    ),
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
 
                               const SizedBox(height: 8),
 
                               Text(
-                                "Please enter your email address to receive a verification code",
+                                "Your new password must be different from previous used passwords.",
                                 style: Theme.of(context).textTheme.labelSmall
                                     ?.copyWith(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black.withAlpha(
-                                        (0.7 * 255).toInt(),
-                                      ),
-                                    ),
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black.withAlpha(
+                                    (0.7 * 255).toInt(),
+                                  ),
+                                ),
                               ),
-
-                              const SizedBox(height: 32),
+                              const SizedBox(height: 10),
 
                               FormBuilder(
                                 key: _formKey,
                                 child: Column(
                                   children: [
-                                    // ---------------- Email ----------------
+                                    // ---------------- Password ----------------
                                     CustomTextField(
                                       height: 50,
-                                      controller: value.emailController,
-                                      label: "Email",
+                                      controller: value.passwordController,
+                                      label: "Password",
+                                      fillColor: Colors.white,
+                                      obscure: hidePassword,
+                                      onChanged: (val) {
+                                        updatePasswordStrength(val);
+                                      },
                                       borderColor: AppColors.grey.withAlpha(
                                         (0.3 * 255).toInt(),
                                       ),
@@ -114,25 +133,97 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                         (0.7 * 255).toInt(),
                                       ),
                                       borderWidth: 0.75,
-                                      focusNode: value.emailNode,
-                                      nextFocusNode: value.passwordNode,
-                                      fillColor: Colors.white,
+                                      suffixIcon: hidePassword
+                                          ? Icons.visibility_off_outlined
+                                          : Icons.visibility_outlined,
+                                      onSuffixTap: () => setState(
+                                            () => hidePassword = !hidePassword,
+                                      ),
+                                      iconSize: 14,
+                                      focusNode: value.passwordNode,
+                                      nextFocusNode: value.confirmPasswordNode,
                                       textStyle: Theme.of(context)
                                           .textTheme
                                           .labelLarge
                                           ?.copyWith(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white10,
-                                          ),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white10,
+                                      ),
                                       labelStyle: Theme.of(context)
                                           .textTheme
                                           .bodySmall
                                           ?.copyWith(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w600,
-                                            height: 2.5,
-                                          ),
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        height: 2.5,
+                                      ),
+
+                                    ),
+
+                                    const SizedBox(height: 12),
+                                   StepProgressIndicator(
+                                      totalSteps: 4,
+                                      currentStep: passwordStep,
+                                    ),
+
+                                    const SizedBox(height: 12),
+
+                                    Text(
+                                      "Use 8 or more characters with a mix of letters, numbers & symbols.",
+                                      style: Theme.of(context).textTheme.labelSmall
+                                          ?.copyWith(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black.withAlpha(
+                                          (0.7 * 255).toInt(),
+                                        ),
+                                      ),
+                                    ),
+
+                                    CustomTextField(
+                                      height: 50,
+                                      controller:
+                                      value.confirmPasswordController,
+                                      label: "Confirm Password",
+                                      fillColor: Colors.white,
+                                      obscure: hideConfirmPassword,
+                                      borderColor: AppColors.grey.withAlpha(
+                                        (0.3 * 255).toInt(),
+                                      ),
+                                      focusColor: AppColors.grey.withAlpha(
+                                        (0.3 * 255).toInt(),
+                                      ),
+                                      cursorColor: Colors.black.withAlpha(
+                                        (0.7 * 255).toInt(),
+                                      ),
+                                      borderWidth: 0.75,
+                                      iconSize: 14,
+                                      suffixIcon: hideConfirmPassword
+                                          ? Icons.visibility_off_outlined
+                                          : Icons.visibility_outlined,
+                                      onSuffixTap: () => setState(
+                                            () => hideConfirmPassword =
+                                        !hideConfirmPassword,
+                                      ),
+
+                                      focusNode: value.confirmPasswordNode,
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge
+                                          ?.copyWith(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white10,
+                                      ),
+                                      labelStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        height: 2.5,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -145,8 +236,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                 onPressed: () {
                                   // if (_formKey.currentState?.validate() != true) {
                                   //
-                                  // CustomButton2.shake(emailKey);
-                                  vm.getPopAndPush(RouteNames.emailVerify);
+                                  CustomButton2.shake(emailKey);
+                                  vm.getPopAndPush(RouteNames.dashboard);
                                   //   return;
                                   // }
 
@@ -154,7 +245,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                   // var map = {'email': email};
                                 },
 
-                                btnName: 'Send Email',
+                                btnName: 'Submit',
                                 isDisable: false,
                                 isAnimate: true,
                                 isBold: true,
@@ -195,43 +286,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               //   },
                               // ),
                               const SizedBox(height: 30),
-
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Back to ",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 13,
-                                          color: Colors.black.withAlpha(
-                                            (0.7 * 255).toInt(),
-                                          ),
-                                        ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      vm.getPopAndPush(RouteNames.login);
-                                    },
-                                    child: Text(
-                                      "Sign in",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 13,
-                                            color: AppColors.primaryColor,
-                                          ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              const SizedBox(height: 25),
                             ],
                           ),
                         ),

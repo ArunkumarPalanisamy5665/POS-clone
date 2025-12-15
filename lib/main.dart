@@ -5,6 +5,7 @@ import 'package:new_hrms_flutter/views/screens/auth/forgotPassword/forgot_passwo
 import 'package:new_hrms_flutter/views/screens/auth/login/login_vm.dart';
 import 'package:new_hrms_flutter/views/screens/auth/otp/otp_vm.dart';
 import 'package:new_hrms_flutter/views/screens/auth/register/register_vm.dart';
+import 'package:new_hrms_flutter/views/screens/auth/resetPassword/reset_password_vm.dart';
 import 'package:new_hrms_flutter/views/screens/dashboard/home_vm.dart';
 import 'package:new_hrms_flutter/views/screens/splashScreen/splash_vm.dart';
 import 'package:provider/provider.dart';
@@ -39,8 +40,9 @@ void main() {
         ChangeNotifierProvider(create: (_) => ForgotPasswordVm()),
         ChangeNotifierProvider(create: (_) => EmailVerifyVm()),
         ChangeNotifierProvider(create: (_) => OtpVm()),
+        ChangeNotifierProvider(create: (_) => ResetPasswordVm()),
         // ChangeNotifierProvider(create: (_) => ThemeProvider()),
-        // ChangeNotifierProvider(create: (_) => ConnectivityProvider()),
+        // ChangeNotifierProvider(create: (_=> ConnectivityProvider()),
         // ChangeNotifierProvider(create: (_) => AppLifecycleProvider()),
       ],
       child: const _AppRoot(),

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:new_hrms_flutter/core/routes/route_names.dart';
 import 'package:new_hrms_flutter/views/screens/auth/otp/otp_screen.dart';
+import 'package:new_hrms_flutter/views/screens/auth/resetPassword/reset_password_screen.dart';
 import 'package:new_hrms_flutter/views/screens/dashboard/dashboard_screen.dart';
 import 'package:new_hrms_flutter/views/screens/home/home_screen.dart';
 import 'package:new_hrms_flutter/views/screens/splashScreen/splash_screen.dart';
@@ -45,6 +46,11 @@ class AppRouter {
         path: '/forgot_password',
         name: RouteNames.forgotPassword,
         builder: (context, state) =>  const ForgotPasswordScreen(),
+      ),
+      GoRoute(
+        path: '/reset_password',
+        name: RouteNames.resetPassword,
+        builder: (context, state) =>  const ResetPasswordScreen(),
       ),
 
       GoRoute(
