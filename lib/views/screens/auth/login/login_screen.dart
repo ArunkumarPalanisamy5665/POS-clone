@@ -233,7 +233,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 onPressed: () {
                                   // if (_formKey.currentState?.validate() != true) {
                                   //
-                                  CustomButton2.shake(emailKey);
+                                   CustomButton2.shake(emailKey);
+                                   vm.getPopAndPush(RouteNames.home);
                                   //   return;
                                   // }
 

@@ -73,7 +73,7 @@ class AppRouter {
       GoRoute(
         path: '/home',
         name: RouteNames.home,
-        builder: (context, state) => const HomeScreen(),
+        builder: (context, state) =>  HomeScreen(),
       ),
 
       ShellRoute(

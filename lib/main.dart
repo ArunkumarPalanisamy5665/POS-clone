@@ -31,12 +31,10 @@ void main() {
       providers: [
 
         ChangeNotifierProvider(create: (_) => AppStateNotifier()),
-
         ChangeNotifierProvider(create: (_) => SplashVm()),
         ChangeNotifierProvider(create: (_) => LoginVm()),
         ChangeNotifierProvider(create: (_) => HomeVm()),
         ChangeNotifierProvider(create: (_) => RegisterVm()),
-
         ChangeNotifierProvider(create: (_) => ForgotPasswordVm()),
         ChangeNotifierProvider(create: (_) => EmailVerifyVm()),
         ChangeNotifierProvider(create: (_) => OtpVm()),
@@ -89,11 +87,6 @@ class MyApp extends StatelessWidget {
         darkTheme: AppTheme.dark(context),
         themeMode: app.isDarkMode ? ThemeMode.dark : ThemeMode.light,
         routerConfig: AppRouter.routes,
-        // routeInformationProvider: PlatformRouteInformationProvider(
-        //   initialRouteInformation: RouteInformation(
-        //     uri: Uri.parse('/'),
-        //   ), // Clean URLs: /home, /profile
-        // ),
       ),
     );
   }
