@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:new_hrms_flutter/views/screens/home/widgets/dashBoardWidgets/graph_chart_widget.dart';
 import 'package:new_hrms_flutter/views/screens/home/widgets/linear_chart_box.dart';
 import 'package:new_hrms_flutter/views/widgets/common/drop_down_cards.dart';
+import 'package:new_hrms_flutter/views/widgets/dashboard/reservation_list.dart';
 import 'package:new_hrms_flutter/views/widgets/responsive/responsive.dart';
 
 import 'package:new_hrms_flutter/views/widgets/dashboard/active_order_list.dart';
@@ -470,11 +471,52 @@ class _HomeScreenState extends State<MainHome> {
                     salesGrowth: 12,
                   ),
                 ),
-                const DashboardCard(
+                DashboardCard(
                   title: 'Reservations',
                   actionText: 'All Orders',
                   imagePath: 'assets/images/reservation.png',
-                  body: Center(child: Text('Active Orders List')),
+                  body:ReservationsWidget(reservations: [
+                    Reservation(
+                      date: DateTime(2025, 11, 8),
+                      customerName: 'Elijah Thompson',
+                      status: ReservationStatus.booked,
+                      time: '10:45',
+                      tableNumber: '3',
+                      guests: 2,
+                    ),
+                    Reservation(
+                      date: DateTime(2025, 11, 12),
+                      customerName: "Liam O'Connor",
+                      status: ReservationStatus.booked,
+                      time: '10:45',
+                      tableNumber: '4',
+                      guests: 5,
+                    ),
+                    Reservation(
+                      date: DateTime(2025, 11, 6),
+                      customerName: 'Michael Carter',
+                      status: ReservationStatus.booked,
+                      time: '10:45',
+                      tableNumber: '8',
+                      guests: 6,
+                    ),
+                    Reservation(
+                      date: DateTime(2025, 11, 4),
+                      customerName: 'James Smith',
+                      status: ReservationStatus.paid,
+                      time: '10:45',
+                      tableNumber: '8',
+                      guests: 5,
+                    ),
+                    Reservation(
+                      date: DateTime(2025, 11, 2),
+                      customerName: 'Walk in Customer',
+                      status: ReservationStatus.cancelled,
+                      time: '10:45',
+                      tableNumber: '2',
+                      guests: 5,
+                    ),
+                  ]),
                   showDropdown: true,
 
                 ),
@@ -1058,7 +1100,7 @@ class MetricCard extends StatelessWidget {
               ),
             ],
           ),
-          
+
           // Percentage Badge - Top Right
           Positioned(
             top: 0,
@@ -1066,7 +1108,7 @@ class MetricCard extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: isPositive 
+                color: isPositive
                     ? const Color(0xFF10B981)
                     : const Color(0xFFEF4444),
                 borderRadius: BorderRadius.circular(12),
@@ -1081,7 +1123,7 @@ class MetricCard extends StatelessWidget {
               ),
             ),
           ),
-          
+
           // Icon Circle - Right side
           Positioned(
             right: 0,
