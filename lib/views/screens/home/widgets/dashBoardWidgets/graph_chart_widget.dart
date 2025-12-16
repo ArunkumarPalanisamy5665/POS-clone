@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../domain/models/dashBoardModel/bar_chart_point.dart';
 
-class GraphChartWidget extends StatelessWidget {
+class GraphChartWidget extends StatefulWidget {
   final List<BarChartPoint> data;
   final Color highlightColor;
   final int highlightIndex;
@@ -17,8 +17,15 @@ class GraphChartWidget extends StatelessWidget {
   });
 
   @override
+  State<GraphChartWidget> createState() => _GraphChartWidgetState();
+}
+
+class _GraphChartWidgetState extends State<GraphChartWidget> {
+  int? touchedIndex;
+
+  @override
   Widget build(BuildContext context) {
-    final maxY = data.map((e) => e.value).reduce(max);
+    final maxY = widget.data.map((e) => e.value).reduce(max);
 
     return BarChart(
       BarChartData(
@@ -27,38 +34,47 @@ class GraphChartWidget extends StatelessWidget {
 
         barTouchData: BarTouchData(
           enabled: true,
+          touchCallback: (FlTouchEvent event, barTouchResponse) {
+            setState(() {
+              if (!event.isInterestedForInteractions ||
+                  barTouchResponse == null ||
+                  barTouchResponse.spot == null) {
+                touchedIndex = null;
+                return;
+              }
+              touchedIndex = barTouchResponse.spot!.touchedBarGroupIndex;
+            });
+          },
           touchTooltipData: BarTouchTooltipData(
             tooltipBgColor: Colors.grey[800],
             tooltipBorder: BorderSide(
-              color:  Colors.black.withAlpha(
+              color: Colors.black.withAlpha(
                 (0.2 * 255).toInt(),
               ),
               width: 1,
             ),
             tooltipRoundedRadius: 4,
             getTooltipItem: (group, groupIndex, rod, rodIndex) {
-
               final index = group.x.toInt();
 
-              if (index < 0 || index >= data.length) {
+              if (index < 0 || index >= widget.data.length) {
                 return null;
               }
-
 
               return BarTooltipItem(
                 '',
                 const TextStyle(),
                 children: [
                   TextSpan(
-                    text: '${data[index].label}\n',
-                    style:  TextStyle(
+                    text: '${widget.data[index].label}\n',
+                    style: const TextStyle(
                       fontSize: 12,
                       color: Colors.white,
                     ),
                   ),
                   TextSpan(
                     text: '  ₹ ${(rod.toY / 1000).toStringAsFixed(1)}k  ',
-                    style:  TextStyle(
+                    style: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
@@ -67,30 +83,14 @@ class GraphChartWidget extends StatelessWidget {
                 ],
               );
             },
-
-
-
-            // getTooltipItem: (group, groupIndex, rod, rodIndex) {
-            //   return
-            //
-            //
-            //     BarTooltipItem(
-            //     'Revenue: ${(rod.toY / 1000).toStringAsFixed(1)}k',
-            //     const TextStyle(
-            //       fontSize: 10,
-            //       color: Colors.white,
-            //       fontWeight: FontWeight.bold,
-            //     ),
-            //   );
-            // },
           ),
         ),
 
         titlesData: FlTitlesData(
-          topTitles: AxisTitles(
+          topTitles: const AxisTitles(
             sideTitles: SideTitles(showTitles: false),
           ),
-          rightTitles: AxisTitles(
+          rightTitles: const AxisTitles(
             sideTitles: SideTitles(showTitles: false),
           ),
 
@@ -118,14 +118,14 @@ class GraphChartWidget extends StatelessWidget {
               reservedSize: 22,
               getTitlesWidget: (value, meta) {
                 final index = value.toInt();
-                if (index < 0 || index >= data.length) {
+                if (index < 0 || index >= widget.data.length) {
                   return const SizedBox.shrink();
                 }
 
                 return Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: Text(
-                    data[index].label,
+                    widget.data[index].label,
                     style: TextStyle(
                       color: Colors.grey[600],
                       fontSize: 8,
@@ -137,7 +137,6 @@ class GraphChartWidget extends StatelessWidget {
             ),
           ),
         ),
-
 
         gridData: FlGridData(
           show: true,
@@ -153,18 +152,19 @@ class GraphChartWidget extends StatelessWidget {
 
         borderData: FlBorderData(show: false),
 
-
-        barGroups: List.generate(data.length, (index) {
-          final item = data[index];
+        barGroups: List.generate(widget.data.length, (index) {
+          final item = widget.data[index];
+          final isTouched = touchedIndex == index;
+          final isHighlighted = index == widget.highlightIndex;
 
           return BarChartGroupData(
             x: index,
             barRods: [
               BarChartRodData(
                 toY: item.value,
-                width: 40,
-                color: index == highlightIndex
-                    ? highlightColor
+                width: isTouched ? 45 : 40,
+                color: isTouched || isHighlighted
+                    ? widget.highlightColor
                     : Colors.grey.shade300,
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(12),

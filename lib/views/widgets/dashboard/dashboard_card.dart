@@ -25,11 +25,11 @@ class DashboardCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color:Colors.grey.withOpacity(0.01),
-        borderRadius: BorderRadius.circular(16),
+        color:Colors.white70.withOpacity(1),
+        borderRadius: BorderRadius.circular(5),
         border: Border.all(
           color: Colors.black.withAlpha((0.2 * 255).toInt()),
-          width: 1,
+          width: 0.85,
         ),
         boxShadow: [
           BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10),

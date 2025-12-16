@@ -3,15 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:new_hrms_flutter/views/screens/home/widgets/dashBoardWidgets/graph_chart_widget.dart';
 import 'package:new_hrms_flutter/views/screens/home/widgets/linear_chart_box.dart';
-import 'package:new_hrms_flutter/views/widgets/appDrawer/custom_drawer.dart';
 import 'package:new_hrms_flutter/views/widgets/common/drop_down_cards.dart';
 import 'package:new_hrms_flutter/views/widgets/responsive/responsive.dart';
-import 'package:new_hrms_flutter/views/widgets/sideMenu/side_menu.dart';
 
-import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
-
-import 'package:flutter/material.dart';
+import 'package:new_hrms_flutter/views/widgets/dashboard/active_order_list.dart';
+import 'package:new_hrms_flutter/views/widgets/dashboard/dashboard_card.dart';
+import '../../widgets/dashboard/category_statistics.dart';
 
 import '../../../core/constants/app_colors.dart';
 import 'home_screen.dart';
@@ -144,7 +141,7 @@ class _HomeScreenState extends State<MainHome> {
                 onPressed: () => Scaffold.of(context).openDrawer(),
               ),
             ),
-          if (!isMobile) _buildFilterTabs(),
+          if (Responsive.isDesktop(context)) _buildFilterTabs(),
           const Spacer(),
           _buildTopActions(),
         ],
@@ -321,23 +318,178 @@ class _HomeScreenState extends State<MainHome> {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             children: const [
-              _KpiCard('Orders', '6986'),
-              _KpiCard('Sales', '\$7516'),
-              _KpiCard('Avg Value', '\$25.36'),
-              _KpiCard('Reservations', '496'),
+              MetricCard(
+                title: 'Total Orders',
+                value: '6986',
+                percentageChange: '+12.5%',
+                isPositive: true,
+                iconColor: Color(0xFF9C27B0),
+                icon: Icons.shopping_bag,
+              ),
+              MetricCard(
+                title: 'Total Sales',
+                value: '\$7516',
+                percentageChange: '+12.5%',
+                isPositive: true,
+                iconColor: Color(0xFF2196F3),
+                icon: Icons.attach_money,
+              ),
+              MetricCard(
+                title: 'Average Value',
+                value: '\$25.36',
+                percentageChange: '-8.5%',
+                isPositive: false,
+                iconColor: Color(0xFFFF9800),
+                icon: Icons.payments,
+              ),
+              MetricCard(
+                title: 'Reservations',
+                value: '496',
+                percentageChange: '+12.7%',
+                isPositive: true,
+                iconColor: Color(0xFF4CAF50),
+                icon: Icons.event_seat,
+              ),
             ],
           ),
 
           const SizedBox(height: 24),
 
           /// CHARTS STACK
-          // RevenueCard(),
+          RevenueCard(),
           // // _section('Total Revenue', height: 220),
           // const SizedBox(height: 20),
-          // TopSellingCard(),
+
 
           // const SizedBox(height: 20),
-          const GraphChartPage(),
+
+          if(!Responsive.isDesktop(context))...[
+            const GraphChartPage(),
+            const SizedBox(height: 15,),
+            TopSellingCard(),
+          ]else...[
+            const SizedBox(height: 15,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Expanded(child: GraphChartPage()),
+                const SizedBox(width: 15,),
+                Expanded(child: TopSellingCard()),
+              ],
+            ),
+          ],
+
+
+          Padding(
+            padding: const EdgeInsets.only(top: 15),
+            child: GridView.count(
+              crossAxisCount: Responsive.isDesktop(context) ? 2: 1,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              childAspectRatio: 0.90,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                DashboardCard(
+                  title: 'Category Statistics',
+                  actionText: 'View All',
+                  imagePath: 'assets/images/category_statistics.png',
+                  body: Column(
+                    children: [
+                      InteractiveDonutChart(
+                        data: [
+                          ChartData(percentage: 30, color: Colors.green, label: 'Category A'),
+                          ChartData(percentage: 20, color: Colors.orange, label: 'Category B'),
+                          ChartData(percentage: 20, color: Colors.blue, label: 'Category C'),
+                          ChartData(percentage: 35, color: Colors.purple, label: 'Category D'),
+                        ],
+                        size: 185,
+                        outerCircleWidth: 170,
+                        outerCircleHeight: 170,
+                        innerCircleWidth: 100,
+                        innerCircleHeight:88.44,
+                        innerCircleTop: 10,
+                        innerCircleLeft: 77.5,
+                      ),
+                      const CategoryStatsBody(
+                        data: [
+                          CategoryItem('Take Away', 4898, Colors.blue, Icons.shopping_bag),
+                          CategoryItem('Reservation', 4587, Colors.orange, Icons.restaurant),
+                          CategoryItem('Delivery', 3565, Colors.green, Icons.delivery_dining),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                DashboardCard(
+                  title: 'Active Orders',
+                  actionText: 'Add New',
+                  imagePath: 'assets/images/shopping_cart.png',
+                  body: ActiveOrders(orders: [
+                    ActiveOrderList(
+                      name: "Maria Gonzalez",
+                      type: "Dine In",
+                      status: "In Kitchen",
+                      showTableNo: true,
+                      tableNo: "3",
+                    ),
+                    ActiveOrderList(
+                      name: "Andrew Fletcher",
+                      type: "Reservation",
+                      status: "Cancelled",
+                    ),
+                    ActiveOrderList(
+                      name: "Morgan Evans",
+                      type: "Take Away",
+                      status: "Served",
+                    ),
+                    ActiveOrderList(
+                      name: "Walk in Customer",
+                      type: "Dine In",
+                      status: "In Kitchen",
+                      showTableNo: true,
+                      tableNo: "5",
+                    ),
+                    ActiveOrderList(
+                      name: "Walk in Customer",
+                      type: "Reservation",
+                      status: "Cancelled",
+                    ),
+                  ]),
+                ),
+                const DashboardCard(
+                  title: 'Sales Performance',
+                  actionText: 'View Report',
+                  imagePath: 'assets/images/sales_performance.png',
+                  body: Center(child: Text('Sales Chart')),
+                ),
+                const DashboardCard(
+                  title: 'Reservations',
+                  actionText: 'All Orders',
+                  imagePath: 'assets/images/reservation.png',
+                  body: Center(child: Text('Active Orders List')),
+                  showDropdown: true,
+
+                ),
+                const DashboardCard(
+                  title: 'Tables Available',
+                  actionText: 'View All',
+                  imagePath: 'assets/images/tables_available.png',
+                  body: Center(child: Text('Sales Chart')),
+                ),
+                const DashboardCard(
+                  title: 'Notifications',
+                  actionText: 'View All',
+                  imagePath: 'assets/images/notifications.png',
+                  body: Center(child: Text('Active Orders List')),
+                ),
+
+              ],
+            ),
+          ),
+
+
+
 
           // _section('Top Selling Items', height: 200),
         ],
@@ -648,8 +800,7 @@ class _GraphChartPageState extends State<GraphChartPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 500,
-      height: 300,
+      // height: 300,
       padding: const EdgeInsets.only(top: 30, left: 14, right: 14),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -712,45 +863,23 @@ class _GraphChartPageState extends State<GraphChartPage> {
                   ),
                 ),
 
-
-                // DropdownButton<String>(
-                //   value: selectedPeriod,
-                //   padding: EdgeInsets.zero,
-                //   itemHeight: 48,
-                //   borderRadius: BorderRadius.all(Radius.circular(10)),
-                //   items: const [
-                //     DropdownMenuItem(value: 'Weekly', child: Text('Weekly', style: TextStyle(fontSize: 12),)),
-                //     DropdownMenuItem(value: 'Monthly', child: Text('Monthly',  style: TextStyle(fontSize: 12))),
-                //     DropdownMenuItem(value: 'Yearly', child: Text('Yearly',  style: TextStyle(fontSize: 12))),
-                //   ],
-                //   onChanged: (value) {
-                //     setState(() => selectedPeriod = value!);
-                //   },
-                // ),
               ],
             ),
           ),
 
           const SizedBox(height: 14),
 
-          /// CHART CARD
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                // boxShadow: [
-                //   BoxShadow(
-                //     color: Colors.black.withOpacity(0.05),
-                //     blurRadius: 8,
-                //     offset: const Offset(0, 2),
-                //   ),
-                // ],
-              ),
+          Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: SizedBox(
+              height: 200,
               child: GraphChartWidget(
                 data: graphWeeklyData,
-                highlightIndex: 2, // Wed highlighted
+                // highlightIndex: 2, // Wed highlighted
               ),
             ),
           ),
@@ -761,417 +890,13 @@ class _GraphChartPageState extends State<GraphChartPage> {
 }
 
 
-
-// class GraphChartPage extends StatefulWidget {
-//   const GraphChartPage({Key? key}) : super(key: key);
-//
-//   @override
-//   State<GraphChartPage> createState() => _GraphChartPagePageState();
-// }
-//
-// class _GraphChartPagePageState extends State<GraphChartPage> {
-//   String selectedPeriod = 'Weekly';
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       height: 900,
-//       width: 1000,
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           // Header
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               Row(
-//                 children: [
-//                   Container(
-//                     width: 40,
-//                     height: 40,
-//                     decoration: BoxDecoration(
-//                       color: Colors.grey[200],
-//                       borderRadius: BorderRadius.circular(8),
-//                     ),
-//                     child: const Icon(Icons.attach_money,
-//                         color: Colors.black54, size: 24),
-//                   ),
-//                   const SizedBox(width: 12),
-//                   const Text(
-//                     'Total Revenue',
-//                     style: TextStyle(
-//                       fontSize: 24,
-//                       fontWeight: FontWeight.bold,
-//                       color: Colors.black87,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//               // Dropdown
-//               PopupMenuButton<String>(
-//                 child: Container(
-//                   padding:
-//                   const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-//                   decoration: BoxDecoration(
-//                     border: Border.all(color: Colors.grey[300]!),
-//                     borderRadius: BorderRadius.circular(8),
-//                   ),
-//                   child: Row(
-//                     children: [
-//                       Text(
-//                         selectedPeriod,
-//                         style: const TextStyle(
-//                           fontSize: 16,
-//                           color: Colors.black87,
-//                         ),
-//                       ),
-//                       const SizedBox(width: 8),
-//                       const Icon(Icons.expand_more,
-//                           color: Colors.black54, size: 20),
-//                     ],
-//                   ),
-//                 ),
-//                 onSelected: (value) {
-//                   setState(() {
-//                     selectedPeriod = value;
-//                   });
-//                 },
-//                 itemBuilder: (BuildContext context) => [
-//                   const PopupMenuItem(
-//                     value: 'Weekly',
-//                     child: Text('Weekly'),
-//                   ),
-//                   const PopupMenuItem(
-//                     value: 'Monthly',
-//                     child: Text('Monthly'),
-//                   ),
-//                   const PopupMenuItem(
-//                     value: 'Yearly',
-//                     child: Text('Yearly'),
-//                   ),
-//                 ],
-//               ),
-//             ],
-//           ),
-//           const SizedBox(height: 24),
-//           Divider(color: Colors.grey[300]),
-//           const SizedBox(height: 24),
-//           // Revenue Info
-//           Row(
-//             children: [
-//               Container(
-//                 width: 50,
-//                 height: 50,
-//                 decoration: BoxDecoration(
-//                   color: Colors.blue,
-//                   borderRadius: BorderRadius.circular(8),
-//                 ),
-//                 child: const Icon(Icons.trending_up,
-//                     color: Colors.white, size: 28),
-//               ),
-//               const SizedBox(width: 16),
-//               Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   Text(
-//                     'Total Revenue',
-//                     style: TextStyle(
-//                       fontSize: 13,
-//                       color: Colors.grey[600],
-//                       fontWeight: FontWeight.w500,
-//                     ),
-//                   ),
-//                   const SizedBox(height: 4),
-//                   const Text(
-//                     '\$3989',
-//                     style: TextStyle(
-//                       fontSize: 28,
-//                       fontWeight: FontWeight.bold,
-//                       color: Colors.black87,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ],
-//           ),
-//           const SizedBox(height: 32),
-//           // Chart
-//           Expanded(
-//             child: Container(
-//               decoration: BoxDecoration(
-//                 color: Colors.white,
-//                 borderRadius: BorderRadius.circular(12),
-//                 boxShadow: [
-//                   BoxShadow(
-//                     color: Colors.black.withOpacity(0.05),
-//                     blurRadius: 8,
-//                     offset: const Offset(0, 2),
-//                   ),
-//                 ],
-//               ),
-//               padding: const EdgeInsets.all(24),
-//               child: Column(
-//                 children: [
-//                   Expanded(
-//                     child: BarChart(
-//                       BarChartData(
-//                         alignment: BarChartAlignment.spaceAround,
-//                         maxY: 4000,
-//                         barTouchData: BarTouchData(
-//                           enabled: true,
-//                           touchTooltipData: BarTouchTooltipData(
-//                             tooltipBgColor: Colors.grey[800]!,
-//
-//                             // getTooltipColor: (group) => Colors.grey[800]!,
-//                             tooltipRoundedRadius: 8,
-//                             getTooltipItem: (group, groupIndex, rod, rodIndex) {
-//                               return BarTooltipItem(
-//                                 'Revenue: ${(rod.toY / 1000).toStringAsFixed(1)}k',
-//                                 const TextStyle(
-//                                   color: Colors.white,
-//                                   fontWeight: FontWeight.bold,
-//                                 ),
-//                               );
-//                             },
-//                           ),
-//                         ),
-//                         titlesData: FlTitlesData(
-//                           show: true,
-//                           topTitles: AxisTitles(
-//                             sideTitles: SideTitles(showTitles: false),
-//                           ),
-//                           rightTitles: AxisTitles(
-//                             sideTitles: SideTitles(showTitles: false),
-//                           ),
-//                           leftTitles: AxisTitles(
-//                             sideTitles: SideTitles(
-//                               showTitles: true,
-//                               reservedSize: 40,
-//                               getTitlesWidget: (value, meta) {
-//                                 return Text(
-//                                   '${(value / 1000).toStringAsFixed(0)}k',
-//                                   style: TextStyle(
-//                                     color: Colors.grey[600],
-//                                     fontSize: 12,
-//                                   ),
-//                                   textAlign: TextAlign.right,
-//                                 );
-//                               },
-//                             ),
-//                           ),
-//                           bottomTitles: AxisTitles(
-//                             sideTitles: SideTitles(
-//                               showTitles: true,
-//                               getTitlesWidget: (value, meta) {
-//                                 const days = [
-//                                   'Mon',
-//                                   'Tue',
-//                                   'Wed',
-//                                   'Thu',
-//                                   'Fri',
-//                                   'Sat',
-//                                   'Sun'
-//                                 ];
-//                                 return Padding(
-//                                   padding: const EdgeInsets.only(top: 8),
-//                                   child: Text(
-//                                     days[value.toInt()],
-//                                     style: TextStyle(
-//                                       color: Colors.grey[600],
-//                                       fontSize: 13,
-//                                       fontWeight: FontWeight.w500,
-//                                     ),
-//                                   ),
-//                                 );
-//                               },
-//                             ),
-//                           ),
-//                         ),
-//                         gridData: FlGridData(
-//                           show: true,
-//                           drawHorizontalLine: true,
-//                           horizontalInterval: 1000,
-//                           getDrawingHorizontalLine: (value) {
-//                             return FlLine(
-//                               color: AppColors.grey,
-//                               strokeWidth: 1,
-//                             );
-//                           },
-//                           drawVerticalLine: false,
-//                         ),
-//                         borderData: FlBorderData(show: false),
-//                         barGroups: [
-//                           BarChartGroupData(
-//                             x: 0,
-//                             barRods: [
-//                               BarChartRodData(
-//                                 toY: 1800,
-//                                 color: Colors.grey[300],
-//                                 width: 40,
-//                                 borderRadius: const BorderRadius.vertical(
-//                                   top: Radius.circular(6),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                           BarChartGroupData(
-//                             x: 1,
-//                             barRods: [
-//                               BarChartRodData(
-//                                 toY: 1600,
-//                                 color: Colors.grey[300],
-//                                 width: 40,
-//                                 borderRadius: const BorderRadius.vertical(
-//                                   top: Radius.circular(6),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                           BarChartGroupData(
-//                             x: 2,
-//                             barRods: [
-//                               BarChartRodData(
-//                                 toY: 3500,
-//                                 color: Colors.blue,
-//                                 width: 40,
-//                                 borderRadius: const BorderRadius.vertical(
-//                                   top: Radius.circular(6),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                           BarChartGroupData(
-//                             x: 3,
-//                             barRods: [
-//                               BarChartRodData(
-//                                 toY: 1900,
-//                                 color: Colors.grey[300],
-//                                 width: 40,
-//                                 borderRadius: const BorderRadius.vertical(
-//                                   top: Radius.circular(6),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                           BarChartGroupData(
-//                             x: 4,
-//                             barRods: [
-//                               BarChartRodData(
-//                                 toY: 1700,
-//                                 color: Colors.grey[300],
-//                                 width: 40,
-//                                 borderRadius: const BorderRadius.vertical(
-//                                   top: Radius.circular(6),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                           BarChartGroupData(
-//                             x: 5,
-//                             barRods: [
-//                               BarChartRodData(
-//                                 toY: 1500,
-//                                 color: Colors.grey[300],
-//                                 width: 40,
-//                                 borderRadius: const BorderRadius.vertical(
-//                                   top: Radius.circular(6),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                           BarChartGroupData(
-//                             x: 6,
-//                             barRods: [
-//                               BarChartRodData(
-//                                 toY: 1400,
-//                                 color: Colors.grey[300],
-//                                 width: 40,
-//                                 borderRadius: const BorderRadius.vertical(
-//                                   top: Radius.circular(6),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//           const SizedBox(height: 24),
-//           // Tooltip/Legend
-//           Container(
-//             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-//             decoration: BoxDecoration(
-//               color: Colors.grey[100],
-//               borderRadius: BorderRadius.circular(8),
-//               border: Border.all(color: Colors.grey[300]!),
-//             ),
-//             child: Row(
-//               children: [
-//                 Container(
-//                   width: 12,
-//                   height: 12,
-//                   decoration: BoxDecoration(
-//                     color: Colors.grey[600],
-//                     shape: BoxShape.circle,
-//                   ),
-//                 ),
-//                 const SizedBox(width: 8),
-//                 const Text(
-//                   'Revenue: 3.5k',
-//                   style: TextStyle(
-//                     fontSize: 13,
-//                     color: Colors.black87,
-//                     fontWeight: FontWeight.w500,
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-class _KpiCard extends StatelessWidget {
-  final String title;
-  final String value;
-
-  const _KpiCard(this.title, this.value);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(value,
-              style:
-              const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 6),
-          Text(title),
-        ],
-      ),
-    );
-  }
-}
-
-class DashboardCard extends StatelessWidget {
+class DashboardItemCard extends StatelessWidget {
   final String title;
   final IconData icon;
   final Color color;
   final VoidCallback onTap;
 
-  const DashboardCard({
+  const DashboardItemCard({
     super.key,
     required this.title,
     required this.icon,
@@ -1263,5 +988,132 @@ final List<DashboardIcons> dashboardIcons = [
   DashboardIcons( Icons.analytics_outlined, Colors.red),
 ];
 
+// Modern MetricCard Widget - Matches _KpiCard design
+class MetricCard extends StatelessWidget {
+  final String title;
+  final String value;
+  final String percentageChange;
+  final bool isPositive;
+  final Color iconColor;
+  final IconData icon;
+
+  const MetricCard({
+    super.key,
+    required this.title,
+    required this.value,
+    required this.percentageChange,
+    required this.isPositive,
+    required this.iconColor,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Stack(
+        children: [
+          // Main content - Left side
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Value
+              Text(
+                value,
+                style: const TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                  letterSpacing: -0.5,
+                ),
+              ),
+              const SizedBox(height: 6),
+              // Title
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.grey[600],
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+          
+          // Percentage Badge - Top Right
+          Positioned(
+            top: 0,
+            right: 70,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: isPositive 
+                    ? const Color(0xFF10B981)
+                    : const Color(0xFFEF4444),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                percentageChange,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          
+          // Icon Circle - Right side
+          Positioned(
+            right: 0,
+            top: 0,
+            bottom: 0,
+            child: Center(
+              child: Container(
+                width: 56,
+                height: 56,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      iconColor.withOpacity(0.8),
+                      iconColor,
+                    ],
+                  ),
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: iconColor.withOpacity(0.3),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Icon(
+                  icon,
+                  color: Colors.white,
+                  size: 28,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 

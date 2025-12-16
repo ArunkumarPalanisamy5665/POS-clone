@@ -39,23 +39,32 @@ class _DropDownCardsState extends State<DropDownCards> {
       barrierDismissible: true,
       barrierColor: Colors.transparent,
       transitionDuration: const Duration(milliseconds: 220),
-      pageBuilder: (_, __, ___) {
-        return Stack(
-          children: [
-            Positioned(
-              left: offset.dx,
-              top: offset.dy + size.height + 6,
-              child: Material(
-                color: Colors.transparent,
-                child: _dropdownContent(),
+      pageBuilder: (context, _, __) {
+        return GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: Stack(
+            children: [
+              Positioned(
+                left: offset.dx,
+                top: offset.dy + size.height + 6,
+                child: GestureDetector(
+                  onTap: () {}, // Prevent taps from propagating to parent
+                  child: Material(
+                    color: Colors.transparent,
+                    child: _dropdownContent(),
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
       transitionBuilder: (_, animation, __, child) {
         final curved =
-        CurvedAnimation(parent: animation, curve: Curves.easeOutCubic);
+            CurvedAnimation(parent: animation, curve: Curves.easeOutCubic);
 
         return FadeTransition(
           opacity: curved,
