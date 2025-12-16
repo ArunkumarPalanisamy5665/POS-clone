@@ -11,6 +11,7 @@ import 'package:new_hrms_flutter/views/widgets/dashboard/dashboard_card.dart';
 import '../../widgets/dashboard/category_statistics.dart';
 
 import '../../../core/constants/app_colors.dart';
+import '../../widgets/dashboard/sales_performance_card.dart';
 import 'home_screen.dart';
 
 
@@ -461,7 +462,13 @@ class _HomeScreenState extends State<MainHome> {
                   title: 'Sales Performance',
                   actionText: 'View Report',
                   imagePath: 'assets/images/sales_performance.png',
-                  body: Center(child: Text('Sales Chart')),
+                  body: SalesPerformanceCard(
+                    percentage: 40,
+                    totalOrders: 6589,
+                    totalSales: 56589,
+                    ordersGrowth: 6,
+                    salesGrowth: 12,
+                  ),
                 ),
                 const DashboardCard(
                   title: 'Reservations',
