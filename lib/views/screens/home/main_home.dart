@@ -1,6 +1,5 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:new_hrms_flutter/core/constants/app_export.dart';
 import 'package:new_hrms_flutter/views/screens/home/widgets/dashBoardWidgets/graph_chart_widget.dart';
 import 'package:new_hrms_flutter/views/screens/home/widgets/linear_chart_box.dart';
 import 'package:new_hrms_flutter/views/widgets/common/drop_down_cards.dart';
@@ -8,11 +7,14 @@ import 'package:new_hrms_flutter/views/widgets/responsive/responsive.dart';
 
 import 'package:new_hrms_flutter/views/widgets/dashboard/active_order_list.dart';
 import 'package:new_hrms_flutter/views/widgets/dashboard/dashboard_card.dart';
+import '../../widgets/common/custom_checkbox.dart';
+import '../../widgets/common/custom_container.dart';
+import '../../widgets/common/custom_divider.dart';
+import '../../widgets/common/custom_icon_contain.dart';
 import '../../widgets/dashboard/category_statistics.dart';
 
 import '../../../core/constants/app_colors.dart';
 import 'home_screen.dart';
-
 
 class AppBreakpoints {
   static const mobile = 600.0;
@@ -21,7 +23,8 @@ class AppBreakpoints {
 
 String selectedMenu = 'Orders';
 String selectedPeriod = 'Weekly';
-
+String selectedTopSelling = 'All';
+bool isChecked = false;
 
 class MainHome extends StatefulWidget {
   const MainHome({super.key});
@@ -48,82 +51,72 @@ class _HomeScreenState extends State<MainHome> {
           drawer: isMobile ? Drawer(child: _buildSidebar()) : null,
 
           body: Row(
-              children: [
-
-                Container(
-                  width: 60,
-                  decoration: BoxDecoration(
-                    color: AppColors.greySide,
-                  ),
-                  height: MediaQuery.of(context).size.height,
-                  child: Stack(
-                    children: [
-                      Positioned.fill(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-
-                              const SizedBox(height: 20),
-                              ...List.generate(
-                                dashboardItems.length,
-                                    (index) {
-                                  final item = dashboardItems[index];
-                                  return ListTile(
-                                    leading: Icon(item.icon, size: 18),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      Positioned(
-                        bottom: 10,
-                        left: 0,
-                        right: 0,
-                        child: Center(child: _iconButton(Icons.notifications)),
-                      ),
-                    ],
-                  ),
-                ),
-
-                Expanded(
-                  child: Column(
-                    children: [
-
-                      Expanded(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 60,
+                decoration: BoxDecoration(color: AppColors.greySide),
+                height: MediaQuery.of(context).size.height,
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: SingleChildScrollView(
+                        child: Column(
                           children: [
-
-                            if (isDesktop || isTablet)
-                              SizedBox(width: 260, child: _buildSidebar()),
-
-                            Expanded(
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    _buildTopBar(isMobile),
-                                    _buildHeaderBar(isMobile),
-                                    _buildMainContent(width),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            const SizedBox(height: 20),
+                            ...List.generate(dashboardItems.length, (index) {
+                              final item = dashboardItems[index];
+                              return ListTile(
+                                leading: Icon(item.icon, size: 18),
+                              );
+                            }),
                           ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+
+                    Positioned(
+                      bottom: 10,
+                      left: 0,
+                      right: 0,
+                      child: Center(child: _iconButton(Icons.notifications)),
+                    ),
+                  ],
                 ),
-              ]
+              ),
+
+              Expanded(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (isDesktop || isTablet)
+                            SizedBox(width: 260, child: _buildSidebar()),
+
+                          Expanded(
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  _buildTopBar(isMobile),
+                                  _buildHeaderBar(isMobile),
+                                  _buildMainContent(width),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         );
       },
     );
   }
-
 
   Widget _buildTopBar(bool isMobile) {
     return Container(
@@ -161,14 +154,16 @@ class _HomeScreenState extends State<MainHome> {
         children: tabs
             .map(
               (e) => Padding(
-            padding:
-            const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            child: Text(
-              e,
-              style: const TextStyle(fontWeight: FontWeight.w500),
-            ),
-          ),
-        )
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
+                child: Text(
+                  e,
+                  style: const TextStyle(fontWeight: FontWeight.w500),
+                ),
+              ),
+            )
             .toList(),
       ),
     );
@@ -185,30 +180,26 @@ class _HomeScreenState extends State<MainHome> {
   }
 
   Widget _buildSidebar() {
-    final menu = [
-      'Dashboard',
-      'POS',
-      'Orders',
-      'Kitchen',
-      'Reservation'
-    ];
-
+    final menu = ['Dashboard', 'POS', 'Orders', 'Kitchen', 'Reservation'];
 
     return Container(
       height: double.infinity,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white,
-        border:  Border(
-          top: BorderSide(color: Colors.black.withAlpha(
-            (0.2 * 255).toInt(),
-          ), width: 0.60),
-          left: BorderSide(color: Colors.black.withAlpha(
-            (0.2 * 255).toInt(),
-          ), width: 0.60),
-          right: BorderSide(color: Colors.black.withAlpha(
-            (0.2 * 255).toInt(),
-          ), width: 0.60),
+        border: Border(
+          top: BorderSide(
+            color: Colors.black.withAlpha((0.2 * 255).toInt()),
+            width: 0.60,
+          ),
+          left: BorderSide(
+            color: Colors.black.withAlpha((0.2 * 255).toInt()),
+            width: 0.60,
+          ),
+          right: BorderSide(
+            color: Colors.black.withAlpha((0.2 * 255).toInt()),
+            width: 0.60,
+          ),
         ),
         borderRadius: BorderRadius.circular(3),
       ),
@@ -216,22 +207,19 @@ class _HomeScreenState extends State<MainHome> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             DropDownCards(
               value: selectedMenu,
-              items: const [
-                'New Order',
-                'Order List',
-                'Returns',
-                'Reports',
-              ],
+              items: const ['New Order', 'Order List', 'Returns', 'Reports'],
               onChanged: (value) {
                 setState(() {
                   selectedMenu = value;
                 });
               },
               childBuilder: (value) => Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 10,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(6),
@@ -252,17 +240,16 @@ class _HomeScreenState extends State<MainHome> {
 
             SizedBox(height: 20),
             ...menu.map(_menuItem),
-          ],),
+          ],
+        ),
       ),
     );
   }
-
 
   Widget _menuItem(String title) {
     return Padding(
       padding: const EdgeInsets.all(3.0),
       child: Container(
-
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -303,8 +290,11 @@ class _HomeScreenState extends State<MainHome> {
   }
 
   Widget _buildMainContent(double width) {
-    final crossAxisCount =
-    width < 600 ? 1 : width < 1024 ? 2 : 4;
+    final crossAxisCount = width < 600
+        ? 1
+        : width < 1024
+        ? 2
+        : 4;
 
     return Padding(
       padding: const EdgeInsets.all(20),
@@ -357,33 +347,31 @@ class _HomeScreenState extends State<MainHome> {
 
           /// CHARTS STACK
           RevenueCard(),
+
           // // _section('Total Revenue', height: 220),
           // const SizedBox(height: 20),
 
-
           // const SizedBox(height: 20),
-
-          if(!Responsive.isDesktop(context))...[
+          if (!Responsive.isDesktop(context)) ...[
             const GraphChartPage(),
-            const SizedBox(height: 15,),
+            const SizedBox(height: 15),
             TopSellingCard(),
-          ]else...[
-            const SizedBox(height: 15,),
+          ] else ...[
+            const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Expanded(child: GraphChartPage()),
-                const SizedBox(width: 15,),
-                Expanded(child: TopSellingCard()),
+                const Expanded(flex: 3, child: GraphChartPage()),
+                const SizedBox(width: 15),
+                Expanded(flex: 2, child: TopSellingCard()),
               ],
             ),
           ],
 
-
           Padding(
             padding: const EdgeInsets.only(top: 15),
             child: GridView.count(
-              crossAxisCount: Responsive.isDesktop(context) ? 2: 1,
+              crossAxisCount: Responsive.isDesktop(context) ? 2 : 1,
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
               childAspectRatio: 0.90,
@@ -398,24 +386,55 @@ class _HomeScreenState extends State<MainHome> {
                     children: [
                       InteractiveDonutChart(
                         data: [
-                          ChartData(percentage: 30, color: Colors.green, label: 'Category A'),
-                          ChartData(percentage: 20, color: Colors.orange, label: 'Category B'),
-                          ChartData(percentage: 20, color: Colors.blue, label: 'Category C'),
-                          ChartData(percentage: 35, color: Colors.purple, label: 'Category D'),
+                          ChartData(
+                            percentage: 30,
+                            color: Colors.green,
+                            label: 'Category A',
+                          ),
+                          ChartData(
+                            percentage: 20,
+                            color: Colors.orange,
+                            label: 'Category B',
+                          ),
+                          ChartData(
+                            percentage: 20,
+                            color: Colors.blue,
+                            label: 'Category C',
+                          ),
+                          ChartData(
+                            percentage: 35,
+                            color: Colors.purple,
+                            label: 'Category D',
+                          ),
                         ],
                         size: 185,
                         outerCircleWidth: 170,
                         outerCircleHeight: 170,
                         innerCircleWidth: 100,
-                        innerCircleHeight:88.44,
+                        innerCircleHeight: 88.44,
                         innerCircleTop: 10,
                         innerCircleLeft: 77.5,
                       ),
                       const CategoryStatsBody(
                         data: [
-                          CategoryItem('Take Away', 4898, Colors.blue, Icons.shopping_bag),
-                          CategoryItem('Reservation', 4587, Colors.orange, Icons.restaurant),
-                          CategoryItem('Delivery', 3565, Colors.green, Icons.delivery_dining),
+                          CategoryItem(
+                            'Take Away',
+                            4898,
+                            Colors.blue,
+                            Icons.shopping_bag,
+                          ),
+                          CategoryItem(
+                            'Reservation',
+                            4587,
+                            Colors.orange,
+                            Icons.restaurant,
+                          ),
+                          CategoryItem(
+                            'Delivery',
+                            3565,
+                            Colors.green,
+                            Icons.delivery_dining,
+                          ),
                         ],
                       ),
                     ],
@@ -425,37 +444,39 @@ class _HomeScreenState extends State<MainHome> {
                   title: 'Active Orders',
                   actionText: 'Add New',
                   imagePath: 'assets/images/shopping_cart.png',
-                  body: ActiveOrders(orders: [
-                    ActiveOrderList(
-                      name: "Maria Gonzalez",
-                      type: "Dine In",
-                      status: "In Kitchen",
-                      showTableNo: true,
-                      tableNo: "3",
-                    ),
-                    ActiveOrderList(
-                      name: "Andrew Fletcher",
-                      type: "Reservation",
-                      status: "Cancelled",
-                    ),
-                    ActiveOrderList(
-                      name: "Morgan Evans",
-                      type: "Take Away",
-                      status: "Served",
-                    ),
-                    ActiveOrderList(
-                      name: "Walk in Customer",
-                      type: "Dine In",
-                      status: "In Kitchen",
-                      showTableNo: true,
-                      tableNo: "5",
-                    ),
-                    ActiveOrderList(
-                      name: "Walk in Customer",
-                      type: "Reservation",
-                      status: "Cancelled",
-                    ),
-                  ]),
+                  body: ActiveOrders(
+                    orders: [
+                      ActiveOrderList(
+                        name: "Maria Gonzalez",
+                        type: "Dine In",
+                        status: "In Kitchen",
+                        showTableNo: true,
+                        tableNo: "3",
+                      ),
+                      ActiveOrderList(
+                        name: "Andrew Fletcher",
+                        type: "Reservation",
+                        status: "Cancelled",
+                      ),
+                      ActiveOrderList(
+                        name: "Morgan Evans",
+                        type: "Take Away",
+                        status: "Served",
+                      ),
+                      ActiveOrderList(
+                        name: "Walk in Customer",
+                        type: "Dine In",
+                        status: "In Kitchen",
+                        showTableNo: true,
+                        tableNo: "5",
+                      ),
+                      ActiveOrderList(
+                        name: "Walk in Customer",
+                        type: "Reservation",
+                        status: "Cancelled",
+                      ),
+                    ],
+                  ),
                 ),
                 const DashboardCard(
                   title: 'Sales Performance',
@@ -469,7 +490,6 @@ class _HomeScreenState extends State<MainHome> {
                   imagePath: 'assets/images/reservation.png',
                   body: Center(child: Text('Active Orders List')),
                   showDropdown: true,
-
                 ),
                 const DashboardCard(
                   title: 'Tables Available',
@@ -483,13 +503,9 @@ class _HomeScreenState extends State<MainHome> {
                   imagePath: 'assets/images/notifications.png',
                   body: Center(child: Text('Active Orders List')),
                 ),
-
               ],
             ),
           ),
-
-
-
 
           // _section('Top Selling Items', height: 200),
         ],
@@ -549,7 +565,8 @@ class _HomeScreenState extends State<MainHome> {
       ),
       child: Icon(icon, size: 18),
     );
-  }}
+  }
+}
 
 class RevenueCard extends StatelessWidget {
   @override
@@ -582,17 +599,17 @@ class RevenueCard extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.grey[100],
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: const Text(
                   'Weekly',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.black54,
-                  ),
+                  style: TextStyle(fontSize: 12, color: Colors.black54),
                 ),
               ),
             ],
@@ -615,10 +632,7 @@ class RevenueCard extends StatelessWidget {
                 children: [
                   Text(
                     'Total Revenue',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
-                    ),
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                   Text(
                     '\$3989',
@@ -647,14 +661,22 @@ class RevenueCard extends StatelessWidget {
   }
 }
 
-class TopSellingCard extends StatelessWidget {
+class TopSellingCard extends StatefulWidget {
+  const TopSellingCard({super.key});
+
+  @override
+  State<TopSellingCard> createState() => _TopSellingCardState();
+}
+
+class _TopSellingCardState extends State<TopSellingCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 400,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(5),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
@@ -666,113 +688,203 @@ class TopSellingCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(width: 40,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Top Selling Item',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomIconContainer(
+                    width: 20,
+                    height: 20,
+                    iconSize: 12,
+                    borderRadius: 4,
+                    svgAsset: AppAssets.foodIcon,
+                    onTap: () {},
+                    borderColor: Colors.black.withAlpha((0.2 * 255).toInt()),
+                    backgroundColor: Colors.white,
+                  ),
+                  SizedBox(width: 8),
+
+                  Text(
+                    'Top Selling Item',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ],
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: const Text(
-                  'All',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.black54,
+
+              DropDownCards(
+                value: selectedTopSelling,
+                items: const ['Sea food', 'Pizza', 'Salads'],
+                onChanged: (value) {
+                  setState(() {
+                    selectedTopSelling = value;
+                  });
+                },
+                childBuilder: (value) => Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 5,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(color: Colors.grey.shade300),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        value,
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
+                              fontSize: 12,
+                              color: Colors.black54,
+                              fontWeight: FontWeight.w400,
+                            ),
+                      ),
+                      const SizedBox(width: 6),
+                      const Icon(Icons.keyboard_arrow_down, size: 18),
+                    ],
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 20),
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.grey[50],
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    image: const DecorationImage(
-                      image: AssetImage(
-                        'assets/pizza.png',
-                      ),
-                      fit: BoxFit.cover,
+          CustomDivider(
+            thickness: 0.76,
+            verticalPadding: 10,
+            color: Colors.black.withAlpha((0.2 * 255).toInt()),
+          ),
+
+          CustomContainer(
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height * 0.065,
+            borderRadius: BorderRadius.circular(5),
+            alignment: Alignment.center,
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(color: AppColors.lightGg),
+            onTap: () {
+              print("Tapped");
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '\u{1F525}',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.orange.withOpacity(0.1),
-                    ),
-                    child: const Icon(
-                      Icons.local_pizza,
-                      color: Colors.orange,
-                      size: 30,
+                  Expanded(
+                    child: Text(
+                      'Most Ordered : Veggie Supreme Pizza',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.green,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Most Ordered : Veggie Supreme Pizza',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.green,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      const Text(
-                        'Veggie Supreme Pizza',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black87,
-                        ),
-                      ),
-                      Text(
-                        'No of Orders : 520',
-                        style: TextStyle(
-                          fontSize: 11,
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-          const SizedBox(height: 16),
+
+          const SizedBox(height: 20),
+
+          CustomContainer(
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height * 0.1,
+            borderRadius: BorderRadius.circular(5),
+            alignment: Alignment.center,
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(
+                color: Colors.black.withAlpha((0.2 * 255).toInt()),
+                width: 0.65,
+              ),
+            ),
+            onTap: () {
+              print("Tapped");
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      image: const DecorationImage(
+                        image: AssetImage('assets/pizza.png'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.orange.withOpacity(0.1),
+                      ),
+                      child: const Icon(
+                        Icons.local_pizza,
+                        color: Colors.orange,
+                        size: 30,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Veggie Supreme Pizza',
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        Text(
+                          'No of Orders : 520',
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          Spacer(),
           ListView.builder(
             itemCount: menuList.length,
             shrinkWrap: true,
-            physics:const BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               final item = menuList[index];
 
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 child: MenuItem(
-                  number: (index + 1).toString().padLeft(2, '0'),
+                  number: (index + 2).toString().padLeft(2, '0'),
                   name: item.name,
                   orders: item.orders,
                   color: item.color,
@@ -786,8 +898,6 @@ class TopSellingCard extends StatelessWidget {
   }
 }
 
-
-
 class GraphChartPage extends StatefulWidget {
   const GraphChartPage({super.key});
 
@@ -796,15 +906,13 @@ class GraphChartPage extends StatefulWidget {
 }
 
 class _GraphChartPageState extends State<GraphChartPage> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: 300,
       padding: const EdgeInsets.only(top: 30, left: 14, right: 14),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(5),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
@@ -816,35 +924,33 @@ class _GraphChartPageState extends State<GraphChartPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           Padding(
             padding: const EdgeInsets.only(left: 10, right: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   'Total Revenue',
-                  style: TextStyle(
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
+                    color: Colors.black87,
                   ),
                 ),
 
-
                 DropDownCards(
                   value: selectedPeriod,
-                  items: const [
-                    'Weekly',
-                    'Monthly',
-                    'yearly',
-                  ],
+                  items: const ['Weekly', 'Monthly', 'yearly'],
                   onChanged: (value) {
                     setState(() {
                       selectedPeriod = value;
                     });
                   },
                   childBuilder: (value) => Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(6),
@@ -853,8 +959,6 @@ class _GraphChartPageState extends State<GraphChartPage> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.shopping_cart, size: 18),
-                        const SizedBox(width: 8),
                         Text(value, style: const TextStyle(fontSize: 12)),
                         const SizedBox(width: 6),
                         const Icon(Icons.keyboard_arrow_down, size: 18),
@@ -862,11 +966,78 @@ class _GraphChartPageState extends State<GraphChartPage> {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
 
+          CustomDivider(
+            thickness: 0.76,
+            verticalPadding: 4,
+            color: Colors.black.withAlpha((0.2 * 255).toInt()),
+          ),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Icon(
+                      Icons.arrow_upward_outlined,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Total Revenue',
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
+                              fontSize: 14,
+                              color: Colors.black54,
+                              fontWeight: FontWeight.w400,
+                            ),
+                      ),
+                      const Text(
+                        '\$3989',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
+              CustomCheckbox(
+                value: isChecked,
+                width: 18,
+                height: 18,
+                label: 'Revenue',
+                labelStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontSize: 14,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.w400,
+                ),
+                isCircular: false,
+                borderRadius: 4,
+                borderColor: AppColors.primaryColor,
+                onChanged: (val) {
+                  setState(() => isChecked = val);
+                },
+              ),
+            ],
+          ),
           const SizedBox(height: 14),
 
           Container(
@@ -888,7 +1059,6 @@ class _GraphChartPageState extends State<GraphChartPage> {
     );
   }
 }
-
 
 class DashboardItemCard extends StatelessWidget {
   final String title;
@@ -927,11 +1097,7 @@ class DashboardItemCard extends StatelessWidget {
             CircleAvatar(
               backgroundColor: color.withOpacity(0.15),
               radius: 32,
-              child: Icon(
-                icon,
-                size: 30,
-                color: color,
-              ),
+              child: Icon(icon, size: 30, color: color),
             ),
 
             const SizedBox(height: 12),
@@ -963,7 +1129,7 @@ class DashboardIcons {
   final IconData icon;
   final Color color;
 
-  DashboardIcons( this.icon, this.color);
+  DashboardIcons(this.icon, this.color);
 }
 
 final List<DashboardItem> dashboardItems = [
@@ -980,12 +1146,12 @@ final List<DashboardItem> dashboardItems = [
 final List<DashboardIcons> dashboardIcons = [
   DashboardIcons(Icons.people_alt_rounded, Colors.blue),
   DashboardIcons(Icons.access_time_filled, Colors.green),
-  DashboardIcons( Icons.calendar_month, Colors.orange),
+  DashboardIcons(Icons.calendar_month, Colors.orange),
   DashboardIcons(Icons.payments, Colors.pink),
-  DashboardIcons( Icons.business_center, Colors.purple),
-  DashboardIcons( Icons.task, Colors.indigo),
-  DashboardIcons( Icons.settings, Colors.grey),
-  DashboardIcons( Icons.analytics_outlined, Colors.red),
+  DashboardIcons(Icons.business_center, Colors.purple),
+  DashboardIcons(Icons.task, Colors.indigo),
+  DashboardIcons(Icons.settings, Colors.grey),
+  DashboardIcons(Icons.analytics_outlined, Colors.red),
 ];
 
 // Modern MetricCard Widget - Matches _KpiCard design
@@ -1051,7 +1217,7 @@ class MetricCard extends StatelessWidget {
               ),
             ],
           ),
-          
+
           // Percentage Badge - Top Right
           Positioned(
             top: 0,
@@ -1059,7 +1225,7 @@ class MetricCard extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: isPositive 
+                color: isPositive
                     ? const Color(0xFF10B981)
                     : const Color(0xFFEF4444),
                 borderRadius: BorderRadius.circular(12),
@@ -1074,8 +1240,7 @@ class MetricCard extends StatelessWidget {
               ),
             ),
           ),
-          
-          // Icon Circle - Right side
+
           Positioned(
             right: 0,
             top: 0,
@@ -1088,10 +1253,7 @@ class MetricCard extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: [
-                      iconColor.withOpacity(0.8),
-                      iconColor,
-                    ],
+                    colors: [iconColor.withOpacity(0.8), iconColor],
                   ),
                   shape: BoxShape.circle,
                   boxShadow: [
@@ -1102,11 +1264,7 @@ class MetricCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: Icon(
-                  icon,
-                  color: Colors.white,
-                  size: 28,
-                ),
+                child: Icon(icon, color: Colors.white, size: 28),
               ),
             ),
           ),
@@ -1115,5 +1273,3 @@ class MetricCard extends StatelessWidget {
     );
   }
 }
-
-
