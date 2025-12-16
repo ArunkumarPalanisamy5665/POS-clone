@@ -354,23 +354,24 @@ class _HomeScreenState extends State<MainHome> {
 
           // const SizedBox(height: 20),
           if (!Responsive.isDesktop(context)) ...[
+            const SizedBox(height: 24),
             const GraphChartPage(),
-            const SizedBox(height: 15),
+            const SizedBox(height: 24),
             TopSellingCard(),
           ] else ...[
-            const SizedBox(height: 15),
+            const SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Expanded(flex: 3, child: GraphChartPage()),
-                const SizedBox(width: 15),
+                const SizedBox(width: 24),
                 Expanded(flex: 2, child: TopSellingCard()),
               ],
             ),
           ],
 
           Padding(
-            padding: const EdgeInsets.only(top: 15),
+            padding: const EdgeInsets.only(top: 24),
             child: GridView.count(
               crossAxisCount: Responsive.isDesktop(context) ? 2 : 1,
               crossAxisSpacing: 16,
@@ -578,7 +579,96 @@ class _HomeScreenState extends State<MainHome> {
 class RevenueCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return CustomContainer(
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height * 0.7,
+        padding: EdgeInsets.only(top: 30, left: 14, right: 14),
+        borderRadius: BorderRadius.circular(5),
+        alignment: Alignment.center,
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+            color: AppColors.white,
+            border: Border.all(color: Colors.black.withAlpha((0.2 * 255).toInt()), width: 0.50)
+        ),
+        onTap: () {
+          print("Tapped");
+        },
+        child:Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Total Revenue',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[100],
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: const Text(
+                    'Weekly',
+                    style: TextStyle(fontSize: 12, color: Colors.black54),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Icon(Icons.trending_up, color: Colors.white),
+                ),
+                const SizedBox(width: 12),
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Total Revenue',
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                    Text(
+                      '\$3989',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Spacer(),
+            SizedBox(
+              height: 180,
+              child: LinearChartBox(
+                data: weeklyData,
+                lineColor: Colors.blue,
+                height: 260,
+              ),
+            ),
+            const SizedBox(height: 20),
+          ],
+        ));
+
+      Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -678,230 +768,229 @@ class TopSellingCard extends StatefulWidget {
 class _TopSellingCardState extends State<TopSellingCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 400,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
+    return CustomContainer(
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height * 0.7,
+        padding: EdgeInsets.only(top: 30, left: 14, right: 14),
         borderRadius: BorderRadius.circular(5),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(width: 40,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CustomIconContainer(
-                    width: 20,
-                    height: 20,
-                    iconSize: 12,
-                    borderRadius: 4,
-                    svgAsset: AppAssets.foodIcon,
-                    onTap: () {},
-                    borderColor: Colors.black.withAlpha((0.2 * 255).toInt()),
-                    backgroundColor: Colors.white,
-                  ),
-                  SizedBox(width: 8),
-
-                  Text(
-                    'Top Selling Item',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+        alignment: Alignment.center,
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          border: Border.all(color: Colors.black.withAlpha((0.2 * 255).toInt()), width: 0.50)
+        ),
+        onTap: () {
+          print("Tapped");
+        },
+        child:Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CustomIconContainer(
+                      width: 20,
+                      height: 20,
+                      iconSize: 12,
+                      borderRadius: 4,
+                      svgAsset: AppAssets.foodIcon,
+                      onTap: () {},
+                      borderColor: Colors.black.withAlpha((0.2 * 255).toInt()),
+                      backgroundColor: Colors.white,
                     ),
-                  ),
-                ],
-              ),
+                    SizedBox(width: 8),
 
-              DropDownCards(
-                value: selectedTopSelling,
-                items: const ['Sea food', 'Pizza', 'Salads'],
-                onChanged: (value) {
-                  setState(() {
-                    selectedTopSelling = value;
-                  });
-                },
-                childBuilder: (value) => Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 5,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(6),
-                    border: Border.all(color: Colors.grey.shade300),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        value,
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(
-                              fontSize: 12,
-                              color: Colors.black54,
-                              fontWeight: FontWeight.w400,
-                            ),
-                      ),
-                      const SizedBox(width: 6),
-                      const Icon(Icons.keyboard_arrow_down, size: 18),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-          CustomDivider(
-            thickness: 0.76,
-            verticalPadding: 10,
-            color: Colors.black.withAlpha((0.2 * 255).toInt()),
-          ),
-
-          CustomContainer(
-            width: double.infinity,
-            height: MediaQuery.of(context).size.height * 0.065,
-            borderRadius: BorderRadius.circular(5),
-            alignment: Alignment.center,
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(color: AppColors.lightGg),
-            onTap: () {
-              print("Tapped");
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '\u{1F525}',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Most Ordered : Veggie Supreme Pizza',
+                    Text(
+                      'Top Selling Item',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.green,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+                  ],
+                ),
 
-          const SizedBox(height: 20),
-
-          CustomContainer(
-            width: double.infinity,
-            height: MediaQuery.of(context).size.height * 0.1,
-            borderRadius: BorderRadius.circular(5),
-            alignment: Alignment.center,
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(
-                color: Colors.black.withAlpha((0.2 * 255).toInt()),
-                width: 0.65,
-              ),
-            ),
-            onTap: () {
-              print("Tapped");
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 40,
-                    height: 40,
+                DropDownCards(
+                  value: selectedTopSelling,
+                  items: const ['Sea food', 'Pizza', 'Salads'],
+                  onChanged: (value) {
+                    setState(() {
+                      selectedTopSelling = value;
+                    });
+                  },
+                  childBuilder: (value) => Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
+                    ),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      image: const DecorationImage(
-                        image: AssetImage('assets/pizza.png'),
-                        fit: BoxFit.cover,
-                      ),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(color: Colors.grey.shade300),
                     ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.orange.withOpacity(0.1),
-                      ),
-                      child: const Icon(
-                        Icons.local_pizza,
-                        color: Colors.orange,
-                        size: 30,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Text(
-                          'Veggie Supreme Pizza',
-                          style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black87,
-                          ),
-                        ),
                         Text(
-                          'No of Orders : 520',
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: Colors.grey[600],
+                          value,
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(
+                            fontSize: 12,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
+                        const SizedBox(width: 6),
+                        const Icon(Icons.keyboard_arrow_down, size: 18),
                       ],
                     ),
                   ),
-                ],
+                ),
+              ],
+            ),
+            CustomDivider(
+              thickness: 0.76,
+              verticalPadding: 15,
+              color: Colors.black.withAlpha((0.2 * 255).toInt()),
+            ),
+
+            CustomContainer(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height * 0.065,
+              borderRadius: BorderRadius.circular(5),
+              alignment: Alignment.center,
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(color: AppColors.lightGg,),
+              onTap: () {
+                print("Tapped");
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '\u{1F525}  ',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        'Most Ordered : Veggie Supreme Pizza',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.green,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
 
-          Spacer(),
-          ListView.builder(
-            itemCount: menuList.length,
-            shrinkWrap: true,
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) {
-              final item = menuList[index];
+            const SizedBox(height: 20),
 
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: MenuItem(
-                  number: (index + 2).toString().padLeft(2, '0'),
-                  name: item.name,
-                  orders: item.orders,
-                  color: item.color,
+            CustomContainer(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height * 0.1,
+              borderRadius: BorderRadius.circular(5),
+              alignment: Alignment.center,
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(
+                  color: Colors.black.withAlpha((0.2 * 255).toInt()),
+                  width: 0.65,
                 ),
-              );
-            },
-          ),
-        ],
-      ),
-    );
+              ),
+              onTap: () {
+                print("Tapped");
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        image: const DecorationImage(
+                          image: AssetImage('assets/pizza.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.orange.withOpacity(0.1),
+                        ),
+                        child: const Icon(
+                          Icons.local_pizza,
+                          color: Colors.orange,
+                          size: 30,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Veggie Supreme Pizza',
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          Text(
+                            'No of Orders : 520',
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            Spacer(),
+            ListView.builder(
+              itemCount: menuList.length,
+              shrinkWrap: true,
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (context, index) {
+                final item = menuList[index];
+
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: MenuItem(
+                    number: (index + 2).toString().padLeft(2, '0'),
+                    name: item.name,
+                    orders: item.orders,
+                    color: item.color,
+                  ),
+                );
+              },
+            ),
+          ],
+        ));
   }
 }
 
@@ -915,19 +1004,20 @@ class GraphChartPage extends StatefulWidget {
 class _GraphChartPageState extends State<GraphChartPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(top: 30, left: 14, right: 14),
+    return CustomContainer(
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height * 0.7,
+      padding: EdgeInsets.only(top: 30, left: 14, right: 14),
+      borderRadius: BorderRadius.circular(5),
+      alignment: Alignment.center,
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(5),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        color: AppColors.white,
+        border: Border.all(color: Colors.black.withAlpha((0.2 * 255).toInt()), width: 0.50)
       ),
+      onTap: () {
+        print("Tapped");
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -936,13 +1026,30 @@ class _GraphChartPageState extends State<GraphChartPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Total Revenue',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomIconContainer(
+                      width: 20,
+                      height: 20,
+                      iconSize: 12,
+                      borderRadius: 4,
+                      svgAsset: AppAssets.dollarIcon,
+                      onTap: () {},
+                      borderColor: Colors.black.withAlpha((0.2 * 255).toInt()),
+                      backgroundColor: Colors.white,
+                    ),
+                    SizedBox(width: 8),
+
+                    Text(
+                      'Total Revenue',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ],
                 ),
 
                 DropDownCards(
@@ -979,7 +1086,7 @@ class _GraphChartPageState extends State<GraphChartPage> {
 
           CustomDivider(
             thickness: 0.76,
-            verticalPadding: 4,
+            verticalPadding: 5,
             color: Colors.black.withAlpha((0.2 * 255).toInt()),
           ),
 
@@ -1008,7 +1115,7 @@ class _GraphChartPageState extends State<GraphChartPage> {
                         'Total Revenue',
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
-                              fontSize: 14,
+                              fontSize: 12,
                               color: Colors.black54,
                               fontWeight: FontWeight.w400,
                             ),
@@ -1054,7 +1161,7 @@ class _GraphChartPageState extends State<GraphChartPage> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: SizedBox(
-              height: 200,
+              height: MediaQuery.of(context).size.height * 0.330,
               child: GraphChartWidget(
                 data: graphWeeklyData,
                 // highlightIndex: 2, // Wed highlighted
@@ -1064,6 +1171,173 @@ class _GraphChartPageState extends State<GraphChartPage> {
         ],
       ),
     );
+
+    //   Container(
+    //   padding: const EdgeInsets.only(top: 30, left: 14, right: 14),
+    //   decoration: BoxDecoration(
+    //     color: Colors.white,
+    //     borderRadius: BorderRadius.circular(5),
+    //     boxShadow: [
+    //       BoxShadow(
+    //         color: Colors.black.withOpacity(0.05),
+    //         blurRadius: 8,
+    //         offset: const Offset(0, 2),
+    //       ),
+    //     ],
+    //   ),
+    //   child: Column(
+    //     crossAxisAlignment: CrossAxisAlignment.start,
+    //     children: [
+    //       Padding(
+    //         padding: const EdgeInsets.only(left: 10, right: 10),
+    //         child: Row(
+    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //           children: [
+    //             Row(
+    //               mainAxisAlignment: MainAxisAlignment.center,
+    //               children: [
+    //                 CustomIconContainer(
+    //                   width: 20,
+    //                   height: 20,
+    //                   iconSize: 12,
+    //                   borderRadius: 4,
+    //                   svgAsset: AppAssets.dollarIcon,
+    //                   onTap: () {},
+    //                   borderColor: Colors.black.withAlpha((0.2 * 255).toInt()),
+    //                   backgroundColor: Colors.white,
+    //                 ),
+    //                 SizedBox(width: 8),
+    //
+    //                 Text(
+    //                   'Total Revenue',
+    //                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
+    //                     fontSize: 24,
+    //                     fontWeight: FontWeight.bold,
+    //                     color: Colors.black87,
+    //                   ),
+    //                 ),
+    //               ],
+    //             ),
+    //
+    //             DropDownCards(
+    //               value: selectedPeriod,
+    //               items: const ['Weekly', 'Monthly', 'yearly'],
+    //               onChanged: (value) {
+    //                 setState(() {
+    //                   selectedPeriod = value;
+    //                 });
+    //               },
+    //               childBuilder: (value) => Container(
+    //                 padding: const EdgeInsets.symmetric(
+    //                   horizontal: 10,
+    //                   vertical: 5,
+    //                 ),
+    //                 decoration: BoxDecoration(
+    //                   color: Colors.white,
+    //                   borderRadius: BorderRadius.circular(6),
+    //                   border: Border.all(color: Colors.grey.shade300),
+    //                 ),
+    //                 child: Row(
+    //                   mainAxisSize: MainAxisSize.min,
+    //                   children: [
+    //                     Text(value, style: const TextStyle(fontSize: 12)),
+    //                     const SizedBox(width: 6),
+    //                     const Icon(Icons.keyboard_arrow_down, size: 18),
+    //                   ],
+    //                 ),
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //       ),
+    //
+    //       CustomDivider(
+    //         thickness: 0.76,
+    //         verticalPadding: 5,
+    //         color: Colors.black.withAlpha((0.2 * 255).toInt()),
+    //       ),
+    //
+    //       Row(
+    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //         children: [
+    //           Row(
+    //             children: [
+    //               Container(
+    //                 width: 40,
+    //                 height: 40,
+    //                 decoration: BoxDecoration(
+    //                   color: AppColors.primaryColor,
+    //                   borderRadius: BorderRadius.circular(8),
+    //                 ),
+    //                 child: const Icon(
+    //                   Icons.arrow_upward_outlined,
+    //                   color: Colors.white,
+    //                 ),
+    //               ),
+    //               const SizedBox(width: 12),
+    //               Column(
+    //                 crossAxisAlignment: CrossAxisAlignment.start,
+    //                 children: [
+    //                   Text(
+    //                     'Total Revenue',
+    //                     style: Theme.of(context).textTheme.titleMedium
+    //                         ?.copyWith(
+    //                           fontSize: 12,
+    //                           color: Colors.black54,
+    //                           fontWeight: FontWeight.w400,
+    //                         ),
+    //                   ),
+    //                   const Text(
+    //                     '\$3989',
+    //                     style: TextStyle(
+    //                       fontSize: 20,
+    //                       fontWeight: FontWeight.bold,
+    //                       color: Colors.black87,
+    //                     ),
+    //                   ),
+    //                 ],
+    //               ),
+    //             ],
+    //           ),
+    //
+    //           CustomCheckbox(
+    //             value: isChecked,
+    //             width: 18,
+    //             height: 18,
+    //             label: 'Revenue',
+    //             labelStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
+    //               fontSize: 14,
+    //               color: Colors.black54,
+    //               fontWeight: FontWeight.w400,
+    //             ),
+    //             isCircular: false,
+    //             borderRadius: 4,
+    //             borderColor: AppColors.primaryColor,
+    //             onChanged: (val) {
+    //               setState(() => isChecked = val);
+    //             },
+    //           ),
+    //         ],
+    //       ),
+    //       const SizedBox(height: 14),
+    //
+    //       Container(
+    //         padding: const EdgeInsets.all(24),
+    //         decoration: BoxDecoration(
+    //           color: Colors.white,
+    //           borderRadius: BorderRadius.circular(12),
+    //         ),
+    //         child: SizedBox(
+    //           height: 200,
+    //           child: GraphChartWidget(
+    //             data: graphWeeklyData,
+    //             // highlightIndex: 2, // Wed highlighted
+    //           ),
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 }
 
