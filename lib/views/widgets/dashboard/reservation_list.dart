@@ -126,11 +126,16 @@ class ReservationCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color(0XFFFFA80B),
-            Color(0XFF0D76E1),
-            Color(0XFF000000),
-            Color(0XFF000000),
-            Color(0XFF000000),
+            Color(0xFF3A5F7D), // soft blue (top-left glow)
+            Color(0xFFB07A1A), // warm orange (top-center glow)
+            Color(0xFF0B0D0E), // dark fade
+            Color(0xFF0B0D0E), // deep black base
+          ],
+          stops: [
+            0.0,
+            0.25,
+            0.55,
+            1.0,
           ],
         ),
         borderRadius: BorderRadius.circular(5),

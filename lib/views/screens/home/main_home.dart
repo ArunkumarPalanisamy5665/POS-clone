@@ -4,6 +4,7 @@ import 'package:new_hrms_flutter/views/screens/home/widgets/dashBoardWidgets/gra
 import 'package:new_hrms_flutter/views/screens/home/widgets/dashBoardWidgets/trending_menu.dart';
 import 'package:new_hrms_flutter/views/screens/home/widgets/linear_chart_box.dart';
 import 'package:new_hrms_flutter/views/widgets/common/drop_down_cards.dart';
+import 'package:new_hrms_flutter/views/widgets/dashboard/notification_list.dart';
 import 'package:new_hrms_flutter/views/widgets/dashboard/reservation_list.dart';
 import 'package:new_hrms_flutter/views/widgets/responsive/responsive.dart';
 
@@ -552,7 +553,8 @@ class _HomeScreenState extends State<MainHome> {
                   title: 'Notifications',
                   actionText: 'View All',
                   imagePath: 'assets/images/notifications.png',
-                  body: Center(child: Text('Active Orders List')),
+                  body:NotificationsList(),
+
                 ),
               ],
             ),
