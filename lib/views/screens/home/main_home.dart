@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_hrms_flutter/core/constants/app_export.dart';
 import 'package:new_hrms_flutter/views/screens/home/widgets/dashBoardWidgets/graph_chart_widget.dart';
+import 'package:new_hrms_flutter/views/screens/home/widgets/dashBoardWidgets/trending_menu.dart';
 import 'package:new_hrms_flutter/views/screens/home/widgets/linear_chart_box.dart';
 import 'package:new_hrms_flutter/views/widgets/common/drop_down_cards.dart';
 import 'package:new_hrms_flutter/views/widgets/dashboard/reservation_list.dart';
@@ -347,18 +348,15 @@ class _HomeScreenState extends State<MainHome> {
 
           const SizedBox(height: 24),
 
-          /// CHARTS STACK
           RevenueCard(),
 
-          // // _section('Total Revenue', height: 220),
-          // const SizedBox(height: 20),
-
-          // const SizedBox(height: 20),
           if (!Responsive.isDesktop(context)) ...[
             const SizedBox(height: 24),
             const GraphChartPage(),
             const SizedBox(height: 24),
             TopSellingCard(),
+            const SizedBox(height: 24),
+            TrendingMenu(),
           ] else ...[
             const SizedBox(height: 24),
             Row(
@@ -369,6 +367,9 @@ class _HomeScreenState extends State<MainHome> {
                 Expanded(flex: 2, child: TopSellingCard()),
               ],
             ),
+            const SizedBox(height: 24),
+            TrendingMenu(),
+
           ],
 
           Padding(
@@ -557,38 +558,10 @@ class _HomeScreenState extends State<MainHome> {
             ),
           ),
 
-          // _section('Top Selling Items', height: 200),
         ],
       ),
     );
   }
-
-  // Widget _section(String title, {double height = 180}) {
-  //   return Container(
-  //     padding: const EdgeInsets.all(16),
-  //     decoration: BoxDecoration(
-  //       color: Colors.white,
-  //       borderRadius: BorderRadius.circular(6),
-  //     ),
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         Text(title,
-  //             style:
-  //             const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-  //         const SizedBox(height: 16),
-  //         Container(
-  //           height: height,
-  //           color: const Color(0xFFF1F5F9),
-  //           alignment: Alignment.center,
-  //           child: const Text('Placeholder'),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-  //
-  //
 
   Widget _button(String text, {bool primary = false}) {
     return Container(
@@ -710,95 +683,9 @@ class RevenueCard extends StatelessWidget {
           ],
         ));
 
-      Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Total Revenue',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: const Text(
-                  'Weekly',
-                  style: TextStyle(fontSize: 12, color: Colors.black54),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Icon(Icons.trending_up, color: Colors.white),
-              ),
-              const SizedBox(width: 12),
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Total Revenue',
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
-                  ),
-                  Text(
-                    '\$3989',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(height: 24),
-          SizedBox(
-            height: 180,
-            child: LinearChartBox(
-              data: weeklyData,
-              lineColor: Colors.blue,
-              height: 260,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
+
 
 class TopSellingCard extends StatefulWidget {
   const TopSellingCard({super.key});
@@ -1206,7 +1093,7 @@ class _GraphChartPageState extends State<GraphChartPage> {
               height: MediaQuery.of(context).size.height * 0.330,
               child: GraphChartWidget(
                 data: graphWeeklyData,
-                // highlightIndex: 2, // Wed highlighted
+                // highlightIndex: 2, // day highlighted
               ),
             ),
           ),
@@ -1214,172 +1101,6 @@ class _GraphChartPageState extends State<GraphChartPage> {
       ),
     );
 
-    //   Container(
-    //   padding: const EdgeInsets.only(top: 30, left: 14, right: 14),
-    //   decoration: BoxDecoration(
-    //     color: Colors.white,
-    //     borderRadius: BorderRadius.circular(5),
-    //     boxShadow: [
-    //       BoxShadow(
-    //         color: Colors.black.withOpacity(0.05),
-    //         blurRadius: 8,
-    //         offset: const Offset(0, 2),
-    //       ),
-    //     ],
-    //   ),
-    //   child: Column(
-    //     crossAxisAlignment: CrossAxisAlignment.start,
-    //     children: [
-    //       Padding(
-    //         padding: const EdgeInsets.only(left: 10, right: 10),
-    //         child: Row(
-    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //           children: [
-    //             Row(
-    //               mainAxisAlignment: MainAxisAlignment.center,
-    //               children: [
-    //                 CustomIconContainer(
-    //                   width: 20,
-    //                   height: 20,
-    //                   iconSize: 12,
-    //                   borderRadius: 4,
-    //                   svgAsset: AppAssets.dollarIcon,
-    //                   onTap: () {},
-    //                   borderColor: Colors.black.withAlpha((0.2 * 255).toInt()),
-    //                   backgroundColor: Colors.white,
-    //                 ),
-    //                 SizedBox(width: 8),
-    //
-    //                 Text(
-    //                   'Total Revenue',
-    //                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-    //                     fontSize: 24,
-    //                     fontWeight: FontWeight.bold,
-    //                     color: Colors.black87,
-    //                   ),
-    //                 ),
-    //               ],
-    //             ),
-    //
-    //             DropDownCards(
-    //               value: selectedPeriod,
-    //               items: const ['Weekly', 'Monthly', 'yearly'],
-    //               onChanged: (value) {
-    //                 setState(() {
-    //                   selectedPeriod = value;
-    //                 });
-    //               },
-    //               childBuilder: (value) => Container(
-    //                 padding: const EdgeInsets.symmetric(
-    //                   horizontal: 10,
-    //                   vertical: 5,
-    //                 ),
-    //                 decoration: BoxDecoration(
-    //                   color: Colors.white,
-    //                   borderRadius: BorderRadius.circular(6),
-    //                   border: Border.all(color: Colors.grey.shade300),
-    //                 ),
-    //                 child: Row(
-    //                   mainAxisSize: MainAxisSize.min,
-    //                   children: [
-    //                     Text(value, style: const TextStyle(fontSize: 12)),
-    //                     const SizedBox(width: 6),
-    //                     const Icon(Icons.keyboard_arrow_down, size: 18),
-    //                   ],
-    //                 ),
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //       ),
-    //
-    //       CustomDivider(
-    //         thickness: 0.76,
-    //         verticalPadding: 5,
-    //         color: Colors.black.withAlpha((0.2 * 255).toInt()),
-    //       ),
-    //
-    //       Row(
-    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //         children: [
-    //           Row(
-    //             children: [
-    //               Container(
-    //                 width: 40,
-    //                 height: 40,
-    //                 decoration: BoxDecoration(
-    //                   color: AppColors.primaryColor,
-    //                   borderRadius: BorderRadius.circular(8),
-    //                 ),
-    //                 child: const Icon(
-    //                   Icons.arrow_upward_outlined,
-    //                   color: Colors.white,
-    //                 ),
-    //               ),
-    //               const SizedBox(width: 12),
-    //               Column(
-    //                 crossAxisAlignment: CrossAxisAlignment.start,
-    //                 children: [
-    //                   Text(
-    //                     'Total Revenue',
-    //                     style: Theme.of(context).textTheme.titleMedium
-    //                         ?.copyWith(
-    //                           fontSize: 12,
-    //                           color: Colors.black54,
-    //                           fontWeight: FontWeight.w400,
-    //                         ),
-    //                   ),
-    //                   const Text(
-    //                     '\$3989',
-    //                     style: TextStyle(
-    //                       fontSize: 20,
-    //                       fontWeight: FontWeight.bold,
-    //                       color: Colors.black87,
-    //                     ),
-    //                   ),
-    //                 ],
-    //               ),
-    //             ],
-    //           ),
-    //
-    //           CustomCheckbox(
-    //             value: isChecked,
-    //             width: 18,
-    //             height: 18,
-    //             label: 'Revenue',
-    //             labelStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-    //               fontSize: 14,
-    //               color: Colors.black54,
-    //               fontWeight: FontWeight.w400,
-    //             ),
-    //             isCircular: false,
-    //             borderRadius: 4,
-    //             borderColor: AppColors.primaryColor,
-    //             onChanged: (val) {
-    //               setState(() => isChecked = val);
-    //             },
-    //           ),
-    //         ],
-    //       ),
-    //       const SizedBox(height: 14),
-    //
-    //       Container(
-    //         padding: const EdgeInsets.all(24),
-    //         decoration: BoxDecoration(
-    //           color: Colors.white,
-    //           borderRadius: BorderRadius.circular(12),
-    //         ),
-    //         child: SizedBox(
-    //           height: 200,
-    //           child: GraphChartWidget(
-    //             data: graphWeeklyData,
-    //             // highlightIndex: 2, // Wed highlighted
-    //           ),
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 }
 
@@ -1477,7 +1198,6 @@ final List<DashboardIcons> dashboardIcons = [
   DashboardIcons(Icons.analytics_outlined, Colors.red),
 ];
 
-// Modern MetricCard Widget - Matches _KpiCard design
 class MetricCard extends StatelessWidget {
   final String title;
   final String value;
@@ -1513,12 +1233,10 @@ class MetricCard extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          // Main content - Left side
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Value
               Text(
                 value,
                 style: const TextStyle(
@@ -1529,7 +1247,6 @@ class MetricCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 6),
-              // Title
               Text(
                 title,
                 style: TextStyle(
@@ -1541,7 +1258,6 @@ class MetricCard extends StatelessWidget {
             ],
           ),
 
-          // Percentage Badge - Top Right
           Positioned(
             top: 0,
             right: 70,
@@ -1564,7 +1280,6 @@ class MetricCard extends StatelessWidget {
             ),
           ),
 
-          // Icon Circle - Right side
           Positioned(
             right: 0,
             top: 0,

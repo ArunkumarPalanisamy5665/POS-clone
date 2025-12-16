@@ -216,6 +216,8 @@ class AppAssets {
   static const String syncIcon = 'assets/svg/menu/sync_icon.svg';
   static const String foodIcon = 'assets/svg/menu/food_icon.svg';
   static const String dollarIcon = 'assets/svg/menu/dollar_icon.svg';
+  static const String veg_nonVeg_Icon = 'assets/svg/menu/veg_nonVeg_.svg';
+  static const String trendMenuIcon = 'assets/svg/menu/trend_menu_icon.svg';
 
 
 
