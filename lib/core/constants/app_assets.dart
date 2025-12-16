@@ -214,6 +214,7 @@ class AppAssets {
   static const String searchIcon = 'assets/svg/menu/search_icon.svg';
   static const String upgradeIcon = 'assets/svg/menu/upgrade_icon.svg';
   static const String syncIcon = 'assets/svg/menu/sync_icon.svg';
+  static const String foodIcon = 'assets/svg/menu/food_icon.svg';
 
 
 

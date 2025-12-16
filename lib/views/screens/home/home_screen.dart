@@ -22,7 +22,6 @@ final List<MenuData> menuList = [
   MenuData('Veg Pizza', 310, Colors.green),
   MenuData('Pasta', 260, Colors.blue),
   MenuData('French Fries', 180, Colors.purple),
-  MenuData('Soft Drinks', 120, Colors.red),
 ];
 
 
@@ -520,11 +519,11 @@ class MenuItem extends StatelessWidget {
     return Row(
       children: [
         Text(
-          number,
-          style: const TextStyle(
-            fontSize: 12,
+          '#${number}',
+          style: TextStyle(
+            fontSize: 10,
             fontWeight: FontWeight.w600,
-            color: Colors.black87,
+            color: Colors.black.withOpacity(0.675),
           ),
         ),
         const SizedBox(width: 12),
@@ -534,6 +533,7 @@ class MenuItem extends StatelessWidget {
             style: const TextStyle(
               fontSize: 12,
               color: Colors.black87,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),
