@@ -174,7 +174,7 @@ class _TrendingMenuState extends State<TrendingMenu> {
                 crossAxisCount: Responsive.isMobile(context)? 1: Responsive.isTablet(context)?2:3, // Desktop style
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
-                childAspectRatio: 1.2,
+                childAspectRatio: MediaQuery.of(context).size.width >= 1100? 1.1 :1.2,
               ),
               itemCount: foodItems.length,
               itemBuilder: (context, index) {

@@ -3,6 +3,7 @@ import 'package:new_hrms_flutter/core/constants/app_export.dart';
 import 'package:new_hrms_flutter/views/screens/home/widgets/dashBoardWidgets/graph_chart_widget.dart';
 import 'package:new_hrms_flutter/views/screens/home/widgets/dashBoardWidgets/trending_menu.dart';
 import 'package:new_hrms_flutter/views/screens/home/widgets/linear_chart_box.dart';
+import 'package:new_hrms_flutter/views/screens/home/widgets/metric_card.dart';
 import 'package:new_hrms_flutter/views/widgets/common/drop_down_cards.dart';
 import 'package:new_hrms_flutter/views/widgets/dashboard/notification_list.dart';
 import 'package:new_hrms_flutter/views/widgets/dashboard/reservation_list.dart';
@@ -10,6 +11,7 @@ import 'package:new_hrms_flutter/views/widgets/responsive/responsive.dart';
 
 import 'package:new_hrms_flutter/views/widgets/dashboard/active_order_list.dart';
 import 'package:new_hrms_flutter/views/widgets/dashboard/dashboard_card.dart';
+import '../../../domain/models/dashBoardModel/dash_board_metric_item.dart';
 import '../../widgets/common/custom_checkbox.dart';
 import '../../widgets/common/custom_container.dart';
 import '../../widgets/common/custom_divider.dart';
@@ -44,19 +46,19 @@ class _HomeScreenState extends State<MainHome> {
       builder: (context, constraints) {
         final width = constraints.maxWidth;
 
-        final isMobile = width < AppBreakpoints.mobile;
-        final isTablet =
-            width >= AppBreakpoints.mobile && width < AppBreakpoints.tablet;
-        final isDesktop = width >= AppBreakpoints.tablet;
+        final isMobile = Responsive.isMobile(context);
+        final isTablet = MediaQuery.of(context).size.width >= 1000;
+        final isDesktop = Responsive.isDesktop(context) ;
 
         return Scaffold(
           backgroundColor: const Color(0xFFF8F8F8),
 
-          drawer: isMobile ? Drawer(child: _buildSidebar()) : null,
+          drawer: !isDesktop? Drawer(child: _buildSidebar()) : null,
 
           body: Row(
             children: [
-              Container(
+              if(isDesktop || isTablet)
+                Container(
                 width: 60,
                 decoration: BoxDecoration(color: AppColors.greySide),
                 height: MediaQuery.of(context).size.height,
@@ -131,14 +133,14 @@ class _HomeScreenState extends State<MainHome> {
       ),
       child: Row(
         children: [
-          if (isMobile)
+          if (Responsive.isMobile(context) || MediaQuery.of(context).size.width < 1000)
             Builder(
               builder: (context) => IconButton(
                 icon: const Icon(Icons.menu),
                 onPressed: () => Scaffold.of(context).openDrawer(),
               ),
             ),
-          if (Responsive.isDesktop(context)) _buildFilterTabs(),
+          if (MediaQuery.of(context).size.width > 1000) _buildFilterTabs(),
           const Spacer(),
           _buildTopActions(),
         ],
@@ -294,9 +296,9 @@ class _HomeScreenState extends State<MainHome> {
   }
 
   Widget _buildMainContent(double width) {
-    final crossAxisCount = width < 600
+    final crossAxisCount = Responsive.isMobile(context)
         ? 1
-        : width < 1024
+        : Responsive.isTablet(context)
         ? 2
         : 4;
 
@@ -304,47 +306,24 @@ class _HomeScreenState extends State<MainHome> {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-          /// KPI GRID
-          GridView.count(
-            crossAxisCount: crossAxisCount,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
+
+          GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            children: const [
-              MetricCard(
-                title: 'Total Orders',
-                value: '6986',
-                percentageChange: '+12.5%',
-                isPositive: true,
-                iconColor: Color(0xFF9C27B0),
-                icon: Icons.shopping_bag,
-              ),
-              MetricCard(
-                title: 'Total Sales',
-                value: '\$7516',
-                percentageChange: '+12.5%',
-                isPositive: true,
-                iconColor: Color(0xFF2196F3),
-                icon: Icons.attach_money,
-              ),
-              MetricCard(
-                title: 'Average Value',
-                value: '\$25.36',
-                percentageChange: '-8.5%',
-                isPositive: false,
-                iconColor: Color(0xFFFF9800),
-                icon: Icons.payments,
-              ),
-              MetricCard(
-                title: 'Reservations',
-                value: '496',
-                percentageChange: '+12.7%',
-                isPositive: true,
-                iconColor: Color(0xFF4CAF50),
-                icon: Icons.event_seat,
-              ),
-            ],
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: MediaQuery.of(context).size.width <=650
+                  ? 1
+                  : MediaQuery.of(context).size.width <= 1200
+                  ? 2
+                  : 4,
+              mainAxisSpacing: 1,
+              crossAxisSpacing: 1,
+              childAspectRatio: MediaQuery.of(context).size.width <=900? 3: 2.5,
+            ),
+            itemCount: dashboardMetrics.length,
+            itemBuilder: (context, index) {
+              return MetricCard(item: dashboardMetrics[index]);
+            },
           ),
 
           const SizedBox(height: 24),
@@ -370,7 +349,6 @@ class _HomeScreenState extends State<MainHome> {
             ),
             const SizedBox(height: 24),
             TrendingMenu(),
-
           ],
 
           Padding(
@@ -499,48 +477,50 @@ class _HomeScreenState extends State<MainHome> {
                   title: 'Reservations',
                   actionText: 'All Orders',
                   imagePath: 'assets/images/reservation.png',
-                  body:ReservationsWidget(reservations: [
-                    Reservation(
-                      date: DateTime(2025, 11, 8),
-                      customerName: 'Elijah Thompson',
-                      status: ReservationStatus.booked,
-                      time: '10:45',
-                      tableNumber: '3',
-                      guests: 2,
-                    ),
-                    Reservation(
-                      date: DateTime(2025, 11, 12),
-                      customerName: "Liam O'Connor",
-                      status: ReservationStatus.booked,
-                      time: '10:45',
-                      tableNumber: '4',
-                      guests: 5,
-                    ),
-                    Reservation(
-                      date: DateTime(2025, 11, 6),
-                      customerName: 'Michael Carter',
-                      status: ReservationStatus.booked,
-                      time: '10:45',
-                      tableNumber: '8',
-                      guests: 6,
-                    ),
-                    Reservation(
-                      date: DateTime(2025, 11, 4),
-                      customerName: 'James Smith',
-                      status: ReservationStatus.paid,
-                      time: '10:45',
-                      tableNumber: '8',
-                      guests: 5,
-                    ),
-                    Reservation(
-                      date: DateTime(2025, 11, 2),
-                      customerName: 'Walk in Customer',
-                      status: ReservationStatus.cancelled,
-                      time: '10:45',
-                      tableNumber: '2',
-                      guests: 5,
-                    ),
-                  ]),
+                  body: ReservationsWidget(
+                    reservations: [
+                      Reservation(
+                        date: DateTime(2025, 11, 8),
+                        customerName: 'Elijah Thompson',
+                        status: ReservationStatus.booked,
+                        time: '10:45',
+                        tableNumber: '3',
+                        guests: 2,
+                      ),
+                      Reservation(
+                        date: DateTime(2025, 11, 12),
+                        customerName: "Liam O'Connor",
+                        status: ReservationStatus.booked,
+                        time: '10:45',
+                        tableNumber: '4',
+                        guests: 5,
+                      ),
+                      Reservation(
+                        date: DateTime(2025, 11, 6),
+                        customerName: 'Michael Carter',
+                        status: ReservationStatus.booked,
+                        time: '10:45',
+                        tableNumber: '8',
+                        guests: 6,
+                      ),
+                      Reservation(
+                        date: DateTime(2025, 11, 4),
+                        customerName: 'James Smith',
+                        status: ReservationStatus.paid,
+                        time: '10:45',
+                        tableNumber: '8',
+                        guests: 5,
+                      ),
+                      Reservation(
+                        date: DateTime(2025, 11, 2),
+                        customerName: 'Walk in Customer',
+                        status: ReservationStatus.cancelled,
+                        time: '10:45',
+                        tableNumber: '2',
+                        guests: 5,
+                      ),
+                    ],
+                  ),
                   showDropdown: true,
                 ),
                 const DashboardCard(
@@ -553,13 +533,11 @@ class _HomeScreenState extends State<MainHome> {
                   title: 'Notifications',
                   actionText: 'View All',
                   imagePath: 'assets/images/notifications.png',
-                  body:NotificationsList(),
-
+                  body: NotificationsList(),
                 ),
               ],
             ),
           ),
-
         ],
       ),
     );
@@ -597,97 +575,99 @@ class RevenueCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height * 0.7,
-        padding: EdgeInsets.only(top: 30, left: 14, right: 14),
-        borderRadius: BorderRadius.circular(5),
-        alignment: Alignment.center,
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-            color: AppColors.white,
-            border: Border.all(color: Colors.black.withAlpha((0.2 * 255).toInt()), width: 0.50)
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height * 0.7,
+      padding: EdgeInsets.only(top: 30, left: 14, right: 14),
+      borderRadius: BorderRadius.circular(5),
+      alignment: Alignment.center,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        border: Border.all(
+          color: Colors.black.withAlpha((0.2 * 255).toInt()),
+          width: 0.50,
         ),
-        onTap: () {
-          print("Tapped");
-        },
-        child:Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Total Revenue',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                  ),
+      ),
+      onTap: () {
+        print("Tapped");
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Total Revenue',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: const Text(
-                    'Weekly',
-                    style: TextStyle(fontSize: 12, color: Colors.black54),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Icon(Icons.trending_up, color: Colors.white),
-                ),
-                const SizedBox(width: 12),
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Total Revenue',
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
-                    ),
-                    Text(
-                      '\$3989',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Spacer(),
-            SizedBox(
-              height: 180,
-              child: LinearChartBox(
-                data: weeklyData,
-                lineColor: Colors.blue,
-                height: 260,
               ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: const Text(
+                  'Weekly',
+                  style: TextStyle(fontSize: 12, color: Colors.black54),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Icon(Icons.trending_up, color: Colors.white),
+              ),
+              const SizedBox(width: 12),
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Total Revenue',
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+                  Text(
+                    '\$3989',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Spacer(),
+          SizedBox(
+            height: 180,
+            child: LinearChartBox(
+              data: weeklyData,
+              lineColor: Colors.blue,
+              height: 260,
             ),
-            const SizedBox(height: 20),
-          ],
-        ));
-
+          ),
+          const SizedBox(height: 20),
+        ],
+      ),
+    );
   }
 }
-
 
 class TopSellingCard extends StatefulWidget {
   const TopSellingCard({super.key});
@@ -700,228 +680,232 @@ class _TopSellingCardState extends State<TopSellingCard> {
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height * 0.7,
-        padding: EdgeInsets.only(top: 30, left: 14, right: 14),
-        borderRadius: BorderRadius.circular(5),
-        alignment: Alignment.center,
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          border: Border.all(color: Colors.black.withAlpha((0.2 * 255).toInt()), width: 0.50)
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height * 0.7,
+      padding: EdgeInsets.only(top: 30, left: 14, right: 14),
+      borderRadius: BorderRadius.circular(5),
+      alignment: Alignment.center,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        border: Border.all(
+          color: Colors.black.withAlpha((0.2 * 255).toInt()),
+          width: 0.50,
         ),
-        onTap: () {
-          print("Tapped");
-        },
-        child:Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CustomIconContainer(
-                      width: 20,
-                      height: 20,
-                      iconSize: 12,
-                      borderRadius: 4,
-                      svgAsset: AppAssets.foodIcon,
-                      onTap: () {},
-                      borderColor: Colors.black.withAlpha((0.2 * 255).toInt()),
-                      backgroundColor: Colors.white,
-                    ),
-                    SizedBox(width: 8),
+      ),
+      onTap: () {
+        print("Tapped");
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CustomIconContainer(
+                    width: 20,
+                    height: 20,
+                    iconSize: 12,
+                    borderRadius: 4,
+                    svgAsset: AppAssets.foodIcon,
+                    onTap: () {},
+                    borderColor: Colors.black.withAlpha((0.2 * 255).toInt()),
+                    backgroundColor: Colors.white,
+                  ),
+                  SizedBox(width: 8),
 
-                    Text(
-                      'Top Selling Item',
+                  Text(
+                    'Top Selling Item',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ],
+              ),
+
+              DropDownCards(
+                value: selectedTopSelling,
+                items: const ['Sea food', 'Pizza', 'Salads'],
+                onChanged: (value) {
+                  setState(() {
+                    selectedTopSelling = value;
+                  });
+                },
+                childBuilder: (value) => Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 5,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(color: Colors.grey.shade300),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        value,
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
+                              fontSize: 12,
+                              color: Colors.black54,
+                              fontWeight: FontWeight.w400,
+                            ),
+                      ),
+                      const SizedBox(width: 6),
+                      const Icon(Icons.keyboard_arrow_down, size: 18),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          CustomDivider(
+            thickness: 0.76,
+            verticalPadding: 15,
+            color: Colors.black.withAlpha((0.2 * 255).toInt()),
+          ),
+
+          CustomContainer(
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height * 0.065,
+            borderRadius: BorderRadius.circular(5),
+            alignment: Alignment.center,
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(color: AppColors.lightGg),
+            onTap: () {
+              print("Tapped");
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '\u{1F525}  ',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      'Most Ordered : Veggie Supreme Pizza',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.green,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
+            ),
+          ),
 
-                DropDownCards(
-                  value: selectedTopSelling,
-                  items: const ['Sea food', 'Pizza', 'Salads'],
-                  onChanged: (value) {
-                    setState(() {
-                      selectedTopSelling = value;
-                    });
-                  },
-                  childBuilder: (value) => Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 5,
-                    ),
+          const SizedBox(height: 20),
+
+          CustomContainer(
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height * 0.1,
+            borderRadius: BorderRadius.circular(5),
+            alignment: Alignment.center,
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(
+                color: Colors.black.withAlpha((0.2 * 255).toInt()),
+                width: 0.65,
+              ),
+            ),
+            onTap: () {
+              print("Tapped");
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(6),
-                      border: Border.all(color: Colors.grey.shade300),
+                      borderRadius: BorderRadius.circular(8),
+                      image: const DecorationImage(
+                        image: AssetImage('assets/pizza.png'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.orange.withOpacity(0.1),
+                      ),
+                      child: const Icon(
+                        Icons.local_pizza,
+                        color: Colors.orange,
+                        size: 30,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          value,
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(
-                            fontSize: 12,
-                            color: Colors.black54,
-                            fontWeight: FontWeight.w400,
+                        const Text(
+                          'Veggie Supreme Pizza',
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
                           ),
                         ),
-                        const SizedBox(width: 6),
-                        const Icon(Icons.keyboard_arrow_down, size: 18),
+                        Text(
+                          'No of Orders : 520',
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.grey[600],
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                ),
-              ],
-            ),
-            CustomDivider(
-              thickness: 0.76,
-              verticalPadding: 15,
-              color: Colors.black.withAlpha((0.2 * 255).toInt()),
-            ),
-
-            CustomContainer(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.065,
-              borderRadius: BorderRadius.circular(5),
-              alignment: Alignment.center,
-              clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(color: AppColors.lightGg,),
-              onTap: () {
-                print("Tapped");
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '\u{1F525}  ',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        'Most Ordered : Veggie Supreme Pizza',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.green,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                ],
               ),
             ),
+          ),
 
-            const SizedBox(height: 20),
+          Spacer(),
+          ListView.builder(
+            itemCount: menuList.length,
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, index) {
+              final item = menuList[index];
 
-            CustomContainer(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.1,
-              borderRadius: BorderRadius.circular(5),
-              alignment: Alignment.center,
-              clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(
-                  color: Colors.black.withAlpha((0.2 * 255).toInt()),
-                  width: 0.65,
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: MenuItem(
+                  number: (index + 2).toString().padLeft(2, '0'),
+                  name: item.name,
+                  orders: item.orders,
+                  color: item.color,
                 ),
-              ),
-              onTap: () {
-                print("Tapped");
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        image: const DecorationImage(
-                          image: AssetImage('assets/pizza.png'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Colors.orange.withOpacity(0.1),
-                        ),
-                        child: const Icon(
-                          Icons.local_pizza,
-                          color: Colors.orange,
-                          size: 30,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Veggie Supreme Pizza',
-                            style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black87,
-                            ),
-                          ),
-                          Text(
-                            'No of Orders : 520',
-                            style: TextStyle(
-                              fontSize: 11,
-                              color: Colors.grey[600],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            Spacer(),
-            ListView.builder(
-              itemCount: menuList.length,
-              shrinkWrap: true,
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                final item = menuList[index];
-
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: MenuItem(
-                    number: (index + 2).toString().padLeft(2, '0'),
-                    name: item.name,
-                    orders: item.orders,
-                    color: item.color,
-                  ),
-                );
-              },
-            ),
-          ],
-        ));
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -944,7 +928,10 @@ class _GraphChartPageState extends State<GraphChartPage> {
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: AppColors.white,
-        border: Border.all(color: Colors.black.withAlpha((0.2 * 255).toInt()), width: 0.50)
+        border: Border.all(
+          color: Colors.black.withAlpha((0.2 * 255).toInt()),
+          width: 0.50,
+        ),
       ),
       onTap: () {
         print("Tapped");
@@ -1102,7 +1089,6 @@ class _GraphChartPageState extends State<GraphChartPage> {
         ],
       ),
     );
-
   }
 }
 
@@ -1200,117 +1186,37 @@ final List<DashboardIcons> dashboardIcons = [
   DashboardIcons(Icons.analytics_outlined, Colors.red),
 ];
 
-class MetricCard extends StatelessWidget {
-  final String title;
-  final String value;
-  final String percentageChange;
-  final bool isPositive;
-  final Color iconColor;
-  final IconData icon;
-
-  const MetricCard({
-    super.key,
-    required this.title,
-    required this.value,
-    required this.percentageChange,
-    required this.isPositive,
-    required this.iconColor,
-    required this.icon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                  letterSpacing: -0.5,
-                ),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Colors.grey[600],
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-
-          Positioned(
-            top: 0,
-            right: 70,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: isPositive
-                    ? const Color(0xFF10B981)
-                    : const Color(0xFFEF4444),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                percentageChange,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-
-          Positioned(
-            right: 0,
-            top: 0,
-            bottom: 0,
-            child: Center(
-              child: Container(
-                width: 56,
-                height: 56,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [iconColor.withOpacity(0.8), iconColor],
-                  ),
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: iconColor.withOpacity(0.3),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Icon(icon, color: Colors.white, size: 28),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+final List<DashboardMetricItem> dashboardMetrics = [
+  DashboardMetricItem(
+    title: 'Total Orders',
+    value: '6986',
+    percentage: '+12.5%',
+    isPositive: true,
+    svgIcon: AppAssets.orderDashIcon,
+    gradient: [Color(0xFF8B5CF6), Color(0xFF6D28D9)],
+  ),
+  DashboardMetricItem(
+    title: 'Total Sales',
+    value: '\$7516',
+    percentage: '+12.5%',
+    isPositive: true,
+    svgIcon: AppAssets.salesIcon,
+    gradient: [Color(0xFF3B82F6), Color(0xFF1D4ED8)],
+  ),
+  DashboardMetricItem(
+    title: 'Average Value',
+    value: '\$25.36',
+    percentage: '-8.5%',
+    isPositive: false,
+    svgIcon: AppAssets.averageIcon,
+    gradient: [Color(0xFFF97316), Color(0xFFEA580C)],
+  ),
+  DashboardMetricItem(
+    title: 'Reservations',
+    value: '496',
+    percentage: '-12.7%',
+    isPositive: false,
+    svgIcon: AppAssets.reservationIcon,
+    gradient: [Color(0xFF22C55E), Color(0xFF16A34A)],
+  ),
+];

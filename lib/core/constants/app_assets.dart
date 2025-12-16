@@ -163,6 +163,7 @@ class AppAssets {
   static const String dropMenu1 = 'assets/images/drop_menu_1.png';
   static const String dropMenu2 = 'assets/images/drop_menu_2.png';
   static const String dropMenu3 = 'assets/images/drop_menu_3.png';
+  static const String cardBg = 'assets/images/dashboard_card_bg.png';
 
 
   // SVG Icons (if any)
@@ -219,6 +220,11 @@ class AppAssets {
   static const String veg_nonVeg_Icon = 'assets/svg/menu/veg_nonVeg_.svg';
   static const String trendMenuIcon = 'assets/svg/menu/trend_menu_icon.svg';
 
+ //dashboard icons
+  static const String orderDashIcon = 'assets/svg/menu/dash_order_icon.svg';
+  static const String salesIcon = 'assets/svg/menu/sales_icon.svg';
+  static const String reservationIcon = 'assets/svg/menu/reservation_icon.svg';
+  static const String averageIcon = 'assets/svg/menu/average_icon.svg';
 
 
 

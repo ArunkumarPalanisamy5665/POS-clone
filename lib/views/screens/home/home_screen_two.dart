@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_hrms_flutter/core/constants/app_assets.dart';
 import 'package:new_hrms_flutter/views/screens/home/widgets/metric_card.dart';
 import 'package:new_hrms_flutter/views/screens/home/widgets/revenue_card.dart';
 import 'package:new_hrms_flutter/views/screens/home/widgets/side_bar.dart';
@@ -26,7 +27,7 @@ class  HomeScreenTwo extends StatelessWidget {
                       children: [
                         _buildHeader(),
                         const SizedBox(height: 24),
-                        _buildMetricsRow(),
+                        // _buildMetricsRow(),
                         const SizedBox(height: 24),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -198,53 +199,4 @@ class  HomeScreenTwo extends StatelessWidget {
     );
   }
 
-  Widget _buildMetricsRow() {
-    return Row(
-      children: [
-        Expanded(
-          child: MetricCard(
-            title: 'Total Orders',
-            value: '6986',
-            percentageChange: '+12.5%',
-            isPositive: true,
-            iconColor: const Color(0xFF9C27B0),
-            icon: Icons.shopping_bag,
-          ),
-        ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: MetricCard(
-            title: 'Total Sales',
-            value: '\$7516',
-            percentageChange: '+12.5%',
-            isPositive: true,
-            iconColor: const Color(0xFF2196F3),
-            icon: Icons.attach_money,
-          ),
-        ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: MetricCard(
-            title: 'Average Value',
-            value: '\$25.36',
-            percentageChange: '-8.5%',
-            isPositive: false,
-            iconColor: const Color(0xFFFF9800),
-            icon: Icons.payments,
-          ),
-        ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: MetricCard(
-            title: 'Reservations',
-            value: '496',
-            percentageChange: '+12.5%',
-            isPositive: true,
-            iconColor: const Color(0xFF4CAF50),
-            icon: Icons.event_seat,
-          ),
-        ),
-      ],
-    );
-  }
 }
