@@ -61,7 +61,13 @@ class CustomDrawer extends StatelessWidget {
       child: Scaffold(
         key: scaffoldKey,
         appBar: appBar,
-        drawer: drawer,
+        drawer:  Drawer(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+            width: 275,
+            child: drawer,
+        ),
         body: SafeArea(
             bottom: false,
             top: false,

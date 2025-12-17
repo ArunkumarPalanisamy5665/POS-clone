@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:new_hrms_flutter/core/constants/app_export.dart';
 
 import '../../../../../core/constants/app_colors.dart';
+import '../../../../../domain/models/dashBoardModel/dashboard_item.dart';
 import '../../../../widgets/common/custom_container.dart';
 import '../../../../widgets/common/custom_divider.dart';
 import '../../../../widgets/common/custom_icon_contain.dart';
@@ -22,6 +23,10 @@ class FoodItem {
 }
 
 String selectedTopSelling = 'All Items';
+DashboardItem? selectedDashboardMenu = DashboardItem(
+  title: 'All Items',
+  svgIcon: AppAssets.salesIcon,
+);
 
 
 class TrendingMenu extends StatefulWidget {
@@ -35,6 +40,23 @@ class _TrendingMenuState extends State<TrendingMenu> {
 
   @override
   Widget build(BuildContext context) {
+
+    final List<DashboardItem> dashboardMenuitems = [
+      DashboardItem(
+        title: 'All Items',
+      ),
+      DashboardItem(
+        title: 'Sea Food',
+      ),
+      DashboardItem(
+        title: 'Pizza',
+      ),
+      DashboardItem(
+        title: 'Salads',
+      ),
+    ];
+
+
     final List<FoodItem> foodItems = [
       FoodItem(
         name: 'Grilled Chicken',
@@ -122,42 +144,66 @@ class _TrendingMenuState extends State<TrendingMenu> {
                   ],
                 ),
 
-                DropDownCards(
-                  value: selectedTopSelling,
-                  items: const ['Sea food', 'Pizza', 'Salads'],
-                  onChanged: (value) {
-                    setState(() {
-                      selectedTopSelling = value;
-                    });
-                  },
-                  childBuilder: (value) => Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 5,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(6),
-                      border: Border.all(color: Colors.grey.shade300),
-                    ),
-                    child: Row(
+                Flexible(
+                  child: DropDownCards<DashboardItem?>(
+                    value: selectedDashboardMenu,
+                    items: dashboardMenuitems,
+                    onChanged: (module) {
+                      setState(() => selectedDashboardMenu = module);
+                    },
+                    childBuilder: (module) => Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          value,
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(
-                            fontSize: 12,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        const SizedBox(width: 6),
-                        const Icon(Icons.keyboard_arrow_down, size: 18),
+                        Flexible(child: Text("${module?.title}", overflow: TextOverflow.ellipsis)),
+                        const Icon(Icons.keyboard_arrow_down),
+                      ],
+                    ),
+                    itemBuilder: (module, isSelected) => Row(
+                      children: [
+                        Expanded(child: Text("${module?.title}")),
                       ],
                     ),
                   ),
                 ),
+
+
+
+                // DropDownCards(
+                //   value: selectedTopSelling,
+                //   items: const ['Sea food', 'Pizza', 'Salads'],
+                //   onChanged: (value) {
+                //     setState(() {
+                //       selectedTopSelling = value;
+                //     });
+                //   },
+                //   childBuilder: (value) => Container(
+                //     padding: const EdgeInsets.symmetric(
+                //       horizontal: 10,
+                //       vertical: 5,
+                //     ),
+                //     decoration: BoxDecoration(
+                //       color: Colors.white,
+                //       borderRadius: BorderRadius.circular(6),
+                //       border: Border.all(color: Colors.grey.shade300),
+                //     ),
+                //     child: Row(
+                //       mainAxisSize: MainAxisSize.min,
+                //       children: [
+                //         Text(
+                //           value,
+                //           style: Theme.of(context).textTheme.titleMedium
+                //               ?.copyWith(
+                //             fontSize: 12,
+                //             color: Colors.black,
+                //             fontWeight: FontWeight.w400,
+                //           ),
+                //         ),
+                //         const SizedBox(width: 6),
+                //         const Icon(Icons.keyboard_arrow_down, size: 18),
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
             CustomDivider(
