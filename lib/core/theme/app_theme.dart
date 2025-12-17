@@ -197,7 +197,7 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const String fontFamily = "Poppins";
+  static const String fontFamily = "InstrumentSans";
 
   // ================================================================
   // RESPONSIVE LIGHT TEXT THEME

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const String fontFamily = "Poppins";
+  static const String fontFamily = "InstrumentSans";
 
   static const TextTheme textThemeLight = TextTheme(
     displayLarge: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.black),

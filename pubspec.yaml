@@ -83,7 +83,7 @@ flutter_native_splash:
   image: assets/images/smart_hr_logo.png
   fullscreen: true
   color: "ffffff"
-  android_12: 
+  android_12:
     image: assets/images/smart_hr_logo.png
     fullscreen: true
     color: "ffffff"
@@ -139,54 +139,31 @@ flutter:
       fonts:
         - asset: assets/fonts/Poppins-Light.otf
 
-    - family: Poppins
+    - family: InstrumentSans
       fonts:
-        - asset: assets/fonts/poppins/Poppins-Regular.ttf
-        - asset: assets/fonts/poppins/Poppins-Italic.ttf
+        - asset: assets/fonts/Instrument Sans/InstrumentSans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Instrument Sans/InstrumentSans-Italic.ttf
+          weight: 400
           style: italic
-        - asset: assets/fonts/poppins/Poppins-Bold.ttf
-          weight: 700
-        - asset: assets/fonts/poppins/Poppins-BoldItalic.ttf
-          weight: 700
-          style: italic
-        - asset: assets/fonts/poppins/Poppins-Light.ttf
-          weight: 300
-        - asset: assets/fonts/poppins/Poppins-LightItalic.ttf
-          weight: 300
-          style: italic
-        - asset: assets/fonts/poppins/Poppins-Medium.ttf
+        - asset: assets/fonts/Instrument Sans/InstrumentSans-Medium.ttf
           weight: 500
-        - asset: assets/fonts/poppins/Poppins-MediumItalic.ttf
+        - asset: assets/fonts/Instrument Sans/InstrumentSans-MediumItalic.ttf
           weight: 500
           style: italic
-        - asset: assets/fonts/poppins/Poppins-SemiBold.ttf
+        - asset: assets/fonts/Instrument Sans/InstrumentSans-SemiBold.ttf
           weight: 600
-        - asset: assets/fonts/poppins/Poppins-SemiBoldItalic.ttf
+        - asset: assets/fonts/Instrument Sans/InstrumentSans-SemiBoldItalic.ttf
           weight: 600
           style: italic
-        - asset: assets/fonts/poppins/Poppins-ExtraBold.ttf
-          weight: 800
-        - asset: assets/fonts/poppins/Poppins-ExtraBoldItalic.ttf
-          weight: 800
+
+        - asset: assets/fonts/Instrument Sans/InstrumentSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Instrument Sans/InstrumentSans-BoldItalic.ttf
+          weight: 700
           style: italic
-        - asset: assets/fonts/poppins/Poppins-ExtraLight.ttf
-          weight: 200
-        - asset: assets/fonts/poppins/Poppins-ExtraLightItalic.ttf
-          weight: 200
-          style: italic
-        - asset: assets/fonts/poppins/Poppins-Thin.ttf
-          weight: 100
-        - asset: assets/fonts/poppins/Poppins-ThinItalic.ttf
-          weight: 100
-          style: italic
-        - asset: assets/fonts/poppins/Poppins-Black.ttf
-          weight: 900
-        - asset: assets/fonts/poppins/Poppins-BlackItalic.ttf
-          weight: 900
-          style: italic
-    - family: Quintessential
-      fonts:
-        - asset: assets/fonts/Quintessential-Regular.ttf
+
+
 
   # assets:
   #   - images/a_dot_burr.jpeg
