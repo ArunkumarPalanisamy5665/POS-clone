@@ -126,6 +126,7 @@ flutter:
     - assets/images/
     - assets/svg/
     - assets/svg/menu/
+    - assets/svg/menu/subMenus/
     - assets/cer/
 
   fonts:

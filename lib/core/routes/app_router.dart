@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:new_hrms_flutter/core/routes/route_names.dart';
 import 'package:new_hrms_flutter/views/screens/auth/otp/otp_screen.dart';
 import 'package:new_hrms_flutter/views/screens/auth/resetPassword/reset_password_screen.dart';
-import 'package:new_hrms_flutter/views/screens/dashboard/dashboard_screen.dart';
+import 'package:new_hrms_flutter/views/screens/dashboard/dashboard_screen.dart' hide DashboardScreen;
 import 'package:new_hrms_flutter/views/screens/home/home_screen.dart';
-import 'package:new_hrms_flutter/views/screens/home/home_screen_two.dart';
+import 'package:new_hrms_flutter/views/screens/home/home_screen_two.dart' hide MainHome;
 import 'package:new_hrms_flutter/views/screens/splashScreen/splash_screen.dart';
 import 'package:new_hrms_flutter/views/screens/app_shell.dart';
 import '../../main.dart';
@@ -15,6 +15,8 @@ import '../../views/screens/auth/forgotPassword/forgot_password_screen.dart';
 import '../../views/screens/auth/login/login_screen.dart';
 import '../../views/screens/auth/register/register_screen.dart';
 import '../../views/screens/home/main_home.dart';
+import '../../views/screens/home/main/main_shell.dart';
+import '../../views/screens/home/main/pos_shell.dart';
 import '../../views/screens/home/profile_manager.dart';
 
 class AppRouter {
@@ -66,23 +68,19 @@ class AppRouter {
         name: RouteNames.otp,
         builder: (context, state) => const OtpScreen(),
       ),
-      GoRoute(
-        path: '/dashboard',
-        name: RouteNames.dashboard,
-        builder: (context, state) => const DashboardScreen(),
-      ),
+      // GoRoute(
+      //   path: '/dashboard',
+      //   name: RouteNames.dashboard,
+      //   builder: (context, state) => const DashboardScreen(),
+      // ),
 
-      GoRoute(
-        path: '/home',
-        name: RouteNames.home,
-        builder: (context, state) =>  HomeScreen(),
-      ),
 
-      GoRoute(
-        path: '/home_main',
-        name: RouteNames.homeMain,
-        builder: (context, state) =>  MainHome(),
-      ),
+
+      // GoRoute(
+      //   path: '/home_main',
+      //   name: RouteNames.homeMain,
+      //   builder: (context, state) =>   HomeScreenTwo(),
+      // ),
 
       ShellRoute(
         builder: (context, state, child) {
@@ -127,6 +125,66 @@ class AppRouter {
           ),
         ],
       ),
+      ShellRoute(
+        builder: (_, __, child) {
+          return MainShell(child: child);
+        },
+        routes: [
+          GoRoute(
+            path: '/dashboard',
+            name: RouteNames.dashboard,
+            builder: (context, state) =>  MainHome(),
+          ),
+
+          // GoRoute(
+          //   path: '/dashboard',
+          //   name: RouteNames.dashboard,
+          //   builder: (_, __) => const DashboardScreen(),
+          // ),
+          GoRoute(
+            path: '/pos',
+            name: RouteNames.pos,
+            builder: (_, __) => const PosScreen(),
+          ),
+          GoRoute(
+            path: '/orders',
+            name: RouteNames.order,
+            builder: (_, __) => const OrdersScreen(),
+          ),
+          GoRoute(
+            path: '/kitchen',
+            name: RouteNames.kitchen,
+            builder: (_, __) => const KitchenScreen(),
+          ),
+          GoRoute(
+            path: '/reservation',
+            name: RouteNames.reservation,
+            builder: (_, __) => const ReservationScreen(),
+          ),
+        ],
+      ),
+
+      ShellRoute(
+        builder: (_, __, child) {
+          return PosShell(child: child);
+        },
+        routes: [
+          GoRoute(
+            path: '/profile/info',
+            builder: (_, __) => const ProfileInfoPage(),
+          ),
+          GoRoute(
+            path: '/profile/documents',
+            builder: (_, __) => const ProfileDocumentsPage(),
+          ),
+          GoRoute(
+            path: '/profile/settings',
+            builder: (_, __) => const ProfileSettingsPage(),
+          ),
+        ],
+      ),
     ],
   );
 }
+
+

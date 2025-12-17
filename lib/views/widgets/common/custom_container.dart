@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:new_hrms_flutter/views/widgets/common/custom_mouse_region.dart';
 
-class CustomContainer extends StatelessWidget {
-  final VoidCallback onTap;
-  final double width;
-  final double height;
+import '../../../core/constants/app_colors.dart';
+
+
+class CustomContainer extends StatefulWidget {
+  final VoidCallback? onTap;
+  final double? width;
+  final double? height;
+  final bool isNeedHover;
   final BorderRadius borderRadius;
-  final BoxDecoration decoration;
+  final BoxDecoration? decoration;
   final Widget child;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
@@ -15,11 +20,12 @@ class CustomContainer extends StatelessWidget {
 
   const CustomContainer({
     super.key,
-    required this.onTap,
-    required this.decoration,
+    this.onTap,
+    this.decoration,
     required this.child,
-    this.width = 40,
-    this.height = 40,
+    this.isNeedHover = false,
+    this.width,
+    this.height,
     this.borderRadius = const BorderRadius.all(Radius.circular(8)),
     this.padding,
     this.margin,
@@ -29,27 +35,55 @@ class CustomContainer extends StatelessWidget {
   });
 
   @override
+  State<CustomContainer> createState() => _CustomContainerState();
+}
+
+class _CustomContainerState extends State<CustomContainer> {
+  bool isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
+    final BoxDecoration effectiveDecoration =
+        widget.decoration ??
+            BoxDecoration(
+              color: isHovered ? AppColors.grey : AppColors.white,
+              borderRadius: widget.borderRadius,
+              border: Border.all(
+                width: 1,
+                color: Colors.black.withAlpha((0.2 * 255).toInt()),
+              ),
+            );
+
     return Material(
       color: Colors.transparent,
-      borderRadius: borderRadius,
-      child: InkWell(
-        borderRadius: borderRadius,
-        onTap: onTap,
-        child: Container(
-          padding: padding,
-          margin: margin,
-          alignment: alignment,
-          constraints: constraints,
-          clipBehavior: clipBehavior,
-          width: width,
-          height: height,
-          decoration: decoration.copyWith(
-            borderRadius: borderRadius,
+      borderRadius: widget.borderRadius,
+      child: CustomMouseRegion(
+        onHoverChanged: (hovered) {
+          setState(() => isHovered = hovered);
+        },
+        child: InkWell(
+          borderRadius: widget.borderRadius,
+          onTap: widget.onTap,
+          child: Container(
+            width: widget.width,
+            height: widget.height,
+            padding: widget.padding,
+            margin: widget.margin,
+            alignment: widget.alignment,
+            constraints: widget.constraints,
+            clipBehavior: widget.clipBehavior,
+            decoration: effectiveDecoration.copyWith(
+              color: widget.isNeedHover? isHovered ? AppColors.grey.withOpacity(0.010) :AppColors.white:AppColors.white,
+              borderRadius: widget.borderRadius,
+            ),
+            child: widget.child,
           ),
-          child: child,
         ),
       ),
     );
   }
 }
+
+
+
+
