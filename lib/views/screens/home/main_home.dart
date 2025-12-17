@@ -12,6 +12,7 @@ import 'package:new_hrms_flutter/views/widgets/responsive/responsive.dart';
 import 'package:new_hrms_flutter/views/widgets/dashboard/active_order_list.dart';
 import 'package:new_hrms_flutter/views/widgets/dashboard/dashboard_card.dart';
 import '../../../domain/models/dashBoardModel/dash_board_metric_item.dart';
+import '../../../domain/models/dashBoardModel/dashboard_item.dart';
 import '../../widgets/common/custom_checkbox.dart';
 import '../../widgets/common/custom_container.dart';
 import '../../widgets/common/custom_divider.dart';
@@ -32,6 +33,11 @@ String selectedPeriod = 'Weekly';
 String selectedTopSelling = 'All';
 bool isChecked = false;
 
+DashboardItem? selectedDashboardMenu = dashboardMenuitems.isNotEmpty ? dashboardMenuitems.first : null;
+
+DashboardItem? selectedTopSellingItem = topSellingList.isNotEmpty ? topSellingList.first : null;
+
+
 class MainHome extends StatefulWidget {
   const MainHome({super.key});
 
@@ -50,71 +56,24 @@ class _HomeScreenState extends State<MainHome> {
         final isTablet = MediaQuery.of(context).size.width >= 1000;
         final isDesktop = Responsive.isDesktop(context) ;
 
-        return Scaffold(
+        return CustomDrawer(
           backgroundColor: const Color(0xFFF8F8F8),
 
           drawer: !isDesktop? Drawer(child: _buildSidebar()) : null,
 
-          body: Row(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if(isDesktop || isTablet)
-                Container(
-                width: 60,
-                decoration: BoxDecoration(color: AppColors.greySide),
-                height: MediaQuery.of(context).size.height,
-                child: Stack(
-                  children: [
-                    Positioned.fill(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 20),
-                            ...List.generate(dashboardItems.length, (index) {
-                              final item = dashboardItems[index];
-                              return ListTile(
-                                leading: Icon(item.icon, size: 18),
-                              );
-                            }),
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    Positioned(
-                      bottom: 10,
-                      left: 0,
-                      right: 0,
-                      child: Center(child: _iconButton(Icons.notifications)),
-                    ),
-                  ],
-                ),
-              ),
-
+              if (isDesktop) _buildSidebar(),
               Expanded(
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (isDesktop || isTablet)
-                            SizedBox(width: 260, child: _buildSidebar()),
-
-                          Expanded(
-                            child: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  _buildTopBar(isMobile),
-                                  _buildHeaderBar(isMobile),
-                                  _buildMainContent(width),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      _buildTopBar(isMobile),
+                      _buildHeaderBar(isMobile),
+                      _buildMainContent(width),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -188,67 +147,170 @@ class _HomeScreenState extends State<MainHome> {
   Widget _buildSidebar() {
     final menu = ['Dashboard', 'POS', 'Orders', 'Kitchen', 'Reservation'];
 
-    return Container(
-      height: double.infinity,
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          top: BorderSide(
-            color: Colors.black.withAlpha((0.2 * 255).toInt()),
-            width: 0.60,
-          ),
-          left: BorderSide(
-            color: Colors.black.withAlpha((0.2 * 255).toInt()),
-            width: 0.60,
-          ),
-          right: BorderSide(
-            color: Colors.black.withAlpha((0.2 * 255).toInt()),
-            width: 0.60,
-          ),
-        ),
-        borderRadius: BorderRadius.circular(3),
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            DropDownCards(
-              value: selectedMenu,
-              items: const ['New Order', 'Order List', 'Returns', 'Reports'],
-              onChanged: (value) {
-                setState(() {
-                  selectedMenu = value;
-                });
-              },
-              childBuilder: (value) => Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 10,
+    return Row(
+      children: [
+          Container(
+            width: 60,
+            decoration: const BoxDecoration(color: AppColors.greySide),
+            height: MediaQuery.of(context).size.height,
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 13),
+                        SvgPicture.asset(AppAssets.mainLogoIcon, width: 30, height: 32),
+                         const SizedBox(height: 13),
+                        ...List.generate(dashboardIcons.length, (index) {
+                          final item = dashboardIcons[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 8.0, top: 15,bottom: 8.0, right: 8.0),
+                            child: SvgPicture.asset("${item.svgIcon}", width: 15, height: 15),
+                          );
+                        }),
+                      ],
+                    ),
+                  ),
                 ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(6),
-                  border: Border.all(color: Colors.grey.shade300),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(Icons.shopping_cart, size: 18),
-                    const SizedBox(width: 8),
-                    Text(value),
-                    const SizedBox(width: 6),
-                    const Icon(Icons.keyboard_arrow_down, size: 18),
-                  ],
-                ),
-              ),
-            ),
 
-            SizedBox(height: 20),
-            ...menu.map(_menuItem),
-          ],
+                Positioned(
+                  bottom: 10,
+                  left: 0,
+                  right: 0,
+                  child: Center(child: _iconButton(Icons.notifications)),
+                ),
+              ],
+            ),
+          ),
+
+        Container(
+          width: 215,
+          height: double.infinity,
+          // padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border(
+              top: Responsive.isDesktop(context)? BorderSide(
+                color: Colors.black.withAlpha((0.2 * 255).toInt()),
+                width: 0.60,
+              ): BorderSide.none,
+              left: BorderSide(
+                color: Colors.black.withAlpha((0.2 * 255).toInt()),
+                width: 0.60,
+              ),
+              right: Responsive.isDesktop(context)? BorderSide(
+                color: Colors.black.withAlpha((0.2 * 255).toInt()),
+                width: 0.60,
+              ): BorderSide.none,
+            ),
+            borderRadius: BorderRadius.circular(0),
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 10),
+               Row(
+                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                 children: [
+
+
+               Flexible(
+                 child: DropDownCards<DashboardItem?>(
+                   value: selectedDashboardMenu,
+                   items: dashboardMenuitems,
+                   onChanged: (module) {
+                     setState(() => selectedDashboardMenu = module);
+                   },
+                   childBuilder: (module) => Row(
+                     mainAxisSize: MainAxisSize.min,
+                     children: [
+                       if (module?.svgIcon != null)
+                         Image.asset(
+                           module!.svgIcon!,
+                           width: 16,
+                           height: 16,
+                           errorBuilder: (context, error, stackTrace) {
+                             return const Icon(Icons.image_not_supported, size: 16);
+                           },
+                         ),
+                       const SizedBox(width: 8),
+                       Flexible(child: Text("${module?.title}", overflow: TextOverflow.ellipsis)),
+                       const Icon(Icons.keyboard_arrow_down),
+                     ],
+                   ),
+                   itemBuilder: (module, isSelected) => Row(
+                     children: [
+                       if (module?.svgIcon != null)
+                         Image.asset(
+                           module!.svgIcon!,
+                           width: 16,
+                           height: 16,
+                           errorBuilder: (context, error, stackTrace) {
+                             return const Icon(Icons.image_not_supported, size: 16);
+                           },
+                         ),
+                       const SizedBox(width: 8),
+                       Expanded(child: Text("${module?.title}")),
+                       // if (isSelected)
+                       //   const Icon(Icons.check, size: 16, color: Colors.green),
+                     ],
+                   ),
+                 ),
+               ),
+
+            // DropDownCards(
+            //        value: selectedMenu,
+            //        items: const ['New Order', 'Order List', 'Returns', 'Reports'],
+            //        onChanged: (value) {
+            //          setState(() {
+            //            selectedMenu = value;
+            //          });
+            //        },
+            //        childBuilder: (value) => Container(
+            //          padding: const EdgeInsets.symmetric(
+            //            horizontal: 12,
+            //            vertical: 10,
+            //          ),
+            //          decoration: BoxDecoration(
+            //            color: Colors.white,
+            //            borderRadius: BorderRadius.circular(6),
+            //            // border: Border.all(color: Colors.grey.shade300),
+            //          ),
+            //          child: Row(
+            //            mainAxisSize: MainAxisSize.min,
+            //            children: [
+            //              Image.asset(AppAssets.restaurantIcon, width: 16),
+            //              const SizedBox(width: 8),
+            //              Text(value),
+            //              const SizedBox(width: 6),
+            //              const Icon(Icons.keyboard_arrow_down, size: 18),
+            //            ],
+            //          ),
+            //        ),
+            //      ),
+
+                 Padding(
+                   padding: const EdgeInsets.only(right: 10),
+                   child: Icon(Icons.close_sharp, size: 23,),
+                 )
+               ],),
+                CustomDivider(
+                    thickness: 0.50,
+                    verticalPadding: 0,
+                    color: Colors.black.withAlpha(
+                      (0.2 * 255).toInt(),
+                    ),
+                ),
+
+                // SizedBox(height: 20),
+                ...menu.map(_menuItem),
+              ],
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 
@@ -256,14 +318,14 @@ class _HomeScreenState extends State<MainHome> {
     return Padding(
       padding: const EdgeInsets.all(3.0),
       child: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.only(left: 10,top: 10),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(6),
+          borderRadius: BorderRadius.circular(5),
         ),
         child: Row(
           children: [
-            const Icon(Icons.dashboard, size: 18),
+            const Icon(Icons.dashboard, size: 16),
             const SizedBox(width: 10),
             Text(title),
           ],
@@ -729,42 +791,63 @@ class _TopSellingCardState extends State<TopSellingCard> {
                 ],
               ),
 
-              DropDownCards(
-                value: selectedTopSelling,
-                items: const ['Sea food', 'Pizza', 'Salads'],
-                onChanged: (value) {
-                  setState(() {
-                    selectedTopSelling = value;
-                  });
+              DropDownCards<DashboardItem?>(
+                value: selectedTopSellingItem,
+                items: topSellingList,
+                onChanged: (module) {
+                  setState(() => selectedTopSellingItem = module);
                 },
-                childBuilder: (value) => Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 5,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(6),
-                    border: Border.all(color: Colors.grey.shade300),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        value,
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(
-                              fontSize: 12,
-                              color: Colors.black54,
-                              fontWeight: FontWeight.w400,
-                            ),
-                      ),
-                      const SizedBox(width: 6),
-                      const Icon(Icons.keyboard_arrow_down, size: 18),
-                    ],
-                  ),
+                childBuilder: (module) => Row(
+                  children: [
+                    Text("${module?.title}"),
+                    const Icon(Icons.keyboard_arrow_down),
+                  ],
+                ),
+                itemBuilder: (module, isSelected) => Row(
+                  children: [
+                    Expanded(child: Text("${module?.title}")),
+                    // if (isSelected)
+                    //   const Icon(Icons.check, size: 16, color: Colors.green),
+                  ],
                 ),
               ),
+
+              // DropDownCards(
+              //   value: selectedTopSelling,
+              //   items: const ['Sea food', 'Pizza', 'Salads'],
+              //   onChanged: (value) {
+              //     setState(() {
+              //       selectedTopSelling = value;
+              //     });
+              //   },
+              //   childBuilder: (value) => Container(
+              //     padding: const EdgeInsets.symmetric(
+              //       horizontal: 10,
+              //       vertical: 5,
+              //     ),
+              //     decoration: BoxDecoration(
+              //       color: Colors.white,
+              //       borderRadius: BorderRadius.circular(6),
+              //       border: Border.all(color: Colors.grey.shade300),
+              //     ),
+              //     child: Row(
+              //       mainAxisSize: MainAxisSize.min,
+              //       children: [
+              //         Text(
+              //           value,
+              //           style: Theme.of(context).textTheme.titleMedium
+              //               ?.copyWith(
+              //                 fontSize: 12,
+              //                 color: Colors.black54,
+              //                 fontWeight: FontWeight.w400,
+              //               ),
+              //         ),
+              //         const SizedBox(width: 6),
+              //         const Icon(Icons.keyboard_arrow_down, size: 18),
+              //       ],
+              //     ),
+              //   ),
+              // ),
             ],
           ),
           CustomDivider(
@@ -772,6 +855,8 @@ class _TopSellingCardState extends State<TopSellingCard> {
             verticalPadding: 15,
             color: Colors.black.withAlpha((0.2 * 255).toInt()),
           ),
+
+
 
           CustomContainer(
             width: double.infinity,
@@ -883,7 +968,6 @@ class _TopSellingCardState extends State<TopSellingCard> {
               ),
             ),
           ),
-
           Spacer(),
           ListView.builder(
             itemCount: menuList.length,
@@ -970,34 +1054,75 @@ class _GraphChartPageState extends State<GraphChartPage> {
                   ],
                 ),
 
-                DropDownCards(
-                  value: selectedPeriod,
-                  items: const ['Weekly', 'Monthly', 'yearly'],
-                  onChanged: (value) {
-                    setState(() {
-                      selectedPeriod = value;
-                    });
+                DropDownCards<DashboardItem?>(
+                  value: selectedDashboardMenu,
+                  items: dashboardMenuitems,
+                  onChanged: (module) {
+                    setState(() => selectedDashboardMenu = module);
                   },
-                  childBuilder: (value) => Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 5,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(6),
-                      border: Border.all(color: Colors.grey.shade300),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(value, style: const TextStyle(fontSize: 12)),
-                        const SizedBox(width: 6),
-                        const Icon(Icons.keyboard_arrow_down, size: 18),
-                      ],
-                    ),
+                  childBuilder: (module) => Row(
+                    children: [
+                      if (module?.svgIcon != null)
+                        Image.asset(
+                          module!.svgIcon!,
+                          width: 16,
+                          height: 16,
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Icon(Icons.image_not_supported, size: 16);
+                          },
+                        ),
+                      const SizedBox(width: 8),
+                      Text("${module?.title}"),
+                      const Icon(Icons.keyboard_arrow_down),
+                    ],
+                  ),
+                  itemBuilder: (module, isSelected) => Row(
+                    children: [
+                      if (module?.svgIcon != null)
+                        Image.asset(
+                          module!.svgIcon!,
+                          width: 16,
+                          height: 16,
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Icon(Icons.image_not_supported, size: 16);
+                          },
+                        ),
+                      const SizedBox(width: 8),
+                      Expanded(child: Text("${module?.title}")),
+                      // if (isSelected)
+                      //   const Icon(Icons.check, size: 16, color: Colors.green),
+                    ],
                   ),
                 ),
+
+                // DropDownCards(
+                //   value: selectedPeriod,
+                //   items: const ['Weekly', 'Monthly', 'yearly'],
+                //   onChanged: (value) {
+                //     setState(() {
+                //       selectedPeriod = value;
+                //     });
+                //   },
+                //   childBuilder: (value) => Container(
+                //     padding: const EdgeInsets.symmetric(
+                //       horizontal: 10,
+                //       vertical: 5,
+                //     ),
+                //     decoration: BoxDecoration(
+                //       color: Colors.white,
+                //       borderRadius: BorderRadius.circular(6),
+                //       border: Border.all(color: Colors.grey.shade300),
+                //     ),
+                //     child: Row(
+                //       mainAxisSize: MainAxisSize.min,
+                //       children: [
+                //         Text(value, style: const TextStyle(fontSize: 12)),
+                //         const SizedBox(width: 6),
+                //         const Icon(Icons.keyboard_arrow_down, size: 18),
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -1149,42 +1274,61 @@ class DashboardItemCard extends StatelessWidget {
   }
 }
 
-class DashboardItem {
-  final String title;
-  final IconData icon;
-  final Color color;
 
-  DashboardItem(this.title, this.icon, this.color);
-}
+// final List<DashboardItem> dashboardItems = [
+//   DashboardItem("Employees", Icons.people_alt_rounded, Colors.blue),
+//   DashboardItem("Attendance", Icons.access_time_filled, Colors.green),
+//   DashboardItem("Leave", Icons.calendar_month, Colors.orange),
+//   DashboardItem("Payroll", Icons.payments, Colors.pink),
+//   DashboardItem("Departments", Icons.business_center, Colors.purple),
+//   DashboardItem("Tasks", Icons.task, Colors.indigo),
+//   DashboardItem("Settings", Icons.settings, Colors.grey),
+//   DashboardItem("Reports", Icons.analytics_outlined, Colors.red),
+// ];
 
-class DashboardIcons {
-  final IconData icon;
-  final Color color;
-
-  DashboardIcons(this.icon, this.color);
-}
-
-final List<DashboardItem> dashboardItems = [
-  DashboardItem("Employees", Icons.people_alt_rounded, Colors.blue),
-  DashboardItem("Attendance", Icons.access_time_filled, Colors.green),
-  DashboardItem("Leave", Icons.calendar_month, Colors.orange),
-  DashboardItem("Payroll", Icons.payments, Colors.pink),
-  DashboardItem("Departments", Icons.business_center, Colors.purple),
-  DashboardItem("Tasks", Icons.task, Colors.indigo),
-  DashboardItem("Settings", Icons.settings, Colors.grey),
-  DashboardItem("Reports", Icons.analytics_outlined, Colors.red),
+final List<DashboardItem> dashboardIcons = [
+  DashboardItem(svgIcon: AppAssets.mainMenuIcon),
+  DashboardItem(svgIcon: AppAssets.manageIcon),
+  DashboardItem(svgIcon: AppAssets.operationIcon),
+  DashboardItem(svgIcon: AppAssets.adminIcon),
+  DashboardItem(svgIcon: AppAssets.authIcon),
+  DashboardItem(svgIcon: AppAssets.settingsIcon),
 ];
 
-final List<DashboardIcons> dashboardIcons = [
-  DashboardIcons(Icons.people_alt_rounded, Colors.blue),
-  DashboardIcons(Icons.access_time_filled, Colors.green),
-  DashboardIcons(Icons.calendar_month, Colors.orange),
-  DashboardIcons(Icons.payments, Colors.pink),
-  DashboardIcons(Icons.business_center, Colors.purple),
-  DashboardIcons(Icons.task, Colors.indigo),
-  DashboardIcons(Icons.settings, Colors.grey),
-  DashboardIcons(Icons.analytics_outlined, Colors.red),
+final List<DashboardItem> dashboardMenuitems = [
+  DashboardItem(
+    title: 'Total Sales',
+    svgIcon: AppAssets.dropMenu2,
+  ),
+  DashboardItem(
+    title: 'Total Sales',
+    svgIcon: AppAssets.dropMenu2,
+  ),
+  DashboardItem(
+    title: 'Total Sales',
+    svgIcon: AppAssets.dropMenu2,
+  ),
+  DashboardItem(
+    title: 'Total Sales',
+    svgIcon: AppAssets.dropMenu2,
+  ),
 ];
+
+final List<DashboardItem> topSellingList = [
+  DashboardItem(
+    title: 'All Items',
+  ),
+  DashboardItem(
+    title: 'Sea Food',
+  ),
+  DashboardItem(
+    title: 'Pizza',
+  ),
+  DashboardItem(
+    title: 'Salads',
+  ),
+];
+
 
 final List<DashboardMetricItem> dashboardMetrics = [
   DashboardMetricItem(
