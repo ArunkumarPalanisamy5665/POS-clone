@@ -21,6 +21,7 @@ import '../../widgets/dashboard/category_statistics.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../widgets/dashboard/sales_performance_card.dart';
+import '../../widgets/dashboard/tables_available_list.dart';
 import 'home_screen.dart';
 
 class AppBreakpoints {
@@ -589,7 +590,7 @@ class _HomeScreenState extends State<MainHome> {
                   title: 'Tables Available',
                   actionText: 'View All',
                   imagePath: 'assets/images/tables_available.png',
-                  body: Center(child: Text('Sales Chart')),
+                  body: TableGridView(),
                 ),
                 const DashboardCard(
                   title: 'Notifications',
