@@ -3,6 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../../core/constants/app_export.dart';
 import '../common/custom_button2.dart';
+import '../common/custom_text.dart';
 
 class ActiveOrderList {
   final String name;
@@ -93,12 +94,15 @@ class ActiveOrders extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          order.name,
-                          style: const TextStyle(
+                        CustomText(
+                            order.name,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                          ),
+                          )
                         ),
                         const SizedBox(height: 4),
                         Text(
