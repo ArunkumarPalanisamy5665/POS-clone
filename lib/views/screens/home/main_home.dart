@@ -22,6 +22,7 @@ import '../../widgets/dashboard/category_statistics.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../widgets/dashboard/sales_performance_card.dart';
 import '../../widgets/dashboard/tables_available_list.dart';
+import '../../widgets/orders/order_status_card.dart';
 import 'home_screen.dart';
 
 class AppBreakpoints {
@@ -34,10 +35,13 @@ String selectedPeriod = 'Weekly';
 String selectedTopSelling = 'All';
 bool isChecked = false;
 
-DashboardItem? selectedDashboardMenu = dashboardMenuitems.isNotEmpty ? dashboardMenuitems.first : null;
+DashboardItem? selectedDashboardMenu = dashboardMenuitems.isNotEmpty
+    ? dashboardMenuitems.first
+    : null;
 
-DashboardItem? selectedTopSellingItem = topSellingList.isNotEmpty ? topSellingList.first : null;
-
+DashboardItem? selectedTopSellingItem = topSellingList.isNotEmpty
+    ? topSellingList.first
+    : null;
 
 class MainHome extends StatefulWidget {
   const MainHome({super.key});
@@ -55,12 +59,12 @@ class _HomeScreenState extends State<MainHome> {
 
         final isMobile = Responsive.isMobile(context);
         final isTablet = MediaQuery.of(context).size.width >= 1000;
-        final isDesktop = Responsive.isDesktop(context) ;
+        final isDesktop = Responsive.isDesktop(context);
 
         return CustomDrawer(
           backgroundColor: const Color(0xFFF8F8F8),
 
-          drawer: !isDesktop? Drawer(child: _buildSidebar()) : null,
+          drawer: !isDesktop ? Drawer(child: _buildSidebar()) : null,
 
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,7 +97,8 @@ class _HomeScreenState extends State<MainHome> {
       ),
       child: Row(
         children: [
-          if (Responsive.isMobile(context) || MediaQuery.of(context).size.width < 1000)
+          if (Responsive.isMobile(context) ||
+              MediaQuery.of(context).size.width < 1000)
             Builder(
               builder: (context) => IconButton(
                 icon: const Icon(Icons.menu),
@@ -150,40 +155,53 @@ class _HomeScreenState extends State<MainHome> {
 
     return Row(
       children: [
-          Container(
-            width: 60,
-            decoration: const BoxDecoration(color: AppColors.greySide),
-            height: MediaQuery.of(context).size.height,
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 13),
-                        SvgPicture.asset(AppAssets.mainLogoIcon, width: 30, height: 32),
-                         const SizedBox(height: 13),
-                        ...List.generate(dashboardIcons.length, (index) {
-                          final item = dashboardIcons[index];
-                          return Padding(
-                            padding: const EdgeInsets.only(left: 8.0, top: 15,bottom: 8.0, right: 8.0),
-                            child: SvgPicture.asset("${item.svgIcon}", width: 15, height: 15),
-                          );
-                        }),
-                      ],
-                    ),
+        Container(
+          width: 60,
+          decoration: const BoxDecoration(color: AppColors.greySide),
+          height: MediaQuery.of(context).size.height,
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 13),
+                      SvgPicture.asset(
+                        AppAssets.mainLogoIcon,
+                        width: 30,
+                        height: 32,
+                      ),
+                      const SizedBox(height: 13),
+                      ...List.generate(dashboardIcons.length, (index) {
+                        final item = dashboardIcons[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                            left: 8.0,
+                            top: 15,
+                            bottom: 8.0,
+                            right: 8.0,
+                          ),
+                          child: SvgPicture.asset(
+                            "${item.svgIcon}",
+                            width: 15,
+                            height: 15,
+                          ),
+                        );
+                      }),
+                    ],
                   ),
                 ),
+              ),
 
-                Positioned(
-                  bottom: 10,
-                  left: 0,
-                  right: 0,
-                  child: Center(child: _iconButton(Icons.notifications)),
-                ),
-              ],
-            ),
+              Positioned(
+                bottom: 10,
+                left: 0,
+                right: 0,
+                child: Center(child: _iconButton(Icons.notifications)),
+              ),
+            ],
           ),
+        ),
 
         Container(
           width: 215,
@@ -192,18 +210,22 @@ class _HomeScreenState extends State<MainHome> {
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border(
-              top: Responsive.isDesktop(context)? BorderSide(
-                color: Colors.black.withAlpha((0.2 * 255).toInt()),
-                width: 0.60,
-              ): BorderSide.none,
+              top: Responsive.isDesktop(context)
+                  ? BorderSide(
+                      color: Colors.black.withAlpha((0.2 * 255).toInt()),
+                      width: 0.60,
+                    )
+                  : BorderSide.none,
               left: BorderSide(
                 color: Colors.black.withAlpha((0.2 * 255).toInt()),
                 width: 0.60,
               ),
-              right: Responsive.isDesktop(context)? BorderSide(
-                color: Colors.black.withAlpha((0.2 * 255).toInt()),
-                width: 0.60,
-              ): BorderSide.none,
+              right: Responsive.isDesktop(context)
+                  ? BorderSide(
+                      color: Colors.black.withAlpha((0.2 * 255).toInt()),
+                      width: 0.60,
+                    )
+                  : BorderSide.none,
             ),
             borderRadius: BorderRadius.circular(0),
           ),
@@ -212,97 +234,104 @@ class _HomeScreenState extends State<MainHome> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 10),
-               Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 children: [
-
-
-               Flexible(
-                 child: DropDownCards<DashboardItem?>(
-                   value: selectedDashboardMenu,
-                   items: dashboardMenuitems,
-                   onChanged: (module) {
-                     setState(() => selectedDashboardMenu = module);
-                   },
-                   childBuilder: (module) => Row(
-                     mainAxisSize: MainAxisSize.min,
-                     children: [
-                       if (module?.svgIcon != null)
-                         Image.asset(
-                           module!.svgIcon!,
-                           width: 16,
-                           height: 16,
-                           errorBuilder: (context, error, stackTrace) {
-                             return const Icon(Icons.image_not_supported, size: 16);
-                           },
-                         ),
-                       const SizedBox(width: 8),
-                       Flexible(child: Text("${module?.title}", overflow: TextOverflow.ellipsis)),
-                       const Icon(Icons.keyboard_arrow_down),
-                     ],
-                   ),
-                   itemBuilder: (module, isSelected) => Row(
-                     children: [
-                       if (module?.svgIcon != null)
-                         Image.asset(
-                           module!.svgIcon!,
-                           width: 16,
-                           height: 16,
-                           errorBuilder: (context, error, stackTrace) {
-                             return const Icon(Icons.image_not_supported, size: 16);
-                           },
-                         ),
-                       const SizedBox(width: 8),
-                       Expanded(child: Text("${module?.title}")),
-                       // if (isSelected)
-                       //   const Icon(Icons.check, size: 16, color: Colors.green),
-                     ],
-                   ),
-                 ),
-               ),
-
-            // DropDownCards(
-            //        value: selectedMenu,
-            //        items: const ['New Order', 'Order List', 'Returns', 'Reports'],
-            //        onChanged: (value) {
-            //          setState(() {
-            //            selectedMenu = value;
-            //          });
-            //        },
-            //        childBuilder: (value) => Container(
-            //          padding: const EdgeInsets.symmetric(
-            //            horizontal: 12,
-            //            vertical: 10,
-            //          ),
-            //          decoration: BoxDecoration(
-            //            color: Colors.white,
-            //            borderRadius: BorderRadius.circular(6),
-            //            // border: Border.all(color: Colors.grey.shade300),
-            //          ),
-            //          child: Row(
-            //            mainAxisSize: MainAxisSize.min,
-            //            children: [
-            //              Image.asset(AppAssets.restaurantIcon, width: 16),
-            //              const SizedBox(width: 8),
-            //              Text(value),
-            //              const SizedBox(width: 6),
-            //              const Icon(Icons.keyboard_arrow_down, size: 18),
-            //            ],
-            //          ),
-            //        ),
-            //      ),
-
-                 Padding(
-                   padding: const EdgeInsets.only(right: 10),
-                   child: Icon(Icons.close_sharp, size: 23,),
-                 )
-               ],),
-                CustomDivider(
-                    thickness: 0.50,
-                    verticalPadding: 0,
-                    color: Colors.black.withAlpha(
-                      (0.2 * 255).toInt(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: DropDownCards<DashboardItem?>(
+                        value: selectedDashboardMenu,
+                        items: dashboardMenuitems,
+                        onChanged: (module) {
+                          setState(() => selectedDashboardMenu = module);
+                        },
+                        childBuilder: (module) => Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (module?.svgIcon != null)
+                              Image.asset(
+                                module!.svgIcon!,
+                                width: 16,
+                                height: 16,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return const Icon(
+                                    Icons.image_not_supported,
+                                    size: 16,
+                                  );
+                                },
+                              ),
+                            const SizedBox(width: 8),
+                            Flexible(
+                              child: Text(
+                                "${module?.title}",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const Icon(Icons.keyboard_arrow_down),
+                          ],
+                        ),
+                        itemBuilder: (module, isSelected) => Row(
+                          children: [
+                            if (module?.svgIcon != null)
+                              Image.asset(
+                                module!.svgIcon!,
+                                width: 16,
+                                height: 16,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return const Icon(
+                                    Icons.image_not_supported,
+                                    size: 16,
+                                  );
+                                },
+                              ),
+                            const SizedBox(width: 8),
+                            Expanded(child: Text("${module?.title}")),
+                            // if (isSelected)
+                            //   const Icon(Icons.check, size: 16, color: Colors.green),
+                          ],
+                        ),
+                      ),
                     ),
+
+                    // DropDownCards(
+                    //        value: selectedMenu,
+                    //        items: const ['New Order', 'Order List', 'Returns', 'Reports'],
+                    //        onChanged: (value) {
+                    //          setState(() {
+                    //            selectedMenu = value;
+                    //          });
+                    //        },
+                    //        childBuilder: (value) => Container(
+                    //          padding: const EdgeInsets.symmetric(
+                    //            horizontal: 12,
+                    //            vertical: 10,
+                    //          ),
+                    //          decoration: BoxDecoration(
+                    //            color: Colors.white,
+                    //            borderRadius: BorderRadius.circular(6),
+                    //            // border: Border.all(color: Colors.grey.shade300),
+                    //          ),
+                    //          child: Row(
+                    //            mainAxisSize: MainAxisSize.min,
+                    //            children: [
+                    //              Image.asset(AppAssets.restaurantIcon, width: 16),
+                    //              const SizedBox(width: 8),
+                    //              Text(value),
+                    //              const SizedBox(width: 6),
+                    //              const Icon(Icons.keyboard_arrow_down, size: 18),
+                    //            ],
+                    //          ),
+                    //        ),
+                    //      ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Icon(Icons.close_sharp, size: 23),
+                    ),
+                  ],
+                ),
+                CustomDivider(
+                  thickness: 0.50,
+                  verticalPadding: 0,
+                  color: Colors.black.withAlpha((0.2 * 255).toInt()),
                 ),
 
                 // SizedBox(height: 20),
@@ -319,7 +348,7 @@ class _HomeScreenState extends State<MainHome> {
     return Padding(
       padding: const EdgeInsets.all(3.0),
       child: Container(
-        padding: const EdgeInsets.only(left: 10,top: 10),
+        padding: const EdgeInsets.only(left: 10, top: 10),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(5),
@@ -334,6 +363,7 @@ class _HomeScreenState extends State<MainHome> {
       ),
     );
   }
+
 
   Widget _buildHeaderBar(bool isMobile) {
     return Padding(
@@ -369,19 +399,20 @@ class _HomeScreenState extends State<MainHome> {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: MediaQuery.of(context).size.width <=650
+              crossAxisCount: MediaQuery.of(context).size.width <= 650
                   ? 1
                   : MediaQuery.of(context).size.width <= 1200
                   ? 2
                   : 4,
               mainAxisSpacing: 1,
               crossAxisSpacing: 1,
-              childAspectRatio: MediaQuery.of(context).size.width <=900? 3: 2.5,
+              childAspectRatio: MediaQuery.of(context).size.width <= 900
+                  ? 3
+                  : 2.5,
             ),
             itemCount: dashboardMetrics.length,
             itemBuilder: (context, index) {
@@ -857,8 +888,6 @@ class _TopSellingCardState extends State<TopSellingCard> {
             color: Colors.black.withAlpha((0.2 * 255).toInt()),
           ),
 
-
-
           CustomContainer(
             width: double.infinity,
             height: MediaQuery.of(context).size.height * 0.065,
@@ -1069,7 +1098,10 @@ class _GraphChartPageState extends State<GraphChartPage> {
                           width: 16,
                           height: 16,
                           errorBuilder: (context, error, stackTrace) {
-                            return const Icon(Icons.image_not_supported, size: 16);
+                            return const Icon(
+                              Icons.image_not_supported,
+                              size: 16,
+                            );
                           },
                         ),
                       const SizedBox(width: 8),
@@ -1085,7 +1117,10 @@ class _GraphChartPageState extends State<GraphChartPage> {
                           width: 16,
                           height: 16,
                           errorBuilder: (context, error, stackTrace) {
-                            return const Icon(Icons.image_not_supported, size: 16);
+                            return const Icon(
+                              Icons.image_not_supported,
+                              size: 16,
+                            );
                           },
                         ),
                       const SizedBox(width: 8),
@@ -1275,7 +1310,6 @@ class DashboardItemCard extends StatelessWidget {
   }
 }
 
-
 // final List<DashboardItem> dashboardItems = [
 //   DashboardItem("Employees", Icons.people_alt_rounded, Colors.blue),
 //   DashboardItem("Attendance", Icons.access_time_filled, Colors.green),
@@ -1297,39 +1331,18 @@ final List<DashboardItem> dashboardIcons = [
 ];
 
 final List<DashboardItem> dashboardMenuitems = [
-  DashboardItem(
-    title: 'Total Sales',
-    svgIcon: AppAssets.dropMenu2,
-  ),
-  DashboardItem(
-    title: 'Total Sales',
-    svgIcon: AppAssets.dropMenu2,
-  ),
-  DashboardItem(
-    title: 'Total Sales',
-    svgIcon: AppAssets.dropMenu2,
-  ),
-  DashboardItem(
-    title: 'Total Sales',
-    svgIcon: AppAssets.dropMenu2,
-  ),
+  DashboardItem(title: 'Total Sales', svgIcon: AppAssets.dropMenu2),
+  DashboardItem(title: 'Total Sales', svgIcon: AppAssets.dropMenu2),
+  DashboardItem(title: 'Total Sales', svgIcon: AppAssets.dropMenu2),
+  DashboardItem(title: 'Total Sales', svgIcon: AppAssets.dropMenu2),
 ];
 
 final List<DashboardItem> topSellingList = [
-  DashboardItem(
-    title: 'All Items',
-  ),
-  DashboardItem(
-    title: 'Sea Food',
-  ),
-  DashboardItem(
-    title: 'Pizza',
-  ),
-  DashboardItem(
-    title: 'Salads',
-  ),
+  DashboardItem(title: 'All Items'),
+  DashboardItem(title: 'Sea Food'),
+  DashboardItem(title: 'Pizza'),
+  DashboardItem(title: 'Salads'),
 ];
-
 
 final List<DashboardMetricItem> dashboardMetrics = [
   DashboardMetricItem(
