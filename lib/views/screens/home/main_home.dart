@@ -4,6 +4,7 @@ import 'package:new_hrms_flutter/views/screens/home/widgets/dashBoardWidgets/gra
 import 'package:new_hrms_flutter/views/screens/home/widgets/dashBoardWidgets/trending_menu.dart';
 import 'package:new_hrms_flutter/views/screens/home/widgets/linear_chart_box.dart';
 import 'package:new_hrms_flutter/views/screens/home/widgets/metric_card.dart';
+import 'package:new_hrms_flutter/views/widgets/common/custom_small_card.dart';
 import 'package:new_hrms_flutter/views/widgets/common/drop_down_cards.dart';
 import 'package:new_hrms_flutter/views/widgets/dashboard/notification_list.dart';
 import 'package:new_hrms_flutter/views/widgets/dashboard/reservation_list.dart';
@@ -110,14 +111,55 @@ class _HomeScreenState extends State<MainHome> {
           if (!isMobile)
             Row(
               children: [
-                _button('Sync Data', AppAssets.syncIcon, isBold: true),
-                const SizedBox(width: 10),
-                _button('Export', AppAssets.exportFileIcon, suffixIcon: false),
-                const SizedBox(width: 10),
-                _button(
-                  '15 Nov 25 - 15 Dec 25',
-                  AppAssets.calendarIcon,
+                CustomSmallCard(
+                  text: 'Sync Data',
+                  svgIcon: AppAssets.syncIcon,
+                  prefixIcon: true,
                   suffixIcon: false,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.grey.shade300),
+                  ),
+                  textStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    fontWeight:  FontWeight.w500,
+                  ),
+                  isNeedHover: true,
+                  onTap: () {},
+                ),
+                const SizedBox(width: 10),
+                CustomSmallCard(
+                  text: 'Export',
+                  svgIcon: AppAssets.exportFileIcon,
+                  prefixIcon: true,
+                  suffixIcon: false,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.grey.shade300),
+                  ),
+                  textStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    fontWeight:  FontWeight.w400,
+                  ),
+                  isNeedHover: true,
+                  onTap: () {},
+                ),
+                const SizedBox(width: 10),
+                CustomSmallCard(
+                  text: '15 Nov 25 - 15 Dec 25',
+                  svgIcon: AppAssets.calendarIcon,
+                  prefixIcon: true,
+                  suffixIcon: false,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.grey.shade300),
+                  ),
+                  textStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    fontWeight:  FontWeight.w400,
+                  ),
+                  isNeedHover: true,
+                  onTap: () {},
                 ),
               ],
             ),
@@ -366,56 +408,6 @@ class _HomeScreenState extends State<MainHome> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _button(
-    String text,
-    String svgIcon, {
-    bool primary = false,
-    bool suffixIcon = false,
-        bool isBold = false,
-  }) {
-    return CustomContainer(
-      onTap: () {},
-      isNeedHover: true,
-      padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 8),
-      borderRadius: BorderRadius.circular(5),
-      decoration: BoxDecoration(
-        color: primary ? const Color(0xFF0C76E1) : Colors.white,
-        border: primary ? null : Border.all(color: Colors.grey.shade300, width: 0.75),
-      ),
-      child: Row(
-        children: [
-          SvgPicture.asset(svgIcon, width: 16, height: 16),
-          SizedBox(width: 6),
-          CustomText(
-            text,
-
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: primary ? Colors.white : Colors.black,
-              fontWeight:isBold ? FontWeight.w500 : FontWeight.w400,
-              fontSize: 14,
-              letterSpacing: 0
-            ),
-          ),
-          suffixIcon
-              ? const Icon(Icons.keyboard_arrow_down_rounded, size: 20)
-              : SizedBox(),
-        ],
-      ),
-    );
-  }
-
-  Widget _iconButton(IconData icon) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: Colors.grey.shade300),
-      ),
-      child: Icon(icon, size: 18),
     );
   }
 }
