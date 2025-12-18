@@ -5,10 +5,7 @@ import '../../../core/constants/app_export.dart';
 class CustomMouseRegion extends StatefulWidget {
   final Widget child;
 
-  /// true = mouse entered, false = mouse exited
   final ValueChanged<bool>? onHoverChanged;
-
-  /// raw pointer callbacks (optional)
   final PointerEnterEventListener? onEnter;
   final PointerExitEventListener? onExit;
 

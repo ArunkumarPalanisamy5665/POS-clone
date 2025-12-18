@@ -8,6 +8,7 @@ import '../../../widgets/common/custom_divider.dart';
 import '../../../widgets/common/custom_mouse_region.dart';
 import '../../../widgets/common/custom_text.dart';
 import '../../../widgets/common/drop_down_cards.dart';
+import '../../../widgets/toolBar/filter_tabs_tool.dart';
 import 'main_side_menu.dart';
 
 class Responsive {
@@ -237,7 +238,7 @@ Widget _buildTopBar(BuildContext context, bool isDesktop) {
                 ),
           ),
 
-        if (isDesktop) FilterTabs(),
+        if (isDesktop) const FilterTabsTool(),
 
         const Spacer(),
         _buildTopActions(),
@@ -249,96 +250,94 @@ Widget _buildTopBar(BuildContext context, bool isDesktop) {
 
 int hoveredIndex = -1;
 
-class FilterTabs extends StatefulWidget {
-  const FilterTabs({super.key});
-
-  @override
-  State<FilterTabs> createState() => _FilterTabsState();
-}
-
-class _FilterTabsState extends State<FilterTabs> {
-  int hoveredIndex = -1;
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomContainer(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width * 0.4,
-      padding: const EdgeInsets.all(4),
-      borderRadius: BorderRadius.circular(6),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        border: Border.all(
-          color: Colors.black.withAlpha((0.2 * 255).toInt()),
-          width: 0.50,
-        ),
-      ),
-      onTap: () {},
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: List.generate(toolList.length, (index) {
-          final item = toolList[index];
-          final bool isHovered = hoveredIndex == index;
-
-          return CustomMouseRegion(
-            onHoverChanged: (hovered) {
-              setState(() {
-                hoveredIndex = hovered ? index : -1;
-              });
-            },
-            onEnter: (_) => debugPrint('enter ${item.title}'),
-            onExit: (_) => debugPrint('exit ${item.title}'),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(6),
-              onTap: () {
-                GoRouter.of(context).go(item.route);
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      item.svgIcon,
-                      width: 16,
-                      height: 16,
-                      colorFilter: ColorFilter.mode(
-                        isHovered ? AppColors.primaryColor : AppColors.black,
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                    const SizedBox(width: 6),
-                    CustomText(
-                      item.title,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color:
-                        isHovered ? AppColors.primaryColor : AppColors.black,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        }),
-      ),
-    );
-  }
-}
+// class FilterTabs extends StatefulWidget {
+//   const FilterTabs({super.key});
+//
+//   @override
+//   State<FilterTabs> createState() => _FilterTabsState();
+// }
+//
+// class _FilterTabsState extends State<FilterTabs> {
+//   int hoveredIndex = -1;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: const EdgeInsets.all(2),
+//       decoration: BoxDecoration(
+//         borderRadius: BorderRadius.circular(6),
+//         color: AppColors.greySide,
+//         border: Border.all(
+//           color: Color(0xFFE2E8F0),
+//           width: 0.70,
+//         ),
+//       ),
+//       child: Row(
+//         mainAxisSize: MainAxisSize.min,
+//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//         children: List.generate(toolList.length, (index) {
+//           final item = toolList[index];
+//           final bool isHovered = hoveredIndex == index;
+//
+//           return CustomMouseRegion(
+//             onHoverChanged: (hovered) {
+//               setState(() {
+//                 hoveredIndex = hovered ? index : -1;
+//               });
+//             },
+//             onEnter: (_) => debugPrint('enter ${item.title}'),
+//             onExit: (_) => debugPrint('exit ${item.title}'),
+//             child: InkWell(
+//               borderRadius: BorderRadius.circular(6),
+//               onTap: () {
+//                 GoRouter.of(context).go(item.route);
+//               },
+//               child: Container(
+//                 padding: const EdgeInsets.symmetric(
+//                     horizontal: 12, vertical: 6),
+//                 decoration: BoxDecoration(
+//                   color: Colors.transparent,
+//                   borderRadius: BorderRadius.circular(6),
+//                 ),
+//                 child: SingleChildScrollView(
+//                   scrollDirection: Axis.horizontal,
+//                   child: Row(
+//                     children: [
+//                       SvgPicture.asset(
+//                         item.svgIcon,
+//                         width: 15,
+//                         height: 15,
+//                         colorFilter: ColorFilter.mode(
+//                           isHovered ? AppColors.primaryColor : AppColors.black,
+//                           BlendMode.srcIn,
+//                         ),
+//                       ),
+//                       const SizedBox(width: 6),
+//                       CustomText(
+//                         item.title,
+//                         overflow: TextOverflow.ellipsis,
+//                         style: Theme
+//                             .of(context)
+//                             .textTheme
+//                             .titleLarge
+//                             ?.copyWith(
+//                           fontSize: 14,
+//                           fontWeight: FontWeight.w500,
+//                           color:
+//                           isHovered ? AppColors.primaryColor : AppColors.black,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ),
+//           );
+//         }),
+//       ),
+//     );
+//   }
+// }
 
 
 Widget _buildTopActions() {

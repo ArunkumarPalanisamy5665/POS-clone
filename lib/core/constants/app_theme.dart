@@ -5,20 +5,20 @@ class AppTheme {
 
   static const TextTheme textThemeLight = TextTheme(
     displayLarge: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.black, fontFamily: fontFamily),
-    headlineMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.black),
-    titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
-    bodyLarge: TextStyle(fontSize: 18, color: Colors.black87),
-    bodyMedium: TextStyle(fontSize: 16, color: Colors.black87),
+    headlineMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.black,fontFamily: fontFamily),
+    titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black,fontFamily: fontFamily),
+    bodyLarge: TextStyle(fontSize: 18, color: Colors.black87,fontFamily: fontFamily),
+    bodyMedium: TextStyle(fontSize: 16, color: Colors.black87,fontFamily: fontFamily),
     bodySmall: TextStyle(fontSize: 14, color: Colors.black54,fontFamily: fontFamily),
   );
 
   static const TextTheme textThemeDark = TextTheme(
-    displayLarge: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.white),
-    headlineMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.white),
-    titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
-    bodyLarge: TextStyle(fontSize: 18, color: Colors.white70),
-    bodyMedium: TextStyle(fontSize: 16, color: Colors.white70),
-    bodySmall: TextStyle(fontSize: 14, color: Colors.white54),
+    displayLarge: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.white,fontFamily: fontFamily),
+    headlineMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.white,fontFamily: fontFamily),
+    titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white,fontFamily: fontFamily),
+    bodyLarge: TextStyle(fontSize: 18, color: Colors.white70,fontFamily: fontFamily),
+    bodyMedium: TextStyle(fontSize: 16, color: Colors.white70,fontFamily: fontFamily),
+    bodySmall: TextStyle(fontSize: 14, color: Colors.white54,fontFamily: fontFamily),
   );
 
   // LIGHT THEME
