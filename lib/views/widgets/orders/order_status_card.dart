@@ -20,7 +20,6 @@ class OrderStatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 75,
-      width: 169.33,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,

@@ -18,6 +18,7 @@ import '../../views/screens/home/main_home.dart';
 import '../../views/screens/home/main/main_shell.dart';
 import '../../views/screens/home/main/pos_shell.dart';
 import '../../views/screens/home/profile_manager.dart';
+import '../../views/screens/orders/order_screen.dart';
 
 class AppRouter {
   static final GoRouter routes = GoRouter(
@@ -149,7 +150,7 @@ class AppRouter {
           GoRoute(
             path: '/orders',
             name: RouteNames.order,
-            builder: (_, __) => const OrdersScreen(),
+            builder: (_, __) => const OrderScreen(),
           ),
           GoRoute(
             path: '/kitchen',
