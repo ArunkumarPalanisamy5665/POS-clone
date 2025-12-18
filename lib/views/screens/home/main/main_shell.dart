@@ -267,11 +267,12 @@ class _FilterTabsState extends State<FilterTabs> {
           .size
           .width * 0.4,
       padding: const EdgeInsets.all(4),
+      borderRadius: BorderRadius.circular(6),
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(6),
         border: Border.all(
           color: Colors.black.withAlpha((0.2 * 255).toInt()),
+          width: 0.50,
         ),
       ),
       onTap: () {},

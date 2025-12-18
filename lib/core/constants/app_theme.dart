@@ -4,12 +4,12 @@ class AppTheme {
   static const String fontFamily = "InstrumentSans";
 
   static const TextTheme textThemeLight = TextTheme(
-    displayLarge: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.black),
+    displayLarge: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.black, fontFamily: fontFamily),
     headlineMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.black),
     titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
     bodyLarge: TextStyle(fontSize: 18, color: Colors.black87),
     bodyMedium: TextStyle(fontSize: 16, color: Colors.black87),
-    bodySmall: TextStyle(fontSize: 14, color: Colors.black54),
+    bodySmall: TextStyle(fontSize: 14, color: Colors.black54,fontFamily: fontFamily),
   );
 
   static const TextTheme textThemeDark = TextTheme(
