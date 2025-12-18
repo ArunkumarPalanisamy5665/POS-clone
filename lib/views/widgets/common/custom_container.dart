@@ -17,6 +17,9 @@ class CustomContainer extends StatefulWidget {
   final AlignmentGeometry? alignment;
   final BoxConstraints? constraints;
   final Clip clipBehavior;
+  final Color? hoverColor;
+  final String? assetImage;
+
 
   const CustomContainer({
     super.key,
@@ -32,6 +35,8 @@ class CustomContainer extends StatefulWidget {
     this.alignment,
     this.constraints,
     this.clipBehavior = Clip.none,
+    this.hoverColor,
+    this.assetImage,
   });
 
   @override
@@ -46,7 +51,7 @@ class _CustomContainerState extends State<CustomContainer> {
     final BoxDecoration effectiveDecoration =
         widget.decoration ??
             BoxDecoration(
-              color: isHovered ? AppColors.grey : AppColors.white,
+              color: isHovered ? widget.hoverColor?? AppColors.grey.withOpacity(0.1) : AppColors.white,
               borderRadius: widget.borderRadius,
               border: Border.all(
                 width: 1,
@@ -74,9 +79,15 @@ class _CustomContainerState extends State<CustomContainer> {
             clipBehavior: widget.clipBehavior,
             decoration: effectiveDecoration.copyWith(
               color: widget.isNeedHover
-                  ? (isHovered ? AppColors.grey.withOpacity(0.10) : null)
+                  ? (isHovered ? AppColors.grey.withOpacity(0.1) : null)
                   : null,
               borderRadius: widget.borderRadius,
+              image: widget.assetImage != null
+                  ? DecorationImage(
+                image: AssetImage(widget.assetImage!),
+                fit: BoxFit.cover,
+              )
+                  : effectiveDecoration.image,
             ),
             child: widget.child,
           ),

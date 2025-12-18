@@ -6,6 +6,7 @@ class CustomTextField extends StatefulWidget {
 
   final String? label;
   final String? hint;
+  final bool isLabel;
 
   final IconData? prefixIcon;
   final IconData? suffixIcon;
@@ -47,12 +48,15 @@ class CustomTextField extends StatefulWidget {
   final FocusNode? nextFocusNode;
   final TextInputAction textInputAction;
 
+
+
   const CustomTextField({
     super.key,
     required this.controller,
 
     this.label,
     this.hint,
+    this.isLabel = true,
 
     this.prefixIcon,
     this.suffixIcon,
@@ -113,31 +117,32 @@ class _CustomTextFieldState extends State<CustomTextField> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: '${widget.label} ',
-                      style: widget.labelStyle??Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: const Color(0xFF0F172A),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        height: 1.50,
+              if (widget.isLabel && widget.label != null)
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: '${widget.label} ',
+                        style: widget.labelStyle??Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: const Color(0xFF0F172A),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          height: 1.50,
+                        ),
                       ),
-                    ),
-                    const TextSpan(
-                      text: '*',
-                      style:  TextStyle(
-                        color: Color(0xFFFF3636) /* System-Danger */,
-                        fontSize: 16,
-                        fontFamily: 'Instrument Sans',
-                        fontWeight: FontWeight.w600,
-                        height: 2,
+                      const TextSpan(
+                        text: '*',
+                        style:  TextStyle(
+                          color: Color(0xFFFF3636) /* System-Danger */,
+                          fontSize: 16,
+                          fontFamily: 'Instrument Sans',
+                          fontWeight: FontWeight.w600,
+                          height: 2,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
               // SizedBox(height: 10),
               Container(
                 height: hasError ? widget.height + 10 : widget.height - 10,
