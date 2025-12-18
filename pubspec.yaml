@@ -130,16 +130,6 @@ flutter:
     - assets/cer/
 
   fonts:
-    - family: MyIcons
-      fonts:
-        - asset: assets/fonts/MyIcons.ttf
-    - family: Iconset
-      fonts:
-        - asset: assets/fonts/Iconset.ttf
-    - family: Poppins-Light
-      fonts:
-        - asset: assets/fonts/Poppins-Light.otf
-
     - family: InstrumentSans
       fonts:
         - asset: assets/fonts/Instrument Sans/InstrumentSans-Regular.ttf

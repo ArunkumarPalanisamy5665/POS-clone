@@ -21,6 +21,7 @@ import '../../widgets/dashboard/category_statistics.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../widgets/dashboard/sales_performance_card.dart';
 import '../../widgets/dashboard/tables_available_list.dart';
+import '../../widgets/orders/order_status_card.dart';
 import 'home_screen.dart';
 
 class AppBreakpoints {
