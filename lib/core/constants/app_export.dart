@@ -49,6 +49,7 @@ export 'package:new_hrms_flutter/views/widgets/common/custom_checkbox.dart';
 export 'package:new_hrms_flutter/views/widgets/common/drop_down_cards.dart';
 export 'package:new_hrms_flutter/views/widgets/common/custom_icon_contain.dart';
 export 'package:new_hrms_flutter/views/widgets/common/custom_divider.dart';
+export 'package:new_hrms_flutter/views/widgets/common/custom_container.dart';
 
 
 //domain //model

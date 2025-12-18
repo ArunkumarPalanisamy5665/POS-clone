@@ -142,11 +142,7 @@ class AppRouter {
           //   name: RouteNames.dashboard,
           //   builder: (_, __) => const DashboardScreen(),
           // ),
-          GoRoute(
-            path: '/pos',
-            name: RouteNames.pos,
-            builder: (_, __) => const PosScreen(),
-          ),
+
           GoRoute(
             path: '/orders',
             name: RouteNames.order,
@@ -171,8 +167,9 @@ class AppRouter {
         },
         routes: [
           GoRoute(
-            path: '/profile/info',
-            builder: (_, __) => const ProfileInfoPage(),
+            path: '/pos',
+            name: RouteNames.pos,
+            builder: (_, __) => const PosScreen(),
           ),
           GoRoute(
             path: '/profile/documents',

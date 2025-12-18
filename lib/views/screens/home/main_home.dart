@@ -22,6 +22,7 @@ import '../../widgets/dashboard/category_statistics.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../widgets/dashboard/sales_performance_card.dart';
 import '../../widgets/dashboard/tables_available_list.dart';
+import '../../widgets/mainWidgets/trending_food_menu.dart';
 import '../../widgets/orders/order_status_card.dart';
 import 'home_screen.dart';
 
@@ -204,7 +205,7 @@ class _HomeScreenState extends State<MainHome> {
             const SizedBox(height: 24),
             TopSellingCard(),
             const SizedBox(height: 24),
-            TrendingMenu(),
+            // TrendingFoodMenu(),
           ] else ...[
             const SizedBox(height: 24),
             Row(
@@ -216,7 +217,7 @@ class _HomeScreenState extends State<MainHome> {
               ],
             ),
             const SizedBox(height: 24),
-            TrendingMenu(),
+            // TrendingFoodMenu(),
           ],
 
           Padding(

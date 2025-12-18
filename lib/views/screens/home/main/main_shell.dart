@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:new_hrms_flutter/views/widgets/common/custom_container.dart';
 
 import '../../../../core/constants/app_export.dart';
 import '../../../../domain/models/dashBoardModel/dash_board_menu_model.dart';
-import '../../../widgets/common/custom_divider.dart';
-import '../../../widgets/common/custom_mouse_region.dart';
-import '../../../widgets/common/custom_text.dart';
-import '../../../widgets/common/drop_down_cards.dart';
-import '../../../widgets/toolBar/filter_tabs_tool.dart';
+import '../../../widgets/mainWidgets/toolBar/filter_tabs_tool.dart';
 import 'main_side_menu.dart';
 
 class Responsive {

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:new_hrms_flutter/core/constants/app_export.dart';
 
-import '../../../domain/models/dashBoardModel/dash_board_menu_model.dart';
+import '../../../../domain/models/dashBoardModel/dash_board_menu_model.dart';
+
 
 
 

@@ -193,6 +193,8 @@ class AppAssets {
   static const String expandIcon = 'assets/svg/menu/expand_icon.svg';
   static const String handePOSIcon = 'assets/svg/menu/hande_pos.svg';
   static const String tablePOSIcon = 'assets/svg/menu/table_icon.svg';
+  static const String subIcon = 'assets/svg/menu/sub_icon.svg';
+  static const String addIcon = 'assets/svg/menu/add_icon.svg';
 
   //sub menu icons
   static const String subPosIcon = 'assets/svg/menu/subMenus/pos_icon.svg';
