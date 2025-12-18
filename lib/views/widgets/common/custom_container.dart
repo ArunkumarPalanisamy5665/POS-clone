@@ -73,7 +73,9 @@ class _CustomContainerState extends State<CustomContainer> {
             constraints: widget.constraints,
             clipBehavior: widget.clipBehavior,
             decoration: effectiveDecoration.copyWith(
-              color: widget.isNeedHover? isHovered ? AppColors.grey.withOpacity(0.010) :AppColors.white:AppColors.white,
+              color: widget.isNeedHover
+                  ? (isHovered ? AppColors.grey.withOpacity(0.10) : null)
+                  : null,
               borderRadius: widget.borderRadius,
             ),
             child: widget.child,

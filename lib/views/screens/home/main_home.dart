@@ -81,7 +81,7 @@ class _HomeScreenState extends State<MainHome> {
 
   Widget _buildHeaderBar(bool isMobile) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -109,12 +109,12 @@ class _HomeScreenState extends State<MainHome> {
           if (!isMobile)
             Row(
               children: [
-                _button('Sync Data', AppAssets.syncIcon),
+                _button('Sync Data', AppAssets.syncIcon, isBold: true),
                 const SizedBox(width: 10),
                 _button('Export', AppAssets.exportFileIcon, suffixIcon: false),
                 const SizedBox(width: 10),
                 _button(
-                  '15 Nov, 2025 - 15 Dec, 2025',
+                  '15 Nov 25 - 15 Dec 25',
                   AppAssets.calendarIcon,
                   suffixIcon: false,
                 ),
@@ -127,7 +127,7 @@ class _HomeScreenState extends State<MainHome> {
 
   Widget _buildMainContent(double width) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.only(left: 16, right: 16),
       child: Column(
         children: [
           GridView.builder(
@@ -140,10 +140,10 @@ class _HomeScreenState extends State<MainHome> {
                   ? 2
                   : 4,
               mainAxisSpacing: 1,
-              crossAxisSpacing: 1,
+              crossAxisSpacing: 20,
               childAspectRatio: MediaQuery.of(context).size.width <= 900
-                  ? 3
-                  : 2.5,
+                  ? 2
+                  : 2,
             ),
             itemCount: dashboardMetrics.length,
             itemBuilder: (context, index) {
@@ -373,15 +373,16 @@ class _HomeScreenState extends State<MainHome> {
     String svgIcon, {
     bool primary = false,
     bool suffixIcon = false,
+        bool isBold = false,
   }) {
     return CustomContainer(
       onTap: () {},
       isNeedHover: true,
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 8),
+      borderRadius: BorderRadius.circular(5),
       decoration: BoxDecoration(
         color: primary ? const Color(0xFF0C76E1) : Colors.white,
-        borderRadius: BorderRadius.circular(6),
-        border: primary ? null : Border.all(color: Colors.grey.shade300),
+        border: primary ? null : Border.all(color: Colors.grey.shade300, width: 0.75),
       ),
       child: Row(
         children: [
@@ -389,10 +390,12 @@ class _HomeScreenState extends State<MainHome> {
           SizedBox(width: 6),
           CustomText(
             text,
+
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: primary ? Colors.white : Colors.black,
-              fontWeight: FontWeight.w400,
-              fontSize: 12,
+              fontWeight:isBold ? FontWeight.w500 : FontWeight.w400,
+              fontSize: 14,
+              letterSpacing: 0
             ),
           ),
           suffixIcon
@@ -422,7 +425,7 @@ class RevenueCard extends StatelessWidget {
     return CustomContainer(
       width: double.infinity,
       height: MediaQuery.of(context).size.height * 0.7,
-      padding: EdgeInsets.only(top: 30, left: 14, right: 14),
+      padding: const EdgeInsets.only(top: 30, left: 14, right: 14),
       borderRadius: BorderRadius.circular(5),
       alignment: Alignment.center,
       clipBehavior: Clip.antiAlias,
