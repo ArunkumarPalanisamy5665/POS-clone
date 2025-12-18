@@ -16,6 +16,7 @@ class CustomSmallCard extends StatelessWidget {
   final BoxDecoration? decoration;
   final EdgeInsetsGeometry padding;
   final bool isNeedHover;
+  final String? assetImage;
 
   const CustomSmallCard({
     super.key,
@@ -30,6 +31,8 @@ class CustomSmallCard extends StatelessWidget {
     this.decoration,
     this.padding = const EdgeInsets.symmetric(horizontal: 13, vertical: 8),
     this.isNeedHover = true,
+    this.assetImage,
+
   });
 
   @override
@@ -45,11 +48,21 @@ class CustomSmallCard extends StatelessWidget {
             color: backgroundColor ?? Colors.white,
             border: Border.all(color: Colors.grey.shade300, width: 0.75),
           ),
+
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           if (prefixIcon && svgIcon != null) ...[
             SvgPicture.asset(svgIcon!, width: 16, height: 16),
+            const SizedBox(width: 6),
+          ],
+          if (prefixIcon && assetImage != null) ...[
+            Image.asset(
+              assetImage!,
+              width: 16,
+              height: 16,
+              fit: BoxFit.contain,
+            ),
             const SizedBox(width: 6),
           ],
 
