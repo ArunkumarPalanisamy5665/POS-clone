@@ -12,6 +12,10 @@ class RouteNames {
   static const emailVerify = '/email_verify';
   static const otp = '/otp';
   static const dashboard = '/dashboard';
+  static const pos = '/pos';
+  static const order = '/order';
+  static const kitchen = '/kitchen';
+  static const reservation = '/reservation';
 
 
 

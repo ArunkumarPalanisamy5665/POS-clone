@@ -4,6 +4,7 @@ import 'package:new_hrms_flutter/views/screens/home/widgets/linear_chart_box.dar
 
 import '../../../domain/models/dashBoardModel/bar_chart_point.dart';
 import '../../../domain/models/dashBoardModel/menu_data.dart';
+import '../../widgets/common/custom_text.dart';
 
 
 
@@ -520,20 +521,20 @@ class MenuItem extends StatelessWidget {
       children: [
         Text(
           '#${number}',
-          style: TextStyle(
-            fontSize: 10,
+          style:Theme.of(context).textTheme.titleMedium?.copyWith(
+            fontSize: 13,
             fontWeight: FontWeight.w600,
             color: Colors.black.withOpacity(0.675),
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 4),
         Expanded(
           child: Text(
             name,
-            style: const TextStyle(
-              fontSize: 12,
-              color: Colors.black87,
+            style:Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontSize: 13,
               fontWeight: FontWeight.w600,
+              color: Colors.black87,
             ),
           ),
         ),
@@ -558,13 +559,14 @@ class MenuItem extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 8),
-        Text(
+        CustomText(
           orders.toString(),
-          style: const TextStyle(
+          style:Theme.of(context).textTheme.titleMedium?.copyWith(
             fontSize: 12,
             fontWeight: FontWeight.w600,
             color: Colors.black87,
           ),
+
         ),
       ],
     );

@@ -8,7 +8,6 @@ import 'package:new_hrms_flutter/views/widgets/common/drop_down_cards.dart';
 import 'package:new_hrms_flutter/views/widgets/dashboard/notification_list.dart';
 import 'package:new_hrms_flutter/views/widgets/dashboard/reservation_list.dart';
 import 'package:new_hrms_flutter/views/widgets/responsive/responsive.dart';
-
 import 'package:new_hrms_flutter/views/widgets/dashboard/active_order_list.dart';
 import 'package:new_hrms_flutter/views/widgets/dashboard/dashboard_card.dart';
 import '../../../domain/models/dashBoardModel/dash_board_metric_item.dart';
@@ -17,8 +16,8 @@ import '../../widgets/common/custom_checkbox.dart';
 import '../../widgets/common/custom_container.dart';
 import '../../widgets/common/custom_divider.dart';
 import '../../widgets/common/custom_icon_contain.dart';
+import '../../widgets/common/custom_text.dart';
 import '../../widgets/dashboard/category_statistics.dart';
-
 import '../../../core/constants/app_colors.dart';
 import '../../widgets/dashboard/sales_performance_card.dart';
 import '../../widgets/dashboard/tables_available_list.dart';
@@ -58,23 +57,16 @@ class _HomeScreenState extends State<MainHome> {
         final width = constraints.maxWidth;
 
         final isMobile = Responsive.isMobile(context);
-        final isTablet = MediaQuery.of(context).size.width >= 1000;
-        final isDesktop = Responsive.isDesktop(context);
-
         return CustomDrawer(
           backgroundColor: const Color(0xFFF8F8F8),
-
-          drawer: !isDesktop ? Drawer(child: _buildSidebar()) : null,
 
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (isDesktop) _buildSidebar(),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      _buildTopBar(isMobile),
                       _buildHeaderBar(isMobile),
                       _buildMainContent(width),
                     ],
@@ -88,299 +80,45 @@ class _HomeScreenState extends State<MainHome> {
     );
   }
 
-  Widget _buildTopBar(bool isMobile) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        border: Border(bottom: BorderSide(color: Color(0xFFE2E8F0))),
-      ),
-      child: Row(
-        children: [
-          if (Responsive.isMobile(context) ||
-              MediaQuery.of(context).size.width < 1000)
-            Builder(
-              builder: (context) => IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () => Scaffold.of(context).openDrawer(),
-              ),
-            ),
-          if (MediaQuery.of(context).size.width > 1000) _buildFilterTabs(),
-          const Spacer(),
-          _buildTopActions(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildFilterTabs() {
-    final tabs = ['POS', 'Orders', 'Kitchen', 'Reservation', 'Table'];
-    return Container(
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: const Color(0xFFF1F5F9),
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: Row(
-        children: tabs
-            .map(
-              (e) => Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
-                child: Text(
-                  e,
-                  style: const TextStyle(fontWeight: FontWeight.w500),
-                ),
-              ),
-            )
-            .toList(),
-      ),
-    );
-  }
-
-  Widget _buildTopActions() {
-    return Row(
-      children: [
-        _button('Upgrade', primary: true),
-        const SizedBox(width: 10),
-        _iconButton(Icons.notifications),
-      ],
-    );
-  }
-
-  Widget _buildSidebar() {
-    final menu = ['Dashboard', 'POS', 'Orders', 'Kitchen', 'Reservation'];
-
-    return Row(
-      children: [
-        Container(
-          width: 60,
-          decoration: const BoxDecoration(color: AppColors.greySide),
-          height: MediaQuery.of(context).size.height,
-          child: Stack(
-            children: [
-              Positioned.fill(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 13),
-                      SvgPicture.asset(
-                        AppAssets.mainLogoIcon,
-                        width: 30,
-                        height: 32,
-                      ),
-                      const SizedBox(height: 13),
-                      ...List.generate(dashboardIcons.length, (index) {
-                        final item = dashboardIcons[index];
-                        return Padding(
-                          padding: const EdgeInsets.only(
-                            left: 8.0,
-                            top: 15,
-                            bottom: 8.0,
-                            right: 8.0,
-                          ),
-                          child: SvgPicture.asset(
-                            "${item.svgIcon}",
-                            width: 15,
-                            height: 15,
-                          ),
-                        );
-                      }),
-                    ],
-                  ),
-                ),
-              ),
-
-              Positioned(
-                bottom: 10,
-                left: 0,
-                right: 0,
-                child: Center(child: _iconButton(Icons.notifications)),
-              ),
-            ],
-          ),
-        ),
-
-        Container(
-          width: 215,
-          height: double.infinity,
-          // padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border(
-              top: Responsive.isDesktop(context)
-                  ? BorderSide(
-                      color: Colors.black.withAlpha((0.2 * 255).toInt()),
-                      width: 0.60,
-                    )
-                  : BorderSide.none,
-              left: BorderSide(
-                color: Colors.black.withAlpha((0.2 * 255).toInt()),
-                width: 0.60,
-              ),
-              right: Responsive.isDesktop(context)
-                  ? BorderSide(
-                      color: Colors.black.withAlpha((0.2 * 255).toInt()),
-                      width: 0.60,
-                    )
-                  : BorderSide.none,
-            ),
-            borderRadius: BorderRadius.circular(0),
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Flexible(
-                      child: DropDownCards<DashboardItem?>(
-                        value: selectedDashboardMenu,
-                        items: dashboardMenuitems,
-                        onChanged: (module) {
-                          setState(() => selectedDashboardMenu = module);
-                        },
-                        childBuilder: (module) => Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            if (module?.svgIcon != null)
-                              Image.asset(
-                                module!.svgIcon!,
-                                width: 16,
-                                height: 16,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return const Icon(
-                                    Icons.image_not_supported,
-                                    size: 16,
-                                  );
-                                },
-                              ),
-                            const SizedBox(width: 8),
-                            Flexible(
-                              child: Text(
-                                "${module?.title}",
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            const Icon(Icons.keyboard_arrow_down),
-                          ],
-                        ),
-                        itemBuilder: (module, isSelected) => Row(
-                          children: [
-                            if (module?.svgIcon != null)
-                              Image.asset(
-                                module!.svgIcon!,
-                                width: 16,
-                                height: 16,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return const Icon(
-                                    Icons.image_not_supported,
-                                    size: 16,
-                                  );
-                                },
-                              ),
-                            const SizedBox(width: 8),
-                            Expanded(child: Text("${module?.title}")),
-                            // if (isSelected)
-                            //   const Icon(Icons.check, size: 16, color: Colors.green),
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    // DropDownCards(
-                    //        value: selectedMenu,
-                    //        items: const ['New Order', 'Order List', 'Returns', 'Reports'],
-                    //        onChanged: (value) {
-                    //          setState(() {
-                    //            selectedMenu = value;
-                    //          });
-                    //        },
-                    //        childBuilder: (value) => Container(
-                    //          padding: const EdgeInsets.symmetric(
-                    //            horizontal: 12,
-                    //            vertical: 10,
-                    //          ),
-                    //          decoration: BoxDecoration(
-                    //            color: Colors.white,
-                    //            borderRadius: BorderRadius.circular(6),
-                    //            // border: Border.all(color: Colors.grey.shade300),
-                    //          ),
-                    //          child: Row(
-                    //            mainAxisSize: MainAxisSize.min,
-                    //            children: [
-                    //              Image.asset(AppAssets.restaurantIcon, width: 16),
-                    //              const SizedBox(width: 8),
-                    //              Text(value),
-                    //              const SizedBox(width: 6),
-                    //              const Icon(Icons.keyboard_arrow_down, size: 18),
-                    //            ],
-                    //          ),
-                    //        ),
-                    //      ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: Icon(Icons.close_sharp, size: 23),
-                    ),
-                  ],
-                ),
-                CustomDivider(
-                  thickness: 0.50,
-                  verticalPadding: 0,
-                  color: Colors.black.withAlpha((0.2 * 255).toInt()),
-                ),
-
-                // SizedBox(height: 20),
-                ...menu.map(_menuItem),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _menuItem(String title) {
-    return Padding(
-      padding: const EdgeInsets.all(3.0),
-      child: Container(
-        padding: const EdgeInsets.only(left: 10, top: 10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: Row(
-          children: [
-            const Icon(Icons.dashboard, size: 16),
-            const SizedBox(width: 10),
-            Text(title),
-          ],
-        ),
-      ),
-    );
-  }
-
-
   Widget _buildHeaderBar(bool isMobile) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            'Dashboard',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomText(
+                'Dashboard',
+                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 3),
+                child: SvgPicture.asset(
+                  AppAssets.refreshIcon,
+                  width: 40,
+                  height: 40,
+                ),
+              ),
+            ],
           ),
           if (!isMobile)
             Row(
               children: [
-                _button('Sync'),
+                _button('Sync Data', AppAssets.syncIcon),
                 const SizedBox(width: 10),
-                _button('Export'),
+                _button('Export', AppAssets.exportFileIcon, suffixIcon: false),
+                const SizedBox(width: 10),
+                _button(
+                  '15 Nov, 2025 - 15 Dec, 2025',
+                  AppAssets.calendarIcon,
+                  suffixIcon: false,
+                ),
               ],
             ),
         ],
@@ -389,12 +127,6 @@ class _HomeScreenState extends State<MainHome> {
   }
 
   Widget _buildMainContent(double width) {
-    final crossAxisCount = Responsive.isMobile(context)
-        ? 1
-        : Responsive.isTablet(context)
-        ? 2
-        : 4;
-
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -637,17 +369,37 @@ class _HomeScreenState extends State<MainHome> {
     );
   }
 
-  Widget _button(String text, {bool primary = false}) {
-    return Container(
+  Widget _button(
+    String text,
+    String svgIcon, {
+    bool primary = false,
+    bool suffixIcon = false,
+  }) {
+    return CustomContainer(
+      onTap: () {},
+      isNeedHover: true,
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
         color: primary ? const Color(0xFF0C76E1) : Colors.white,
         borderRadius: BorderRadius.circular(6),
         border: primary ? null : Border.all(color: Colors.grey.shade300),
       ),
-      child: Text(
-        text,
-        style: TextStyle(color: primary ? Colors.white : Colors.black),
+      child: Row(
+        children: [
+          SvgPicture.asset(svgIcon, width: 16, height: 16),
+          SizedBox(width: 6),
+          CustomText(
+            text,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: primary ? Colors.white : Colors.black,
+              fontWeight: FontWeight.w400,
+              fontSize: 12,
+            ),
+          ),
+          suffixIcon
+              ? const Icon(Icons.keyboard_arrow_down_rounded, size: 20)
+              : SizedBox(),
+        ],
       ),
     );
   }
@@ -812,7 +564,7 @@ class _TopSellingCardState extends State<TopSellingCard> {
                   ),
                   SizedBox(width: 8),
 
-                  Text(
+                  CustomText(
                     'Top Selling Item',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontSize: 20,
@@ -837,49 +589,19 @@ class _TopSellingCardState extends State<TopSellingCard> {
                 ),
                 itemBuilder: (module, isSelected) => Row(
                   children: [
-                    Expanded(child: Text("${module?.title}")),
-                    // if (isSelected)
-                    //   const Icon(Icons.check, size: 16, color: Colors.green),
+                    Expanded(
+                      child: CustomText(
+                        "${module?.title}",
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                    ),
                   ],
                 ),
               ),
-
-              // DropDownCards(
-              //   value: selectedTopSelling,
-              //   items: const ['Sea food', 'Pizza', 'Salads'],
-              //   onChanged: (value) {
-              //     setState(() {
-              //       selectedTopSelling = value;
-              //     });
-              //   },
-              //   childBuilder: (value) => Container(
-              //     padding: const EdgeInsets.symmetric(
-              //       horizontal: 10,
-              //       vertical: 5,
-              //     ),
-              //     decoration: BoxDecoration(
-              //       color: Colors.white,
-              //       borderRadius: BorderRadius.circular(6),
-              //       border: Border.all(color: Colors.grey.shade300),
-              //     ),
-              //     child: Row(
-              //       mainAxisSize: MainAxisSize.min,
-              //       children: [
-              //         Text(
-              //           value,
-              //           style: Theme.of(context).textTheme.titleMedium
-              //               ?.copyWith(
-              //                 fontSize: 12,
-              //                 color: Colors.black54,
-              //                 fontWeight: FontWeight.w400,
-              //               ),
-              //         ),
-              //         const SizedBox(width: 6),
-              //         const Icon(Icons.keyboard_arrow_down, size: 18),
-              //       ],
-              //     ),
-              //   ),
-              // ),
             ],
           ),
           CustomDivider(
@@ -903,7 +625,7 @@ class _TopSellingCardState extends State<TopSellingCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  CustomText(
                     '\u{1F525}  ',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontSize: 13,
@@ -911,7 +633,7 @@ class _TopSellingCardState extends State<TopSellingCard> {
                     ),
                   ),
                   Expanded(
-                    child: Text(
+                    child: CustomText(
                       'Most Ordered : Veggie Supreme Pizza',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontSize: 12,
@@ -976,7 +698,7 @@ class _TopSellingCardState extends State<TopSellingCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        const CustomText(
                           'Veggie Supreme Pizza',
                           style: TextStyle(
                             fontSize: 13,
@@ -984,7 +706,7 @@ class _TopSellingCardState extends State<TopSellingCard> {
                             color: Colors.black87,
                           ),
                         ),
-                        Text(
+                        CustomText(
                           'No of Orders : 520',
                           style: TextStyle(
                             fontSize: 11,
@@ -1125,40 +847,9 @@ class _GraphChartPageState extends State<GraphChartPage> {
                         ),
                       const SizedBox(width: 8),
                       Expanded(child: Text("${module?.title}")),
-                      // if (isSelected)
-                      //   const Icon(Icons.check, size: 16, color: Colors.green),
                     ],
                   ),
                 ),
-
-                // DropDownCards(
-                //   value: selectedPeriod,
-                //   items: const ['Weekly', 'Monthly', 'yearly'],
-                //   onChanged: (value) {
-                //     setState(() {
-                //       selectedPeriod = value;
-                //     });
-                //   },
-                //   childBuilder: (value) => Container(
-                //     padding: const EdgeInsets.symmetric(
-                //       horizontal: 10,
-                //       vertical: 5,
-                //     ),
-                //     decoration: BoxDecoration(
-                //       color: Colors.white,
-                //       borderRadius: BorderRadius.circular(6),
-                //       border: Border.all(color: Colors.grey.shade300),
-                //     ),
-                //     child: Row(
-                //       mainAxisSize: MainAxisSize.min,
-                //       children: [
-                //         Text(value, style: const TextStyle(fontSize: 12)),
-                //         const SizedBox(width: 6),
-                //         const Icon(Icons.keyboard_arrow_down, size: 18),
-                //       ],
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -1309,17 +1000,6 @@ class DashboardItemCard extends StatelessWidget {
     );
   }
 }
-
-// final List<DashboardItem> dashboardItems = [
-//   DashboardItem("Employees", Icons.people_alt_rounded, Colors.blue),
-//   DashboardItem("Attendance", Icons.access_time_filled, Colors.green),
-//   DashboardItem("Leave", Icons.calendar_month, Colors.orange),
-//   DashboardItem("Payroll", Icons.payments, Colors.pink),
-//   DashboardItem("Departments", Icons.business_center, Colors.purple),
-//   DashboardItem("Tasks", Icons.task, Colors.indigo),
-//   DashboardItem("Settings", Icons.settings, Colors.grey),
-//   DashboardItem("Reports", Icons.analytics_outlined, Colors.red),
-// ];
 
 final List<DashboardItem> dashboardIcons = [
   DashboardItem(svgIcon: AppAssets.mainMenuIcon),

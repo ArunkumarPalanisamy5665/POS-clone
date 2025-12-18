@@ -134,8 +134,10 @@ class AppAssets {
   static const String cardBg = 'assets/images/dashboard_card_bg.png';
   static const String restaurantIcon = 'assets/images/restaurant_icon.png';
 
+  static const String profileIcon = 'assets/images/profile_icon.png';
+
   // SVG Icons (if any)
-  static const String _svgPath = 'assets/svg/';
+
 
   // Person Icon
   static const String personIcon = 'assets/svg/person_icon.svg';
@@ -188,12 +190,25 @@ class AppAssets {
   static const String veg_nonVeg_Icon = 'assets/svg/menu/veg_nonVeg_.svg';
   static const String trendMenuIcon = 'assets/svg/menu/trend_menu_icon.svg';
   static const String mainLogoIcon = 'assets/svg/menu/main_logo.svg';
+  static const String expandIcon = 'assets/svg/menu/expand_icon.svg';
+  static const String handePOSIcon = 'assets/svg/menu/hande_pos.svg';
+  static const String tablePOSIcon = 'assets/svg/menu/table_icon.svg';
+
+  //sub menu icons
+  static const String subPosIcon = 'assets/svg/menu/subMenus/pos_icon.svg';
+  static const String subOderIcon = 'assets/svg/menu/subMenus/order_icon.svg';
+  static const String subKitchenIcon = 'assets/svg/menu/subMenus/kitchen_icon.svg';
+  static const String subReservationIcon = 'assets/svg/menu/subMenus/reservation_icon.svg';
+  static const String exportFileIcon = 'assets/svg/menu/subMenus/export_file_icon.svg';
+  static const String calendarIcon = 'assets/svg/menu/subMenus/calendar_icon.svg';
+ static const String refreshIcon = 'assets/svg/menu/subMenus/refresh_icon.svg';
 
  //dashboard icons
   static const String orderDashIcon = 'assets/svg/menu/dash_order_icon.svg';
   static const String salesIcon = 'assets/svg/menu/sales_icon.svg';
   static const String reservationIcon = 'assets/svg/menu/reservation_icon.svg';
   static const String averageIcon = 'assets/svg/menu/average_icon.svg';
+  static const String dropDownIcon = 'assets/svg/menu/drop_down_icon.svg';
 
 
 

@@ -9,4 +9,17 @@ class DashboardItem {
   });
 }
 
+class DashboardItemSub {
+  final String? title;
+  final String? svgIcon;
+  final List<DashboardItem>? dashboardItem;
+
+  const DashboardItemSub({
+    this.title,
+    this.svgIcon,
+    this.dashboardItem,
+  });
+}
+
+
 
