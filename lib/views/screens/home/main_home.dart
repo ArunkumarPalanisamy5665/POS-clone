@@ -909,7 +909,7 @@ class _GraphChartPageState extends State<GraphChartPage> {
                   color: Colors.black54,
                   fontWeight: FontWeight.w400,
                 ),
-                isCircular: false,
+                isCircular: true,
                 borderRadius: 4,
                 borderColor: AppColors.primaryColor,
                 onChanged: (val) {

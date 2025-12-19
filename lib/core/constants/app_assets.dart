@@ -135,6 +135,7 @@ class AppAssets {
   static const String restaurantIcon = 'assets/images/restaurant_icon.png';
 
   static const String profileIcon = 'assets/images/profile_icon.png';
+  static const String refreshMainIcon = 'assets/images/refresh_icon.png';
 
   // SVG Icons (if any)
 

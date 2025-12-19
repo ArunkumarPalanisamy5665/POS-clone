@@ -9,11 +9,13 @@ import '../../../../domain/models/food_item.dart';
 import '../../../widgets/common/custom_arrow.dart';
 import '../../../widgets/common/custom_container.dart';
 import '../../../widgets/common/custom_textfield.dart';
+import '../../../widgets/common/hover_icon_button.dart';
+import '../../../widgets/mainWidgets/toolBar/filter_tabs_tool.dart';
 import '../../../widgets/mainWidgets/trending_food_menu.dart';
 import '../../../widgets/orders/order_item_widget.dart';
 import '../../../widgets/orders/order_status_card.dart';
 import '../../../widgets/orders/order_status_tab.dart';
-import '../widgets/posWidgets/Order_status_card_one.dart';
+import '../widgets/posWidgets/recenter_order_widget.dart';
 import '../widgets/posWidgets/card_widget.dart';
 
 // class PosShell extends StatefulWidget {
@@ -628,6 +630,10 @@ import '../widgets/posWidgets/card_widget.dart';
 //   }
 // }
 
+final borderColor = Colors.black.withOpacity(0.2);
+
+
+
 class PosShell extends StatefulWidget {
   final Widget? child;
 
@@ -730,7 +736,6 @@ class _PosShellState extends State<PosShell> {
   ];
 
   final List<OrderCard> orderDeliveredList = [
-
     OrderCard(
       orderId: '#14501',
       customerName: 'James Smith',
@@ -991,182 +996,249 @@ class _PosShellState extends State<PosShell> {
 
     return CustomDrawer(
       backgroundColor: const Color(0xFFF8F8F8),
-      child: Row(
+      child: Column(
         children: [
-          Expanded(
-            flex: 6,
-            child: ScrollConfiguration(
-              behavior: const ScrollBehavior().copyWith(overscroll: false),
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 30,
-                    right: 30,
-                    bottom: 20,
-                    top: 20,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          CustomText(
-                            'Recent Orders',
-                            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(width: 20,),
-                          Expanded(
-                            child: OrderStatusTab(
-                              selectedIndex: selectedIndex,
-                              onTabSelected: (index) {
-                                setState(() {
-                                  selectedIndex = index;
-                                });
-                              },
-                              padding: EdgeInsets.zero,
-                              tabs: orderDetailList,
-                              allOrdersCount: _getOrderCount('All Orders'),
-                              pendingCount: _getOrderCount('Dine In'),
-                              inProgressCount: _getOrderCount('Take Away'),
-                              completedCount: _getOrderCount('Delivery'),
-                              cancelledCount: _getOrderCount('Table'),
-                            ),
-                          ),
-                          CustomArrow(
-                              borderRadius: 50,
-                            onLeftTap: () {
-                              _scrollController.animateTo(
-                                _scrollController.offset - 200,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeOut,
-                              );
-                            },
-                            onRightTap: () {
-                              _scrollController.animateTo(
-                                _scrollController.offset + 200,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeOut,
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 16),
-                      OrderStatusCardOne(orderCards: filteredOrderList,  controller: _scrollController,),
-                      SizedBox(height: 16),
-                      buildMenuCategories(),
-                      const SizedBox(height: 25),
-                      SizedBox(
-                        height: 65,
-                        child: ScrollConfiguration(
-                          behavior: ScrollConfiguration.of(
-                            context,
-                          ).copyWith(scrollbars: false),
-                          child: ListView.builder(
-                            controller: _scrollController,
-                            scrollDirection: Axis.horizontal,
-                            primary: false,
-                            shrinkWrap: true,
-                            physics: const ClampingScrollPhysics(),
-                            itemCount: _orderCards.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(right: 16),
-                                child: OrderStatusCard(
-                                  status: _orderCards[index].status,
-                                  count: _orderCards[index].count,
-                                  titleTextStyle: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium
-                                      ?.copyWith(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 13,
-                                      ),
-                                  subtitleTextStyle: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium
-                                      ?.copyWith(
-                                        color: Colors.black54,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 10,
-                                      ),
+        CustomContainer(
+        height: 60,
+        width: double.infinity,
+        padding: EdgeInsets.zero,
+        borderRadius: BorderRadius.zero,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            left: BorderSide(color: borderColor, width: 0.5),
+            right: BorderSide(color: borderColor, width: 0.5),
+            bottom: BorderSide(color: borderColor, width: 0.5),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
 
-                                  isPrefixIcon: _orderCards[index].isPrefixIcon,
-                                  networkImageUrl:
-                                      _orderCards[index].networkImageUrl,
-                                  icon: _orderCards[index].icon,
-                                  iconColor: _orderCards[index].iconColor,
-                                  backgroundColor:
-                                      _orderCards[index].backgroundColor,
+            Row(
+              children: [
+                Container(
+                  height: 60,
+                  padding: const EdgeInsets.only(left: 10, right: 20),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      right: BorderSide(color: borderColor, width: 0.5),
+                    ),
+                  ),
+                  child: SvgPicture.asset(AppAssets.posLogoIcon),
+                ),
+
+                const SizedBox(width: 25),
+                HoverIconButton(
+                  onTap: () {
+                    GoRouter.of(context).go(RouteNames.dashboard);
+                  },
+                  asset: AppAssets.refreshMainIcon,
+                ),
+
+                const SizedBox(width: 20),
+              ],
+            ),
+
+            const FilterTabsTool(),
+
+            Row(
+              children: [
+                HoverIconButton(onTap: () {}, asset: AppAssets.refreshMainIcon),
+                const SizedBox(width: 10),
+                HoverIconButton(onTap: () {}, asset: AppAssets.refreshMainIcon),
+                const SizedBox(width: 10),
+                HoverIconButton(onTap: () {}, asset: AppAssets.refreshMainIcon),
+                const SizedBox(width: 10),
+                HoverIconButton(onTap: () {}, asset: AppAssets.refreshMainIcon),
+                const SizedBox(width: 20),
+              ],
+            ),
+          ],
+        ),
+      ),
+
+      Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 6,
+                  child: ScrollConfiguration(
+                    behavior: const ScrollBehavior().copyWith(overscroll: false),
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 20,
+                          right: 20,
+                          bottom: 20,
+                          top: 20,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                CustomText(
+                                  'Recent Orders',
+                                  style: Theme.of(context).textTheme.headlineLarge
+                                      ?.copyWith(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                 ),
-                              );
-                            },
-                          ),
+                                SizedBox(width: 20),
+                                Expanded(
+                                  child: OrderStatusTab(
+                                    selectedIndex: selectedIndex,
+                                    onTabSelected: (index) {
+                                      setState(() {
+                                        selectedIndex = index;
+                                      });
+                                    },
+                                    padding: EdgeInsets.zero,
+                                    tabs: orderDetailList,
+                                    allOrdersCount: _getOrderCount('All Orders'),
+                                    pendingCount: _getOrderCount('Dine In'),
+                                    inProgressCount: _getOrderCount('Take Away'),
+                                    completedCount: _getOrderCount('Delivery'),
+                                    cancelledCount: _getOrderCount('Table'),
+                                  ),
+                                ),
+                                CustomArrow(
+                                  borderRadius: 50,
+                                  onLeftTap: () {
+                                    _scrollController.animateTo(
+                                      _scrollController.offset - 200,
+                                      duration: const Duration(milliseconds: 300),
+                                      curve: Curves.easeOut,
+                                    );
+                                  },
+                                  onRightTap: () {
+                                    _scrollController.animateTo(
+                                      _scrollController.offset + 200,
+                                      duration: const Duration(milliseconds: 300),
+                                      curve: Curves.easeOut,
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 16),
+                            RecenterOrderWidget(
+                              orderCards: filteredOrderList,
+                              controller: _scrollController,
+                            ),
+                            SizedBox(height: 16),
+                            buildMenuCategories(),
+                            const SizedBox(height: 25),
+                            SizedBox(
+                              height: 65,
+                              child: ScrollConfiguration(
+                                behavior: ScrollConfiguration.of(
+                                  context,
+                                ).copyWith(scrollbars: false),
+                                child: ListView.builder(
+                                  controller: _scrollController,
+                                  scrollDirection: Axis.horizontal,
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  physics: const ClampingScrollPhysics(),
+                                  itemCount: _orderCards.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(right: 16),
+                                      child: OrderStatusCard(
+                                        status: _orderCards[index].status,
+                                        count: _orderCards[index].count,
+                                        titleTextStyle: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium
+                                            ?.copyWith(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 13,
+                                            ),
+                                        subtitleTextStyle: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium
+                                            ?.copyWith(
+                                              color: Colors.black54,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 10,
+                                            ),
+
+                                        isPrefixIcon: _orderCards[index].isPrefixIcon,
+                                        networkImageUrl:
+                                            _orderCards[index].networkImageUrl,
+                                        icon: _orderCards[index].icon,
+                                        iconColor: _orderCards[index].iconColor,
+                                        backgroundColor:
+                                            _orderCards[index].backgroundColor,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TrendingGridSection<DashboardItem>(
+                                    title: 'Trending Menus',
+                                    isHeader: false,
+
+                                    selectedValue: selectedDashboardMenu,
+                                    dropdownItems: dashboardMenuitems,
+                                    onDropdownChanged: (v) {
+                                      setState(() => selectedDashboardMenu = v);
+                                    },
+                                    padding: EdgeInsets.only(top: 20),
+                                    innerPadding: EdgeInsets.zero,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.transparent,
+                                    ),
+
+                                    crossAxisCount: ResponsiveTwo.gridCount(context),
+                                    childAspectRatio: ResponsiveTwo.gridAspect(
+                                      context,
+                                    ),
+                                    crossAxisSpacing: ResponsiveTwo.gridSpacing(
+                                      context,
+                                    ),
+                                    mainAxisSpacing: ResponsiveTwo.gridSpacing(
+                                      context,
+                                    ),
+
+                                    dropdownChildBuilder: (item) => Row(
+                                      children: [
+                                        Text(item?.title ?? ''),
+                                        const Icon(Icons.keyboard_arrow_down),
+                                      ],
+                                    ),
+
+                                    dropdownItemBuilder: (item, _) => Padding(
+                                      padding: const EdgeInsets.all(8),
+                                      child: Text(item?.title ?? ''),
+                                    ),
+
+                                    itemCount: foodItems.length,
+                                    itemBuilder: (_, i) =>
+                                        FoodCard(item: foodItems[i]),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TrendingGridSection<DashboardItem>(
-                              title: 'Trending Menus',
-                              isHeader: false,
-
-                              selectedValue: selectedDashboardMenu,
-                              dropdownItems: dashboardMenuitems,
-                              onDropdownChanged: (v) {
-                                setState(() => selectedDashboardMenu = v);
-                              },
-                              padding: EdgeInsets.only(top: 20),
-                              innerPadding: EdgeInsets.zero,
-                              decoration: BoxDecoration(
-                                color: Colors.transparent,
-                              ),
-
-                              crossAxisCount: ResponsiveTwo.gridCount(context),
-                              childAspectRatio: ResponsiveTwo.gridAspect(
-                                context,
-                              ),
-                              crossAxisSpacing: ResponsiveTwo.gridSpacing(
-                                context,
-                              ),
-                              mainAxisSpacing: ResponsiveTwo.gridSpacing(
-                                context,
-                              ),
-
-                              dropdownChildBuilder: (item) => Row(
-                                children: [
-                                  Text(item?.title ?? ''),
-                                  const Icon(Icons.keyboard_arrow_down),
-                                ],
-                              ),
-
-                              dropdownItemBuilder: (item, _) => Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: Text(item?.title ?? ''),
-                              ),
-
-                              itemCount: foodItems.length,
-                              itemBuilder: (_, i) =>
-                                  FoodCard(item: foodItems[i]),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
+                if (ResponsiveTwo.showRightPanel(context))
+                  const Expanded(flex: 3, child: CardWidget()),
+              ],
             ),
           ),
-          if (ResponsiveTwo.showRightPanel(context))
-            const Expanded(
-              flex: 3,
-              child: CardWidget(),
-            ),
         ],
       ),
     );

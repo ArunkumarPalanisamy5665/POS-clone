@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:new_hrms_flutter/core/constants/app_export.dart';
 
-class OrderStatusCardOne extends StatelessWidget {
+class RecenterOrderWidget extends StatelessWidget {
   final List<OrderCard> orderCards;
   final ScrollController controller;
-  const OrderStatusCardOne({Key? key, required this.orderCards, required this.controller}) : super(key: key);
+  const RecenterOrderWidget({Key? key, required this.orderCards, required this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
