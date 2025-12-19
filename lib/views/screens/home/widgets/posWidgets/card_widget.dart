@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_hrms_flutter/core/constants/app_colors.dart';
 
 
 
@@ -184,7 +185,7 @@ class _OrderScreenState extends State<CardWidget> {
                       const SizedBox(width: 12),
                       Container(
                         decoration: BoxDecoration(
-                          color: const Color(0xFF0066FF),
+                          color:  AppColors.primaryColor,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: const Icon(Icons.add, color: Colors.white),
@@ -288,7 +289,7 @@ class _OrderScreenState extends State<CardWidget> {
                     width: double.infinity,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF0066FF),
+                        backgroundColor: AppColors.primaryColor,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -389,9 +390,9 @@ class ServiceTypeButton extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 12),
           decoration: BoxDecoration(
-            color: isSelected ? const Color(0xFF0066FF) : Colors.white,
+            color: isSelected ? AppColors.primaryColor : Colors.white,
             border: Border.all(
-              color: isSelected ? const Color(0xFF0066FF) : Colors.grey[300]!,
+              color: isSelected ? AppColors.primaryColor : Colors.grey[300]!,
             ),
             borderRadius: BorderRadius.circular(8),
           ),
@@ -439,7 +440,7 @@ class MenuItemCard extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         border: Border.all(
-          color: isFirst ? const Color(0xFF0066FF) : Colors.grey[300]!,
+          color: isFirst ? AppColors.primaryColor : Colors.grey[300]!,
           width: isFirst ? 2 : 1,
         ),
         borderRadius: BorderRadius.circular(8),
@@ -502,7 +503,7 @@ class MenuItemCard extends StatelessWidget {
                     item.hasNote ? 'View Note' : 'Add Note',
                     style: const TextStyle(
                       fontSize: 12,
-                      color: Color(0xFF0066FF),
+                      color: AppColors.primaryColor,
                     ),
                   ),
                 ),
@@ -655,308 +656,3 @@ class OrderItem {
     required this.hasNote,
   });
 }
-
-
-// class CardWidget extends StatelessWidget {
-//   const CardWidget({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Row(
-//       children: [
-//         // 1. Navigation Rail
-//         const NavigationRailSection(),
-//
-//         // 2. Main Menu Section
-//         Expanded(
-//           flex: 5,
-//           child: MainMenuSection(),
-//         ),
-//
-//         // 3. Order Sidebar
-//         const Expanded(
-//           flex: 2,
-//           child: OrderSidebar(),
-//         ),
-//       ],
-//     );
-//   }
-// }
-//
-//
-// class NavigationRailSection extends StatelessWidget {
-//   const NavigationRailSection({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       width: 80,
-//       color: Colors.white,
-//       child: Column(
-//         children: [
-//           const Padding(
-//             padding: EdgeInsets.symmetric(vertical: 30),
-//             child: Icon(Icons.restaurant, color: Colors.orange, size: 30),
-//           ),
-//           _navIcon(Icons.grid_view_rounded, true),
-//           _navIcon(Icons.receipt_long_rounded, false),
-//           _navIcon(Icons.notifications_none_rounded, false),
-//           _navIcon(Icons.settings_outlined, false),
-//           const Spacer(),
-//           _navIcon(Icons.logout_rounded, false),
-//           const SizedBox(height: 20),
-//         ],
-//       ),
-//     );
-//   }
-//
-//   Widget _navIcon(IconData icon, bool isActive) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(vertical: 15),
-//       child: Icon(icon, color: isActive ? Colors.orange : Colors.grey.shade400),
-//     );
-//   }
-// }
-//
-// /// --- MAIN MENU CONTENT ---
-// class MainMenuSection extends StatelessWidget {
-//   final List<String> categories = ["All", "Burger", "Pizza", "Drink", "Dessert", "Pasta"];
-//
-//   MainMenuSection({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.all(25.0),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           // Header & Search
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               const Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   Text("Welcome, Cashier!", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-//                   Text("Discover your best food here", style: TextStyle(color: Colors.grey)),
-//                 ],
-//               ),
-//               Container(
-//                 width: 300,
-//                 padding: const EdgeInsets.symmetric(horizontal: 15),
-//                 decoration: BoxDecoration(
-//                   color: Colors.white,
-//                   borderRadius: BorderRadius.circular(12),
-//                 ),
-//                 child: const TextField(
-//                   decoration: InputDecoration(
-//                     icon: Icon(Icons.search, color: Colors.grey),
-//                     hintText: "Search food...",
-//                     border: InputBorder.none,
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//           const SizedBox(height: 30),
-//
-//           // Category Selector
-//           SizedBox(
-//             height: 45,
-//             child: ListView.builder(
-//               scrollDirection: Axis.horizontal,
-//               itemCount: categories.length,
-//               itemBuilder: (context, index) {
-//                 bool isSelected = index == 0;
-//                 return Container(
-//                   margin: const EdgeInsets.only(right: 15),
-//                   padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-//                   decoration: BoxDecoration(
-//                     color: isSelected ? Colors.orange : Colors.white,
-//                     borderRadius: BorderRadius.circular(12),
-//                   ),
-//                   child: Center(
-//                     child: Text(
-//                       categories[index],
-//                       style: TextStyle(
-//                         color: isSelected ? Colors.white : Colors.black,
-//                         fontWeight: FontWeight.w600,
-//                       ),
-//                     ),
-//                   ),
-//                 );
-//               },
-//             ),
-//           ),
-//           const SizedBox(height: 30),
-//
-//           // Food Grid
-//           Expanded(
-//             child: GridView.builder(
-//               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-//                 crossAxisCount: 3,
-//                 crossAxisSpacing: 20,
-//                 mainAxisSpacing: 20,
-//                 childAspectRatio: 0.85,
-//               ),
-//               itemCount: 9,
-//               itemBuilder: (context, index) {
-//                 return const FoodItemCard();
-//               },
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-//
-// /// --- FOOD ITEM CARD ---
-// class FoodItemCard extends StatelessWidget {
-//   const FoodItemCard({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       decoration: BoxDecoration(
-//         color: Colors.white,
-//         borderRadius: BorderRadius.circular(20),
-//       ),
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//           const CircleAvatar(
-//             radius: 50,
-//             backgroundColor: Color(0xFFFFF3E0),
-//             child: Icon(Icons.fastfood, size: 50, color: Colors.orange),
-//           ),
-//           const SizedBox(height: 15),
-//           const Text("Double Beef Burger", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-//           const Text("\$12.50", style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold, fontSize: 18)),
-//           const SizedBox(height: 10),
-//           ElevatedButton(
-//             onPressed: () {},
-//             style: ElevatedButton.styleFrom(
-//               backgroundColor: const Color(0xFFFFF3E0),
-//               elevation: 0,
-//               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-//             ),
-//             child: const Text("Add to Cart", style: TextStyle(color: Colors.orange)),
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
-//
-// /// --- RIGHT SIDEBAR: ORDER SUMMARY ---
-// class OrderSidebar extends StatelessWidget {
-//   const OrderSidebar({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       color: Colors.white,
-//       padding: const EdgeInsets.all(25),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           const Text("Current Order", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-//           const SizedBox(height: 20),
-//
-//           // Order List
-//           Expanded(
-//             child: ListView.builder(
-//               itemCount: 3,
-//               itemBuilder: (context, index) {
-//                 return const CartItemTile();
-//               },
-//             ),
-//           ),
-//
-//           const Divider(height: 40),
-//
-//           // Totals
-//           const SummaryRow(label: "Subtotal", value: "\$45.00"),
-//           const SummaryRow(label: "Discount", value: "-\$5.00"),
-//           const SummaryRow(label: "Tax", value: "\$2.50"),
-//           const SizedBox(height: 20),
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: const [
-//               Text("Total", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-//               Text("\$42.50", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.orange)),
-//             ],
-//           ),
-//           const SizedBox(height: 30),
-//
-//           // Checkout Button
-//           SizedBox(
-//             width: double.infinity,
-//             height: 60,
-//             child: ElevatedButton(
-//               onPressed: () {},
-//               style: ElevatedButton.styleFrom(
-//                 backgroundColor: Colors.orange,
-//                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-//               ),
-//               child: const Text("Confirm Order", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-//
-// class CartItemTile extends StatelessWidget {
-//   const CartItemTile({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.only(bottom: 15),
-//       child: Row(
-//         children: [
-//           Container(
-//             width: 60, height: 60,
-//             decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: BorderRadius.circular(10)),
-//             child: const Icon(Icons.fastfood, color: Colors.orange),
-//           ),
-//           const SizedBox(width: 15),
-//           const Expanded(
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Text("Beef Burger", style: TextStyle(fontWeight: FontWeight.bold)),
-//                 Text("x1", style: TextStyle(color: Colors.grey)),
-//               ],
-//             ),
-//           ),
-//           const Text("\$12.50", style: TextStyle(fontWeight: FontWeight.bold)),
-//         ],
-//       ),
-//     );
-//   }
-// }
-//
-// class SummaryRow extends StatelessWidget {
-//   final String label;
-//   final String value;
-//   const SummaryRow({super.key, required this.label, required this.value});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(vertical: 4),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           Text(label, style: const TextStyle(color: Colors.grey, fontSize: 16)),
-//           Text(value, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
-//         ],
-//       ),
-//     );
-//   }
-// }
