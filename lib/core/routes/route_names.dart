@@ -16,6 +16,7 @@ class RouteNames {
   static const order = '/order';
   static const kitchen = '/kitchen';
   static const reservation = '/reservation';
+  static const table = '/table';
 
 
 

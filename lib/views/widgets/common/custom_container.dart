@@ -54,7 +54,7 @@ class _CustomContainerState extends State<CustomContainer> {
               color: isHovered ? widget.hoverColor?? AppColors.grey.withOpacity(0.1) : AppColors.white,
               borderRadius: widget.borderRadius,
               border: Border.all(
-                width: 1,
+                width: 0.50,
                 color: Colors.black.withAlpha((0.2 * 255).toInt()),
               ),
             );

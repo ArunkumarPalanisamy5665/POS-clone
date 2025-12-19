@@ -200,7 +200,7 @@ class _MainShellState extends State<MainShell> {
 
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
                     color: const Color(0xFFF5F5F5),
                     child: widget.child,
                   ),
@@ -327,14 +327,14 @@ class KitchenScreen extends StatelessWidget {
   }
 }
 
-class ReservationScreen extends StatelessWidget {
-  const ReservationScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Reservation Screen'));
-  }
-}
+// class ReservationScreen extends StatelessWidget {
+//   const ReservationScreen({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Center(child: Text('Reservation Screen'));
+//   }
+// }
 
 
 // class MainShell extends StatelessWidget {

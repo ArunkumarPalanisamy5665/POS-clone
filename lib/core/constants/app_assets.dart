@@ -6,40 +6,91 @@ class MyIcons {
   static const _kFontFam = 'MyIcons';
   static const _kFontPkg = null;
 
-  static const IconData calendar =
-      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData ok_circle =
-      IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData user =
-      IconData(0xe82a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData checkmark_cicle =
-      IconData(0xe87f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData user_1 =
-      IconData(0xf007, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData check_circle =
-      IconData(0xf058, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData tasks =
-      IconData(0xf0ae, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData graduation_cap =
-      IconData(0xf19d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData binoculars =
-      IconData(0xf1e5, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData clipboard_list =
-      IconData(0xf46d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData user_graduate =
-      IconData(0xf501, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData user_tie =
-      IconData(0xf508, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData file_contract =
-      IconData(0xf56c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData file_invoice =
-      IconData(0xf570, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData file_invoice_dollar =
-      IconData(0xf571, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData file_signature =
-      IconData(0xf573, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData fingerprint =
-      IconData(0xf577, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData calendar = IconData(
+    0xe800,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData ok_circle = IconData(
+    0xe802,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData user = IconData(
+    0xe82a,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData checkmark_cicle = IconData(
+    0xe87f,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData user_1 = IconData(
+    0xf007,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData check_circle = IconData(
+    0xf058,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData tasks = IconData(
+    0xf0ae,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData graduation_cap = IconData(
+    0xf19d,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData binoculars = IconData(
+    0xf1e5,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData clipboard_list = IconData(
+    0xf46d,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData user_graduate = IconData(
+    0xf501,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData user_tie = IconData(
+    0xf508,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData file_contract = IconData(
+    0xf56c,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData file_invoice = IconData(
+    0xf570,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData file_invoice_dollar = IconData(
+    0xf571,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData file_signature = IconData(
+    0xf573,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData fingerprint = IconData(
+    0xf577,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
 }
 
 class IconSet {
@@ -47,30 +98,59 @@ class IconSet {
 
   static const _kFontFam = 'Iconset';
   static const _kFontPkg = null;
-  static const IconData iconCategory =
-      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData iconSubCat =
-      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData iconBudget =
-      IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData IconFour =
-      IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData IconFive =
-      IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData IconSix =
-      IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData iconAbsentCount =
-      IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData iconPresentCount =
-      IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData iconTicket =
-      IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData iconTaskCount =
-      IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData iconCategory = IconData(
+    0xe800,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData iconSubCat = IconData(
+    0xe801,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData iconBudget = IconData(
+    0xe802,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData IconFour = IconData(
+    0xe803,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData IconFive = IconData(
+    0xe804,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData IconSix = IconData(
+    0xe805,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData iconAbsentCount = IconData(
+    0xe806,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData iconPresentCount = IconData(
+    0xe807,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData iconTicket = IconData(
+    0xe808,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData iconTaskCount = IconData(
+    0xe809,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
 }
 
 class AppAssets {
-
   static const String logo = 'assets/images/logo.png';
   static const String locationBackground = 'assets/images/bg_location.png';
   static const String background = 'assets/images/background.png';
@@ -80,9 +160,6 @@ class AppAssets {
   static const String loc = 'assets/images/loc.png';
   static const String location = 'assets/images/location.png';
   static const String loginBg = 'assets/images/login.png';
-
-
-
 
   //on board asset
   static const String onBoardBG = 'assets/images/onBoard/bg_onboard.png';
@@ -94,8 +171,6 @@ class AppAssets {
   static const String loginDashBoard = 'assets/images/login_logo.png';
   static const String loginDashBoardBG = 'assets/images/login_bg.png';
 
-
-
   static const String homeBackground = 'assets/images/home_bg.png';
   static const String locationBackground1 = 'assets/images/bg_1.png';
   static const String title_1 = 'assets/images/title_1.png';
@@ -103,9 +178,11 @@ class AppAssets {
   static const String otpBackground = 'assets/images/otp.png';
   static const String loginTop = 'assets/images/login_top.png';
   static const String bgPhotoGallery = 'assets/images/bg_photo_gallery.png';
-  static const String paymentSuccessIcon = 'assets/images/payment_success_icon.png';
+  static const String paymentSuccessIcon =
+      'assets/images/payment_success_icon.png';
   static const String bgPaymentSuccess = 'assets/images/bg_payment_success.png';
-  static const String bgPaymentSuccessNew = 'assets/images/bg_payment_success_new.png';
+  static const String bgPaymentSuccessNew =
+      'assets/images/bg_payment_success_new.png';
   static const String paymentSuccessParty =
       'assets/images/payment_success_party.png';
   static const String bgEditProfile = 'assets/images/bg_edit_profile.png';
@@ -127,7 +204,6 @@ class AppAssets {
   static const String cameraHomeIcon = 'assets/images/camera_home_icon.png';
   static const String editProfileIcon = 'assets/images/edit_profile_icon.png';
 
-
   static const String dropMenu1 = 'assets/images/drop_menu_1.png';
   static const String dropMenu2 = 'assets/images/drop_menu_2.png';
   static const String dropMenu3 = 'assets/images/drop_menu_3.png';
@@ -138,7 +214,6 @@ class AppAssets {
   static const String refreshMainIcon = 'assets/images/refresh_icon.png';
 
   // SVG Icons (if any)
-
 
   // Person Icon
   static const String personIcon = 'assets/svg/person_icon.svg';
@@ -159,8 +234,6 @@ class AppAssets {
 
   static const String doubleTick = 'assets/images/double_tick.png';
 
-
-
   static const String mobileIcons = 'assets/svg/mobile_icon.svg';
   static const String chatIcons = 'assets/svg/chat_icon.svg';
   static const String menuIcons = 'assets/svg/menu_icon.svg';
@@ -180,7 +253,8 @@ class AppAssets {
   static const String authIcon = 'assets/svg/menu/auth_icon.svg';
   static const String settingsIcon = 'assets/svg/menu/settings_icon.svg';
   static const String notifyAlertIcon = 'assets/svg/menu/notify_alert.svg';
-  static const String notificationIcon = 'assets/svg/menu/notification_icon.svg';
+  static const String notificationIcon =
+      'assets/svg/menu/notification_icon.svg';
   static const String reportIcon = 'assets/svg/menu/report_icon.svg';
   static const String brightnessIcon = 'assets/svg/menu/brightness_icon.svg';
   static const String searchIcon = 'assets/svg/menu/search_icon.svg';
@@ -204,24 +278,21 @@ class AppAssets {
   static const String subReservationIcon = 'assets/svg/menu/subMenus/reservation_icon.svg';
   static const String exportFileIcon = 'assets/svg/menu/subMenus/export_file_icon.svg';
   static const String calendarIcon = 'assets/svg/menu/subMenus/calendar_icon.svg';
- static const String refreshIcon = 'assets/svg/menu/subMenus/refresh_icon.svg';
+  static const String refreshIcon = 'assets/svg/menu/subMenus/refresh_icon.svg';
+  static const String plusIcon = 'assets/svg/menu/subMenus/plus_icon.svg';
 
- //dashboard icons
+  //dashboard icons
   static const String orderDashIcon = 'assets/svg/menu/dash_order_icon.svg';
   static const String salesIcon = 'assets/svg/menu/sales_icon.svg';
   static const String reservationIcon = 'assets/svg/menu/reservation_icon.svg';
   static const String averageIcon = 'assets/svg/menu/average_icon.svg';
   static const String dropDownIcon = 'assets/svg/menu/drop_down_icon.svg';
 
-
-
   static const String icCamera = 'assets/images/ic_camera.png';
   static const String icMyLocation = 'assets/images/ic_my_location.png';
 
-
   static const String logoBG = 'assets/images/logo_bg.png';
   static const String centerBG = 'assets/images/center_bg.png';
-
 
   static const String viewGallery = 'assets/images/view_gallery.png';
   static const String tickIconTwo = 'assets/images/tick_icon_two.png';
@@ -229,14 +300,11 @@ class AppAssets {
   static const String filesIcon = 'assets/images/files_icon.png';
   static const String portfolioMainBg = 'assets/images/portfolio_main_bg.png';
 
-
   // Animations
   static const String blastAnimation = 'assets/animations/blast.json';
   static const String blast2Animation = 'assets/animations/blast 2.json';
   static const String errorAnimation = 'assets/animations/error.json';
   static const String loadingAnimation = 'assets/animations/loading.json';
-
-
 
   // Fonts
   static const String fontFamily = 'InstrumentSans';
