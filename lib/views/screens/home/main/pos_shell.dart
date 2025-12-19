@@ -8,532 +8,1108 @@ import '../../../../domain/models/dashBoardModel/dashboard_item.dart';
 import '../../../../domain/models/food_item.dart';
 import '../../../widgets/common/custom_container.dart';
 import '../../../widgets/mainWidgets/trending_food_menu.dart';
+import '../../../widgets/orders/order_item_widget.dart';
+import '../../../widgets/orders/order_status_card.dart';
+import '../widgets/posWidgets/Order_status_card_one.dart';
+import '../widgets/posWidgets/card_widget.dart';
+
+// class PosShell extends StatefulWidget {
+//   final Widget child;
+//
+//   const PosShell({super.key, required this.child});
+//
+//   @override
+//   State<PosShell> createState() => _PosShellState();
+// }
+//
+// class _PosShellState extends State<PosShell> {
+//   String selectedTopSelling = 'All Items';
+//   DashboardItem? selectedDashboardMenu = DashboardItem(
+//     title: 'All Items',
+//     svgIcon: AppAssets.salesIcon,
+//   );
+//
+//   final List<DashboardItem> dashboardMenuitems = [
+//     DashboardItem(title: 'All Items'),
+//     DashboardItem(title: 'Sea Food'),
+//     DashboardItem(title: 'Pizza'),
+//     DashboardItem(title: 'Salads'),
+//   ];
+//
+//   // List<FoodItem> foodItems = [
+//   //   FoodItem(
+//   //     name: 'Margherita Pizza',
+//   //     imageUrl: 'https://foodish-api.com/images/pizza/pizza1.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: true,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Classic Burger',
+//   //     imageUrl: 'https://foodish-api.com/images/burger/burger1.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: false,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Chocolate Cake',
+//   //     imageUrl: 'https://foodish-api.com/images/dessert/dessert1.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: true,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Spaghetti Carbonara',
+//   //     imageUrl: 'https://foodish-api.com/images/pasta/pasta1.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: false,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Samosa',
+//   //     imageUrl: 'https://foodish-api.com/images/samosa/samosa2.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: false,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Burger',
+//   //     imageUrl: 'https://foodish-api.com/images/burger/burger28.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: false,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Pepperoni Pizza',
+//   //     imageUrl: 'https://foodish-api.com/images/pizza/pizza2.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: false,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Double Cheeseburger',
+//   //     imageUrl: 'https://foodish-api.com/images/burger/burger2.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: false,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Strawberry Cheesecake',
+//   //     imageUrl: 'https://foodish-api.com/images/dessert/dessert2.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: true,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Fettuccine Alfredo',
+//   //     imageUrl: 'https://foodish-api.com/images/pasta/pasta2.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: true,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Dhoosa',
+//   //     imageUrl: 'https://foodish-api.com/images/dosa/dosa10.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: false,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'BBQ Pizza',
+//   //     imageUrl: 'https://foodish-api.com/images/pizza/pizza55.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: false,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Vegetarian Pizza',
+//   //     imageUrl: 'https://foodish-api.com/images/pizza/pizza3.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: true,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Bacon Burger',
+//   //     imageUrl: 'https://foodish-api.com/images/burger/burger3.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: false,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Tiramisu',
+//   //     imageUrl: 'https://foodish-api.com/images/dessert/dessert3.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: true,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Penne Arrabbiata',
+//   //     imageUrl: 'https://foodish-api.com/images/pasta/pasta3.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: true,
+//   //   ),
+//   //
+//   //   FoodItem(
+//   //     name: 'BBQ Chicken Pizza',
+//   //     imageUrl: 'https://foodish-api.com/images/pizza/pizza4.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: false,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Mushroom Burger',
+//   //     imageUrl: 'https://foodish-api.com/images/burger/burger4.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: true,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Brownie',
+//   //     imageUrl: 'https://foodish-api.com/images/dessert/dessert4.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: true,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Lasagna',
+//   //     imageUrl: 'https://foodish-api.com/images/pasta/pasta4.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: false,
+//   //   ),
+//   //
+//   //   FoodItem(
+//   //     name: 'Four Cheese Pizza',
+//   //     imageUrl: 'https://foodish-api.com/images/pizza/pizza5.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: true,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Turkey Burger',
+//   //     imageUrl: 'https://foodish-api.com/images/burger/burger5.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: false,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Lemon Pie',
+//   //     imageUrl: 'https://foodish-api.com/images/dessert/dessert5.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: true,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Ravioli',
+//   //     imageUrl: 'https://foodish-api.com/images/pasta/pasta5.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: true,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'White Pizza',
+//   //     imageUrl: 'https://foodish-api.com/images/pizza/pizza6.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: true,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Veggie Burger',
+//   //     imageUrl: 'https://foodish-api.com/images/burger/burger6.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: true,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Apple Pie',
+//   //     imageUrl: 'https://foodish-api.com/images/dessert/dessert6.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: true,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Macaroni & Cheese',
+//   //     imageUrl: 'https://foodish-api.com/images/pasta/pasta6.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: true,
+//   //   ),
+//   //
+//   //   FoodItem(
+//   //     name: 'Sicilian Pizza',
+//   //     imageUrl: 'https://foodish-api.com/images/pizza/pizza7.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: false,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Wagyu Burger',
+//   //     imageUrl: 'https://foodish-api.com/images/burger/burger7.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: false,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Crème Brûlée',
+//   //     imageUrl: 'https://foodish-api.com/images/dessert/dessert7.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: true,
+//   //   ),
+//   //   FoodItem(
+//   //     name: 'Tortellini',
+//   //     imageUrl: 'https://foodish-api.com/images/pasta/pasta7.jpg',
+//   //     orders: 0,
+//   //     isVegetarian: true,
+//   //   ),
+//   // ];
+//
+//   List<FoodItem> foodItems = [
+//     FoodItem(
+//       name: 'Classic Cheeseburger',
+//       imageUrl: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
+//       orders: 0,
+//       isVegetarian: false,
+//       category: 'fastFood',
+//     ),
+//     FoodItem(
+//       name: 'Garden Salad',
+//       imageUrl: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd',
+//       orders: 0,
+//       isVegetarian: true,
+//       category: 'healthy',
+//     ),
+//     FoodItem(
+//       name: 'Salmon Sushi Roll',
+//       imageUrl: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c',
+//       orders: 0,
+//       isVegetarian: false,
+//       category: 'international',
+//     ),
+//     FoodItem(
+//       name: 'Blueberry Pancakes',
+//       imageUrl: 'https://images.unsplash.com/photo-1528207776546-365bb710ee93',
+//       orders: 0,
+//       isVegetarian: true,
+//       category: 'breakfast',
+//     ),
+//     FoodItem(
+//       name: 'Chicken Tacos',
+//       imageUrl: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47',
+//       orders: 0,
+//       isVegetarian: false,
+//       category: 'fastFood',
+//     ),
+//     FoodItem(
+//       name: 'Fruit Smoothie Bowl',
+//       imageUrl: 'https://images.unsplash.com/photo-1590301157890-4810ed352733',
+//       orders: 0,
+//       isVegetarian: true,
+//       category: 'healthy',
+//     ),
+//     FoodItem(
+//       name: 'Vegetable Spring Rolls',
+//       imageUrl: 'https://images.unsplash.com/photo-1544025162-d76694265947',
+//       orders: 0,
+//       isVegetarian: true,
+//       category: 'appetizer',
+//     ),
+//     FoodItem(
+//       name: 'Spicy Ramen',
+//       imageUrl: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624',
+//       orders: 0,
+//       isVegetarian: false,
+//       category: 'international',
+//     ),
+//     FoodItem(
+//       name: 'Grilled Salmon Steak',
+//       imageUrl: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288',
+//       orders: 0,
+//       isVegetarian: false,
+//       category: 'seafood',
+//     ),
+//     FoodItem(
+//       name: 'Eggplant Parmesan',
+//       imageUrl: 'https://images.unsplash.com/photo-1626074353765-517a681e40be',
+//       orders: 0,
+//       isVegetarian: true,
+//       category: 'italian',
+//     ),
+//     FoodItem(
+//       name: 'Chicken Tikka Masala',
+//       imageUrl: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641',
+//       orders: 0,
+//       isVegetarian: false,
+//       category: 'international',
+//     ),
+//     FoodItem(
+//       name: 'Avocado Toast',
+//       imageUrl: 'https://images.unsplash.com/photo-1525351484163-7529414344d8',
+//       orders: 0,
+//       isVegetarian: true,
+//       category: 'breakfast',
+//     ),
+//     FoodItem(
+//       name: 'Beef Nachos',
+//       imageUrl: 'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d',
+//       orders: 0,
+//       isVegetarian: false,
+//       category: 'fastFood',
+//     ),
+//     FoodItem(
+//       name: 'Fish and Chips',
+//       imageUrl: 'https://images.unsplash.com/photo-1579208575657-c595a05383b7',
+//       orders: 0,
+//       isVegetarian: false,
+//       category: 'seafood',
+//     ),
+//     FoodItem(
+//       name: 'Mushroom Risotto',
+//       imageUrl: 'https://images.unsplash.com/photo-1476124369491-e7addf5db371',
+//       orders: 0,
+//       isVegetarian: true,
+//       category: 'italian',
+//     ),
+//     FoodItem(
+//       name: 'BBQ Pork Ribs',
+//       imageUrl: 'https://images.unsplash.com/photo-1544025162-d76694265947',
+//       orders: 0,
+//       isVegetarian: false,
+//       category: 'mainCourse',
+//     ),
+//     FoodItem(
+//       name: 'Pad Thai',
+//       imageUrl: 'https://images.unsplash.com/photo-1559339352-11d035aa65de',
+//       orders: 0,
+//       isVegetarian: false,
+//       category: 'international',
+//     ),
+//     FoodItem(
+//       name: 'Quinoa Bowl',
+//       imageUrl: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd',
+//       orders: 0,
+//       isVegetarian: true,
+//       category: 'healthy',
+//     ),
+//     FoodItem(
+//       name: 'Chicken Wings',
+//       imageUrl: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f',
+//       orders: 0,
+//       isVegetarian: false,
+//       category: 'fastFood',
+//     ),
+//     FoodItem(
+//       name: 'Red Velvet Cupcake',
+//       imageUrl: 'https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7',
+//       orders: 0,
+//       isVegetarian: true,
+//       category: 'dessert',
+//     ),
+//     FoodItem(
+//       name: 'Tofu Stir Fry',
+//       imageUrl: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c',
+//       orders: 0,
+//       isVegetarian: true,
+//       category: 'healthy',
+//     ),
+//     FoodItem(
+//       name: 'Belgian Waffles',
+//       imageUrl: 'https://images.unsplash.com/photo-1562329265-95a6d7a83440',
+//       orders: 0,
+//       isVegetarian: true,
+//       category: 'breakfast',
+//     ),
+//     FoodItem(
+//       name: 'Chicken Burrito',
+//       imageUrl: 'https://images.unsplash.com/photo-1584031036380-3fb6f2d51880',
+//       orders: 0,
+//       isVegetarian: false,
+//       category: 'fastFood',
+//     ),
+//     FoodItem(
+//       name: 'Lentil Soup',
+//       imageUrl: 'https://images.unsplash.com/photo-1547592166-23ac45744acd',
+//       orders: 0,
+//       isVegetarian: true,
+//       category: 'healthy',
+//     ),
+//     FoodItem(
+//       name: 'Gyoza',
+//       imageUrl: 'https://images.unsplash.com/photo-1541696432-82c6da8ce7bf',
+//       orders: 0,
+//       isVegetarian: false,
+//       category: 'international',
+//     ),
+//     FoodItem(
+//       name: 'Fruit Tart',
+//       imageUrl: 'https://images.unsplash.com/photo-1519915028121-7d3463d20b13',
+//       orders: 0,
+//       isVegetarian: true,
+//       category: 'dessert',
+//     ),
+//     FoodItem(
+//       name: 'Beef Pho',
+//       imageUrl: 'https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43',
+//       orders: 0,
+//       isVegetarian: false,
+//       category: 'international',
+//     ),
+//   ];
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return CustomDrawer(
+//       backgroundColor: Color(0xFFf8f8f8),
+//       child: Row(
+//         children: [
+//           // _ProfileSideMenu(),
+//           Expanded(
+//             flex: 6,
+//             child: SingleChildScrollView(
+//               child: Column(
+//                 children: [
+//                   TrendingGridSection<DashboardItem>(
+//                     title: 'Trending Menus',
+//                     isHeader: true,
+//                     selectedValue: selectedDashboardMenu,
+//                     dropdownItems: dashboardMenuitems,
+//                     onDropdownChanged: (value) {
+//                       setState(() => selectedDashboardMenu = value);
+//                     },
+//                     crossAxisCount: Responsive.isMobile(context)
+//                         ? 1
+//                         :  MediaQuery.of(context).size.width > 700? 3:MediaQuery.of(context).size.width > 700 &&
+//                         MediaQuery.of(context).size.width > 900
+//                         ? 4
+//                         : 5,
+//                     crossAxisSpacing: 12,
+//                     mainAxisSpacing: 12,
+//                     childAspectRatio: MediaQuery.of(context).size.width <= 600
+//                         ? 1.250
+//                         : MediaQuery.of(context).size.width > 700
+//                         ? 1.0
+//                         : MediaQuery.of(context).size.width > 700 &&
+//                               MediaQuery.of(context).size.width > 900
+//                         ? 0.80
+//                         : MediaQuery.of(context).size.width > 1000? 0.80:MediaQuery.of(context).size.width > 900 &&
+//                               MediaQuery.of(context).size.width > 1100
+//                         ? 0.80
+//                         : 0.80,
+//
+//                     dropdownChildBuilder: (item) => Row(
+//                       children: [
+//                         Text(item?.title ?? ''),
+//                         const Icon(Icons.keyboard_arrow_down),
+//                       ],
+//                     ),
+//
+//                     dropdownItemBuilder: (item, isSelected) => Padding(
+//                       padding: const EdgeInsets.all(8),
+//                       child: Text(item?.title ?? ''),
+//                     ),
+//
+//                     itemCount: foodItems.length,
+//                     itemBuilder: (context, index) {
+//                       return FoodCard(item: foodItems[index]);
+//                     },
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//           if (MediaQuery.of(context).size.width > 1000) ...[
+//             Expanded(flex: 2, child: SizedBox(width: 300)),
+//           ],
+//         ],
+//       ),
+//     );
+//   }
+// }
+//
+// class FoodCard extends StatelessWidget {
+//   final FoodItem item;
+//
+//   const FoodCard({super.key, required this.item});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return CustomContainer(
+//       width: double.infinity,
+//       height: 1,
+//       padding: EdgeInsets.only(top: 9, left: 8, right: 8, bottom: 9),
+//       borderRadius: BorderRadius.circular(5),
+//       alignment: Alignment.center,
+//       clipBehavior: Clip.antiAlias,
+//       decoration: BoxDecoration(
+//         color: AppColors.white,
+//         border: Border.all(color: Color(0xFFE2E8F0), width: 1),
+//       ),
+//       onTap: () {
+//         print("Tapped");
+//       },
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           ClipRRect(
+//             borderRadius: BorderRadius.circular(5),
+//             child: AspectRatio(
+//               aspectRatio: MediaQuery.of(context).size.width <= 700
+//                   ? 1.9 / 1
+//                   : MediaQuery.of(context).size.width < 1100
+//                   ? 3 / 2
+//                   : 3.2 / 1.5,
+//               child: Image.network(item.imageUrl, fit: BoxFit.cover),
+//             ),
+//           ),
+//
+//           const SizedBox(height: 8),
+//           Row(
+//             children: [
+//               Text(
+//                 '${CommonWidgets.capitalizeFirstLetter('${item.category}')}',
+//                 style: TextStyle(fontSize: 11, color: Colors.grey.shade600),
+//               ),
+//               const Spacer(),
+//               VegTag(isVeg: item.isVegetarian),
+//             ],
+//           ),
+//
+//           const SizedBox(height: 6),
+//
+//           Text(
+//             item.name,
+//             maxLines: 1,
+//             overflow: TextOverflow.ellipsis,
+//             style: Theme.of(context).textTheme.titleLarge?.copyWith(
+//               fontSize: 14,
+//               fontWeight: FontWeight.w600,
+//             ),
+//           ),
+//           const SizedBox(height: 6),
+//           Row(
+//             children: [
+//               Text(
+//                 '\$23: ${item.orders}',
+//                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
+//                   fontSize: 14,
+//                   fontWeight: FontWeight.w500,
+//                 ),
+//               ),
+//               Spacer(),
+//               Row(
+//                 children: [
+//                   SvgPicture.asset(AppAssets.subIcon, width: 20, height: 20),
+//                   SizedBox(width: 12),
+//                   Text(
+//                     '${item.orders}',
+//                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
+//                       fontSize: 14,
+//                       fontWeight: FontWeight.w500,
+//                     ),
+//                   ),
+//                   SizedBox(width: 12),
+//                   SvgPicture.asset(AppAssets.addIcon, width: 20, height: 20),
+//                 ],
+//               ),
+//             ],
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+//
+// class VegTag extends StatelessWidget {
+//   final bool isVeg;
+//
+//   const VegTag({super.key, required this.isVeg});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final Color color = isVeg ? Colors.green : Colors.red;
+//
+//     return Container(
+//       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+//       child: Row(
+//         children: [
+//           SvgPicture.asset(
+//             AppAssets.veg_nonVeg_Icon,
+//             colorFilter: ColorFilter.mode(
+//               isVeg ? AppColors.green : AppColors.red,
+//               BlendMode.srcIn,
+//             ),
+//             height: 12,
+//           ),
+//           const SizedBox(width: 4),
+//           Text(
+//             isVeg ? 'Veg' : 'Non Veg',
+//             style: TextStyle(
+//               fontSize: 10,
+//               fontWeight: FontWeight.w600,
+//               color: color,
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+
+
+
 
 class PosShell extends StatefulWidget {
-  final Widget child;
-
-  const PosShell({super.key, required this.child});
+  final Widget? child;
+  const PosShell({super.key, this.child});
 
   @override
   State<PosShell> createState() => _PosShellState();
 }
 
 class _PosShellState extends State<PosShell> {
-  String selectedTopSelling = 'All Items';
-  DashboardItem? selectedDashboardMenu = DashboardItem(
-    title: 'All Items',
-    svgIcon: AppAssets.salesIcon,
-  );
+  DashboardItem? selectedDashboardMenu =
+  DashboardItem(title: 'All Items');
 
-  final List<DashboardItem> dashboardMenuitems = [
+  final dashboardMenuitems = [
     DashboardItem(title: 'All Items'),
     DashboardItem(title: 'Sea Food'),
     DashboardItem(title: 'Pizza'),
     DashboardItem(title: 'Salads'),
   ];
 
-  // List<FoodItem> foodItems = [
-  //   FoodItem(
-  //     name: 'Margherita Pizza',
-  //     imageUrl: 'https://foodish-api.com/images/pizza/pizza1.jpg',
-  //     orders: 0,
-  //     isVegetarian: true,
-  //   ),
-  //   FoodItem(
-  //     name: 'Classic Burger',
-  //     imageUrl: 'https://foodish-api.com/images/burger/burger1.jpg',
-  //     orders: 0,
-  //     isVegetarian: false,
-  //   ),
-  //   FoodItem(
-  //     name: 'Chocolate Cake',
-  //     imageUrl: 'https://foodish-api.com/images/dessert/dessert1.jpg',
-  //     orders: 0,
-  //     isVegetarian: true,
-  //   ),
-  //   FoodItem(
-  //     name: 'Spaghetti Carbonara',
-  //     imageUrl: 'https://foodish-api.com/images/pasta/pasta1.jpg',
-  //     orders: 0,
-  //     isVegetarian: false,
-  //   ),
-  //   FoodItem(
-  //     name: 'Samosa',
-  //     imageUrl: 'https://foodish-api.com/images/samosa/samosa2.jpg',
-  //     orders: 0,
-  //     isVegetarian: false,
-  //   ),
-  //   FoodItem(
-  //     name: 'Burger',
-  //     imageUrl: 'https://foodish-api.com/images/burger/burger28.jpg',
-  //     orders: 0,
-  //     isVegetarian: false,
-  //   ),
-  //   FoodItem(
-  //     name: 'Pepperoni Pizza',
-  //     imageUrl: 'https://foodish-api.com/images/pizza/pizza2.jpg',
-  //     orders: 0,
-  //     isVegetarian: false,
-  //   ),
-  //   FoodItem(
-  //     name: 'Double Cheeseburger',
-  //     imageUrl: 'https://foodish-api.com/images/burger/burger2.jpg',
-  //     orders: 0,
-  //     isVegetarian: false,
-  //   ),
-  //   FoodItem(
-  //     name: 'Strawberry Cheesecake',
-  //     imageUrl: 'https://foodish-api.com/images/dessert/dessert2.jpg',
-  //     orders: 0,
-  //     isVegetarian: true,
-  //   ),
-  //   FoodItem(
-  //     name: 'Fettuccine Alfredo',
-  //     imageUrl: 'https://foodish-api.com/images/pasta/pasta2.jpg',
-  //     orders: 0,
-  //     isVegetarian: true,
-  //   ),
-  //   FoodItem(
-  //     name: 'Dhoosa',
-  //     imageUrl: 'https://foodish-api.com/images/dosa/dosa10.jpg',
-  //     orders: 0,
-  //     isVegetarian: false,
-  //   ),
-  //   FoodItem(
-  //     name: 'BBQ Pizza',
-  //     imageUrl: 'https://foodish-api.com/images/pizza/pizza55.jpg',
-  //     orders: 0,
-  //     isVegetarian: false,
-  //   ),
-  //   FoodItem(
-  //     name: 'Vegetarian Pizza',
-  //     imageUrl: 'https://foodish-api.com/images/pizza/pizza3.jpg',
-  //     orders: 0,
-  //     isVegetarian: true,
-  //   ),
-  //   FoodItem(
-  //     name: 'Bacon Burger',
-  //     imageUrl: 'https://foodish-api.com/images/burger/burger3.jpg',
-  //     orders: 0,
-  //     isVegetarian: false,
-  //   ),
-  //   FoodItem(
-  //     name: 'Tiramisu',
-  //     imageUrl: 'https://foodish-api.com/images/dessert/dessert3.jpg',
-  //     orders: 0,
-  //     isVegetarian: true,
-  //   ),
-  //   FoodItem(
-  //     name: 'Penne Arrabbiata',
-  //     imageUrl: 'https://foodish-api.com/images/pasta/pasta3.jpg',
-  //     orders: 0,
-  //     isVegetarian: true,
-  //   ),
-  //
-  //   FoodItem(
-  //     name: 'BBQ Chicken Pizza',
-  //     imageUrl: 'https://foodish-api.com/images/pizza/pizza4.jpg',
-  //     orders: 0,
-  //     isVegetarian: false,
-  //   ),
-  //   FoodItem(
-  //     name: 'Mushroom Burger',
-  //     imageUrl: 'https://foodish-api.com/images/burger/burger4.jpg',
-  //     orders: 0,
-  //     isVegetarian: true,
-  //   ),
-  //   FoodItem(
-  //     name: 'Brownie',
-  //     imageUrl: 'https://foodish-api.com/images/dessert/dessert4.jpg',
-  //     orders: 0,
-  //     isVegetarian: true,
-  //   ),
-  //   FoodItem(
-  //     name: 'Lasagna',
-  //     imageUrl: 'https://foodish-api.com/images/pasta/pasta4.jpg',
-  //     orders: 0,
-  //     isVegetarian: false,
-  //   ),
-  //
-  //   FoodItem(
-  //     name: 'Four Cheese Pizza',
-  //     imageUrl: 'https://foodish-api.com/images/pizza/pizza5.jpg',
-  //     orders: 0,
-  //     isVegetarian: true,
-  //   ),
-  //   FoodItem(
-  //     name: 'Turkey Burger',
-  //     imageUrl: 'https://foodish-api.com/images/burger/burger5.jpg',
-  //     orders: 0,
-  //     isVegetarian: false,
-  //   ),
-  //   FoodItem(
-  //     name: 'Lemon Pie',
-  //     imageUrl: 'https://foodish-api.com/images/dessert/dessert5.jpg',
-  //     orders: 0,
-  //     isVegetarian: true,
-  //   ),
-  //   FoodItem(
-  //     name: 'Ravioli',
-  //     imageUrl: 'https://foodish-api.com/images/pasta/pasta5.jpg',
-  //     orders: 0,
-  //     isVegetarian: true,
-  //   ),
-  //   FoodItem(
-  //     name: 'White Pizza',
-  //     imageUrl: 'https://foodish-api.com/images/pizza/pizza6.jpg',
-  //     orders: 0,
-  //     isVegetarian: true,
-  //   ),
-  //   FoodItem(
-  //     name: 'Veggie Burger',
-  //     imageUrl: 'https://foodish-api.com/images/burger/burger6.jpg',
-  //     orders: 0,
-  //     isVegetarian: true,
-  //   ),
-  //   FoodItem(
-  //     name: 'Apple Pie',
-  //     imageUrl: 'https://foodish-api.com/images/dessert/dessert6.jpg',
-  //     orders: 0,
-  //     isVegetarian: true,
-  //   ),
-  //   FoodItem(
-  //     name: 'Macaroni & Cheese',
-  //     imageUrl: 'https://foodish-api.com/images/pasta/pasta6.jpg',
-  //     orders: 0,
-  //     isVegetarian: true,
-  //   ),
-  //
-  //   FoodItem(
-  //     name: 'Sicilian Pizza',
-  //     imageUrl: 'https://foodish-api.com/images/pizza/pizza7.jpg',
-  //     orders: 0,
-  //     isVegetarian: false,
-  //   ),
-  //   FoodItem(
-  //     name: 'Wagyu Burger',
-  //     imageUrl: 'https://foodish-api.com/images/burger/burger7.jpg',
-  //     orders: 0,
-  //     isVegetarian: false,
-  //   ),
-  //   FoodItem(
-  //     name: 'Crème Brûlée',
-  //     imageUrl: 'https://foodish-api.com/images/dessert/dessert7.jpg',
-  //     orders: 0,
-  //     isVegetarian: true,
-  //   ),
-  //   FoodItem(
-  //     name: 'Tortellini',
-  //     imageUrl: 'https://foodish-api.com/images/pasta/pasta7.jpg',
-  //     orders: 0,
-  //     isVegetarian: true,
-  //   ),
-  // ];
+  final List<FoodItem> foodItems = List.generate(
+    28,
+        (i) => FoodItem(
+      name: 'Food Item $i',
+      imageUrl:
+      'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
+      orders: i,
+      isVegetarian: i % 2 == 0,
+      category: i % 2 == 0 ? 'veg' : 'non-veg',
+    ),
+  );
 
-  List<FoodItem> foodItems = [
-    FoodItem(
-      name: 'Classic Cheeseburger',
-      imageUrl: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
-      orders: 0,
-      isVegetarian: false,
-      category: 'fastFood',
+  final List<OrderStatusCard> _orderCards = [
+    const OrderStatusCard(
+      status: 'All Menus',
+      count: '200 Menus',
+      isPrefixIcon: true,
+      networkImageUrl: 'https://images.unsplash.com/photo-1525755662778-989d0524087e',
+      icon: Icons.bookmark,
+      iconColor: Colors.orange,
+      backgroundColor: Color(0xFFFFF3E0),
     ),
-    FoodItem(
-      name: 'Garden Salad',
-      imageUrl: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd',
-      orders: 0,
-      isVegetarian: true,
-      category: 'healthy',
+    const OrderStatusCard(
+      status: 'Sea Food',
+      count: '200 Menus',
+      isPrefixIcon: true,
+      networkImageUrl:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
+      icon: Icons.access_time,
+      iconColor: Colors.blue,
+      backgroundColor: Color(0xFFE3F2FD),
     ),
-    FoodItem(
-      name: 'Salmon Sushi Roll',
-      imageUrl: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c',
-      orders: 0,
-      isVegetarian: false,
-      category: 'international',
+    const OrderStatusCard(
+      status: 'Pizza',
+      count: '180 Menus',
+      isPrefixIcon: true,
+      networkImageUrl:'https://images.unsplash.com/photo-1551218808-94e220e084d2',
+      icon: Icons.autorenew,
+      iconColor: Colors.orange,
+      backgroundColor: Color(0xFFFFF3E0),
     ),
-    FoodItem(
-      name: 'Blueberry Pancakes',
-      imageUrl: 'https://images.unsplash.com/photo-1528207776546-365bb710ee93',
-      orders: 0,
-      isVegetarian: true,
-      category: 'breakfast',
+    const OrderStatusCard(
+      status: 'Salads',
+      count: '120 Menus',
+      isPrefixIcon: true,
+      networkImageUrl:'https://images.unsplash.com/photo-1504674900247-0877df9cc836',
+      icon: Icons.pedal_bike,
+      iconColor: Colors.purple,
+      backgroundColor: Color(0xFFF3E5F5),
     ),
-    FoodItem(
-      name: 'Chicken Tacos',
-      imageUrl: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47',
-      orders: 0,
-      isVegetarian: false,
-      category: 'fastFood',
+    const OrderStatusCard(
+      status: 'Tacos',
+      count: '150 Menus',
+      icon: Icons.send,
+      isPrefixIcon: true,
+      networkImageUrl:'https://images.unsplash.com/photo-1473093295043-cdd812d0e601',
+      iconColor: Colors.green,
+      backgroundColor: Color(0xFFE8F5E9),
     ),
-    FoodItem(
-      name: 'Fruit Smoothie Bowl',
-      imageUrl: 'https://images.unsplash.com/photo-1590301157890-4810ed352733',
-      orders: 0,
-      isVegetarian: true,
-      category: 'healthy',
+    const OrderStatusCard(
+      status: 'Soups',
+      count: '170 Menus',
+      isPrefixIcon: true,
+      networkImageUrl:'https://images.unsplash.com/photo-1525755662778-989d0524087e',
+      icon: Icons.person_off,
+      iconColor: Colors.red,
+      backgroundColor: Color(0xFFFFEBEE),
     ),
-    FoodItem(
-      name: 'Vegetable Spring Rolls',
-      imageUrl: 'https://images.unsplash.com/photo-1544025162-d76694265947',
-      orders: 0,
-      isVegetarian: true,
-      category: 'appetizer',
+  ];
+
+  final List<OrderCard> orderDeliveredList = [
+    OrderCard(
+      orderId: '#14589',
+      customerName: 'James Smith',
+      time: '11:30 AM',
+      type: 'Delivery',
+      eta: '12 Mins',
+      progress: 0.25,
+      totalTime: '20:00',
     ),
-    FoodItem(
-      name: 'Spicy Ramen',
-      imageUrl: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624',
-      orders: 0,
-      isVegetarian: false,
-      category: 'international',
+    OrderCard(
+      orderId: '#14589',
+      customerName: 'James Smith',
+      time: '11:30 AM',
+      type: 'Delivery',
+      eta: '12 Mins',
+      progress: 0.25,
+      totalTime: '20:00',
     ),
-    FoodItem(
-      name: 'Grilled Salmon Steak',
-      imageUrl: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288',
-      orders: 0,
-      isVegetarian: false,
-      category: 'seafood',
+    OrderCard(
+      orderId: '#14589',
+      customerName: 'Lucy',
+      time: '1:30 PM',
+      type: 'Delivery',
+      eta: '10 Mins',
+      progress: 0.25,
+      totalTime: '20:00',
     ),
-    FoodItem(
-      name: 'Eggplant Parmesan',
-      imageUrl: 'https://images.unsplash.com/photo-1626074353765-517a681e40be',
-      orders: 0,
-      isVegetarian: true,
-      category: 'italian',
+    OrderCard(
+      orderId: '#56998',
+      customerName: 'Maria Gonzalez',
+      time: '11:45 AM',
+      type: 'Take Away',
+      eta: '-8 Mins',
+      progress: 0.02,
+      totalTime: '49:33',
+      isLate: true,
     ),
-    FoodItem(
-      name: 'Chicken Tikka Masala',
-      imageUrl: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641',
-      orders: 0,
-      isVegetarian: false,
-      category: 'international',
-    ),
-    FoodItem(
-      name: 'Avocado Toast',
-      imageUrl: 'https://images.unsplash.com/photo-1525351484163-7529414344d8',
-      orders: 0,
-      isVegetarian: true,
-      category: 'breakfast',
-    ),
-    FoodItem(
-      name: 'Beef Nachos',
-      imageUrl: 'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d',
-      orders: 0,
-      isVegetarian: false,
-      category: 'fastFood',
-    ),
-    FoodItem(
-      name: 'Fish and Chips',
-      imageUrl: 'https://images.unsplash.com/photo-1579208575657-c595a05383b7',
-      orders: 0,
-      isVegetarian: false,
-      category: 'seafood',
-    ),
-    FoodItem(
-      name: 'Mushroom Risotto',
-      imageUrl: 'https://images.unsplash.com/photo-1476124369491-e7addf5db371',
-      orders: 0,
-      isVegetarian: true,
-      category: 'italian',
-    ),
-    FoodItem(
-      name: 'BBQ Pork Ribs',
-      imageUrl: 'https://images.unsplash.com/photo-1544025162-d76694265947',
-      orders: 0,
-      isVegetarian: false,
-      category: 'mainCourse',
-    ),
-    FoodItem(
-      name: 'Pad Thai',
-      imageUrl: 'https://images.unsplash.com/photo-1559339352-11d035aa65de',
-      orders: 0,
-      isVegetarian: false,
-      category: 'international',
-    ),
-    FoodItem(
-      name: 'Quinoa Bowl',
-      imageUrl: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd',
-      orders: 0,
-      isVegetarian: true,
-      category: 'healthy',
-    ),
-    FoodItem(
-      name: 'Chicken Wings',
-      imageUrl: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f',
-      orders: 0,
-      isVegetarian: false,
-      category: 'fastFood',
-    ),
-    FoodItem(
-      name: 'Red Velvet Cupcake',
-      imageUrl: 'https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7',
-      orders: 0,
-      isVegetarian: true,
-      category: 'dessert',
-    ),
-    FoodItem(
-      name: 'Tofu Stir Fry',
-      imageUrl: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c',
-      orders: 0,
-      isVegetarian: true,
-      category: 'healthy',
-    ),
-    FoodItem(
-      name: 'Belgian Waffles',
-      imageUrl: 'https://images.unsplash.com/photo-1562329265-95a6d7a83440',
-      orders: 0,
-      isVegetarian: true,
-      category: 'breakfast',
-    ),
-    FoodItem(
-      name: 'Chicken Burrito',
-      imageUrl: 'https://images.unsplash.com/photo-1584031036380-3fb6f2d51880',
-      orders: 0,
-      isVegetarian: false,
-      category: 'fastFood',
-    ),
-    FoodItem(
-      name: 'Lentil Soup',
-      imageUrl: 'https://images.unsplash.com/photo-1547592166-23ac45744acd',
-      orders: 0,
-      isVegetarian: true,
-      category: 'healthy',
-    ),
-    FoodItem(
-      name: 'Gyoza',
-      imageUrl: 'https://images.unsplash.com/photo-1541696432-82c6da8ce7bf',
-      orders: 0,
-      isVegetarian: false,
-      category: 'international',
-    ),
-    FoodItem(
-      name: 'Fruit Tart',
-      imageUrl: 'https://images.unsplash.com/photo-1519915028121-7d3463d20b13',
-      orders: 0,
-      isVegetarian: true,
-      category: 'dessert',
-    ),
-    FoodItem(
-      name: 'Beef Pho',
-      imageUrl: 'https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43',
-      orders: 0,
-      isVegetarian: false,
-      category: 'international',
+    OrderCard(
+      orderId: '#145843',
+      customerName: 'Harry',
+      time: '12:30 PM',
+      type: 'Delivery',
+      eta: '-5 Mins',
+      progress: 0.25,
+      totalTime: '20:00',
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
+
     return CustomDrawer(
-      backgroundColor: Color(0xFFf8f8f8),
-      child: Row(
+      backgroundColor: const Color(0xFFF8F8F8),
+      child:
+
+      Row(
         children: [
-          // _ProfileSideMenu(),
           Expanded(
             flex: 6,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  TrendingGridSection<DashboardItem>(
+            child: ScrollConfiguration(
+              behavior: ScrollBehavior().copyWith(overscroll: false),
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30, right: 30, bottom: 20, top: 20),
+                  child: Column(
+                    children: [
+
+                      OrderStatusCardOne(orderCards: orderDeliveredList,),
+                      SizedBox(height: 16,),
+                      SizedBox(
+                          height: 65,
+                          child: ScrollConfiguration(
+                            behavior: ScrollConfiguration.of(context).copyWith(
+                              scrollbars: false,
+                            ),
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              primary: false,
+                              shrinkWrap: true,
+                              physics: const ClampingScrollPhysics(),
+                              itemCount: _orderCards.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 16),
+                                  child: OrderStatusCard(
+                                    status: _orderCards[index].status,
+                                    count:  _orderCards[index].count,
+                                     titleTextStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                       color: Colors.black,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 13
+                                     ),
+                                    subtitleTextStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                        color: Colors.black54,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 10
+                                    ),
+
+                                    isPrefixIcon:  _orderCards[index].isPrefixIcon,
+                                    networkImageUrl:  _orderCards[index].networkImageUrl,
+                                    icon:  _orderCards[index].icon,
+                                    iconColor:  _orderCards[index].iconColor,
+                                    backgroundColor:  _orderCards[index].backgroundColor,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TrendingGridSection<DashboardItem>(
+                              title: 'Trending Menus',
+                              isHeader: false,
+
+                              selectedValue: selectedDashboardMenu,
+                              dropdownItems: dashboardMenuitems,
+                              onDropdownChanged: (v) {
+                                setState(() => selectedDashboardMenu = v);
+                              },
+                              padding: EdgeInsets.only(top: 20),
+                              innerPadding: EdgeInsets.zero,
+                              decoration: BoxDecoration(color: Colors.transparent),
+
+                              crossAxisCount: ResponsiveTwo.gridCount(context),
+                              childAspectRatio: ResponsiveTwo.gridAspect(context),
+                              crossAxisSpacing: ResponsiveTwo.gridSpacing(context),
+                              mainAxisSpacing: ResponsiveTwo.gridSpacing(context),
+
+                              dropdownChildBuilder: (item) => Row(
+                                children: [
+                                  Text(item?.title ?? ''),
+                                  const Icon(Icons.keyboard_arrow_down),
+                                ],
+                              ),
+
+                              dropdownItemBuilder: (item, _) => Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: Text(item?.title ?? ''),
+                              ),
+
+                              itemCount: foodItems.length,
+                              itemBuilder: (_, i) =>
+                                  FoodCard(item: foodItems[i]),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          if (ResponsiveTwo.showRightPanel(context))
+            Expanded(
+              flex: 3,
+              child: CardWidget()
+
+              // Container(
+              //   width: 320,
+              //   height: double.infinity,
+              //   color: Colors.yellow,
+              //   child: const Center(
+              //     child: Text(
+              //       'Order Summary',
+              //       style: TextStyle(
+              //           fontSize: 18,
+              //           fontWeight: FontWeight.w600),
+              //     ),
+              //   ),
+              // ),
+            ),
+        ],
+      ),
+    );
+
+      CustomDrawer(
+      backgroundColor: const Color(0xFFF8F8F8),
+      child: CustomScrollView(
+        slivers: [
+
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: SizedBox(
+                height: 100,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: _orderCards.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: _orderCards[index],
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+
+          SliverToBoxAdapter(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: TrendingGridSection<DashboardItem>(
                     title: 'Trending Menus',
-                    isHeader: true,
+                    isHeader: false,
                     selectedValue: selectedDashboardMenu,
                     dropdownItems: dashboardMenuitems,
-                    onDropdownChanged: (value) {
-                      setState(() => selectedDashboardMenu = value);
+                    onDropdownChanged: (v) {
+                      setState(() => selectedDashboardMenu = v);
                     },
-                    crossAxisCount: Responsive.isMobile(context)
-                        ? 1
-                        :  MediaQuery.of(context).size.width > 700? 3:MediaQuery.of(context).size.width > 700 &&
-                        MediaQuery.of(context).size.width > 900
-                        ? 4
-                        : 5,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                    childAspectRatio: MediaQuery.of(context).size.width <= 600
-                        ? 1.250
-                        : MediaQuery.of(context).size.width > 700
-                        ? 1.0
-                        : MediaQuery.of(context).size.width > 700 &&
-                              MediaQuery.of(context).size.width > 900
-                        ? 0.90
-                        : MediaQuery.of(context).size.width > 900 &&
-                              MediaQuery.of(context).size.width > 1100
-                        ? 1.0
-                        : 0.90,
-
+                    crossAxisCount: ResponsiveTwo.gridCount(context),
+                    childAspectRatio: ResponsiveTwo.gridAspect(context),
+                    crossAxisSpacing: ResponsiveTwo.gridSpacing(context),
+                    mainAxisSpacing: ResponsiveTwo.gridSpacing(context),
                     dropdownChildBuilder: (item) => Row(
                       children: [
                         Text(item?.title ?? ''),
                         const Icon(Icons.keyboard_arrow_down),
                       ],
                     ),
-
-                    dropdownItemBuilder: (item, isSelected) => Padding(
+                    dropdownItemBuilder: (item, _) => Padding(
                       padding: const EdgeInsets.all(8),
                       child: Text(item?.title ?? ''),
                     ),
-
                     itemCount: foodItems.length,
-                    itemBuilder: (context, index) {
-                      return FoodCard(item: foodItems[index]);
-                    },
+                    itemBuilder: (_, i) => FoodCard(item: foodItems[i]),
                   ),
-                ],
-              ),
+                ),
+
+                if (ResponsiveTwo.showRightPanel(context))
+                  Container(
+                    width: 320,
+                    height: 500,
+                    color: Colors.white,
+                    child: const Center(
+                      child: Text(
+                        'Order Summary',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
             ),
           ),
-          if (MediaQuery.of(context).size.width > 1000) ...[
-            Expanded(flex: 2, child: SizedBox(width: 300)),
-          ],
         ],
       ),
     );
+
+
+
+
+
   }
 }
 
+
+
+//CustomDrawer(
+//       backgroundColor: const Color(0xFFF8F8F8),
+//       child: CustomScrollView(
+//         slivers: [
+//
+//           /// 🔹 TOP ORDER STATUS CARDS (horizontal)
+//           SliverToBoxAdapter(
+//             child: Padding(
+//               padding: const EdgeInsets.all(16),
+//               child: SizedBox(
+//                 height: 300,
+//                 child: ListView.builder(
+//                   scrollDirection: Axis.horizontal,
+//                   itemCount: _orderCards.length,
+//                   itemBuilder: (context, index) {
+//                     return Padding(
+//                       padding: const EdgeInsets.only(right: 16),
+//                       child: _orderCards[index],
+//                     );
+//                   },
+//                 ),
+//               ),
+//             ),
+//           ),
+//
+//           /// 🔹 MAIN CONTENT
+//           // SliverPadding(
+//           //   padding: const EdgeInsets.symmetric(horizontal: 16),
+//           //   sliver: SliverToBoxAdapter(
+//           //     child: Row(
+//           //       crossAxisAlignment: CrossAxisAlignment.start,
+//           //       children: [
+//           //
+//           //         /// LEFT GRID
+//           //         Expanded(
+//           //           child: TrendingGridSection<DashboardItem>(
+//           //             title: 'Trending Menus',
+//           //             isHeader: false,
+//           //             selectedValue: selectedDashboardMenu,
+//           //             dropdownItems: dashboardMenuitems,
+//           //             onDropdownChanged: (v) {
+//           //               setState(() => selectedDashboardMenu = v);
+//           //             },
+//           //             crossAxisCount: ResponsiveTwo.gridCount(context),
+//           //             childAspectRatio: ResponsiveTwo.gridAspect(context),
+//           //             crossAxisSpacing: ResponsiveTwo.gridSpacing(context),
+//           //             mainAxisSpacing: ResponsiveTwo.gridSpacing(context),
+//           //             dropdownChildBuilder: (item) => Row(
+//           //               children: [
+//           //                 Text(item?.title ?? ''),
+//           //                 const Icon(Icons.keyboard_arrow_down),
+//           //               ],
+//           //             ),
+//           //             dropdownItemBuilder: (item, _) => Padding(
+//           //               padding: const EdgeInsets.all(8),
+//           //               child: Text(item?.title ?? ''),
+//           //             ),
+//           //             itemCount: foodItems.length,
+//           //             itemBuilder: (_, i) => FoodCard(item: foodItems[i]),
+//           //           ),
+//           //         ),
+//           //
+//           //         /// RIGHT PANEL
+//           //         if (ResponsiveTwo.showRightPanel(context))
+//           //           Container(
+//           //             width: 320,
+//           //             margin: const EdgeInsets.only(left: 16),
+//           //             color: Colors.white,
+//           //             child: const Padding(
+//           //               padding: EdgeInsets.all(16),
+//           //               child: Text(
+//           //                 'Order Summary',
+//           //                 style: TextStyle(
+//           //                   fontSize: 18,
+//           //                   fontWeight: FontWeight.w600,
+//           //                 ),
+//           //               ),
+//           //             ),
+//           //           ),
+//           //       ],
+//           //     ),
+//           //   ),
+//           // ),
+//         ],
+//       ),
+//     )
+
+
 class FoodCard extends StatelessWidget {
   final FoodItem item;
-
   const FoodCard({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return CustomContainer(
-      width: double.infinity,
-      height: 1,
-      padding: EdgeInsets.only(top: 9, left: 8, right: 8, bottom: 9),
-      borderRadius: BorderRadius.circular(5),
-      alignment: Alignment.center,
-      clipBehavior: Clip.antiAlias,
+      padding: const EdgeInsets.all(8),
+      borderRadius: BorderRadius.circular(6),
       decoration: BoxDecoration(
         color: AppColors.white,
-        border: Border.all(color: Color(0xFFE2E8F0), width: 1),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
       ),
-      onTap: () {
-        print("Tapped");
-      },
+      onTap: () {},
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(6),
             child: AspectRatio(
-              aspectRatio: MediaQuery.of(context).size.width <= 700
-                  ? 1.9 / 1
-                  : MediaQuery.of(context).size.width < 1100
-                  ? 3 / 2
-                  : 3.2 / 1.5,
-              child: Image.network(item.imageUrl, fit: BoxFit.cover),
+              aspectRatio: ResponsiveTwo.imageAspectRatio(context),
+              child: Image.network(
+                item.imageUrl,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
 
           const SizedBox(height: 8),
+
           Row(
             children: [
               Text(
-                '${CommonWidgets.capitalizeFirstLetter('${item.category}')}',
-                style: TextStyle(fontSize: 11, color: Colors.grey.shade600),
+                item.category.toUpperCase(),
+                style: const TextStyle(
+                    fontSize: 11, color: Colors.grey),
               ),
               const Spacer(),
               VegTag(isVeg: item.isVegetarian),
@@ -546,80 +1122,98 @@ class FoodCard extends StatelessWidget {
             item.name,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-            ),
+            style: const TextStyle(
+                fontSize: 14, fontWeight: FontWeight.w600),
           ),
-          const SizedBox(height: 6),
+
+          // Spacer(),
+
           Row(
             children: [
-              Text(
-                '\$23: ${item.orders}',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
+              const Text(
+                '\$25',
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
-              Spacer(),
-              Row(
-                children: [
-                  SvgPicture.asset(AppAssets.subIcon, width: 20, height: 20),
-                  SizedBox(width: 12),
-                  Text(
-                    '${item.orders}',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                  SvgPicture.asset(AppAssets.addIcon, width: 20, height: 20),
-                ],
-              ),
+              const Spacer(),
+              _QtyControl(item.orders),
             ],
           ),
+          SizedBox(height: 5,)
         ],
       ),
     );
   }
 }
 
+
 class VegTag extends StatelessWidget {
   final bool isVeg;
-
   const VegTag({super.key, required this.isVeg});
 
   @override
   Widget build(BuildContext context) {
-    final Color color = isVeg ? Colors.green : Colors.red;
+    final color = isVeg ? Colors.green : Colors.red;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-      child: Row(
-        children: [
-          SvgPicture.asset(
-            AppAssets.veg_nonVeg_Icon,
-            colorFilter: ColorFilter.mode(
-              isVeg ? AppColors.green : AppColors.red,
-              BlendMode.srcIn,
-            ),
-            height: 12,
-          ),
-          const SizedBox(width: 4),
-          Text(
-            isVeg ? 'Veg' : 'Non Veg',
-            style: TextStyle(
+    return Row(
+      children: [
+        SvgPicture.asset(
+          AppAssets.veg_nonVeg_Icon,
+          height: 12,
+          colorFilter:
+          ColorFilter.mode(color, BlendMode.srcIn),
+        ),
+        const SizedBox(width: 4),
+        Text(
+          isVeg ? 'Veg' : 'Non Veg',
+          style: TextStyle(
               fontSize: 10,
               fontWeight: FontWeight.w600,
-              color: color,
-            ),
-          ),
-        ],
-      ),
+              color: color),
+        ),
+      ],
     );
   }
 }
+
+
+class _QtyControl extends StatelessWidget {
+  final int qty;
+  const _QtyControl(this.qty);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        SvgPicture.asset(AppAssets.subIcon, width: 18),
+        const SizedBox(width: 10),
+        Text(
+          '$qty',
+          style: const TextStyle(
+              fontSize: 14, fontWeight: FontWeight.w500),
+        ),
+        const SizedBox(width: 10),
+        SvgPicture.asset(AppAssets.addIcon, width: 18),
+      ],
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class _ProfileSideMenu extends StatelessWidget {
   @override

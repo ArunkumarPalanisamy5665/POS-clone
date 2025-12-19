@@ -171,6 +171,20 @@ class AppRouter {
             name: RouteNames.pos,
             builder: (_, __) => const PosScreen(),
           ),
+          // GoRoute(
+          //   path: '/pos',
+          //   name: RouteNames.pos,
+          //   builder: (context, state) {
+          //     final args = state.extra as Map<String, dynamic>?;
+          //
+          //     final List<OrderStatusCardData> orderDeliveredList =
+          //         args?['order_delivered_list'] as List<OrderStatusCardData>? ?? [];
+          //
+          //     return OrderStatusCardOne(
+          //       list: orderDeliveredList,
+          //     );
+          //   },
+          // ),
           GoRoute(
             path: '/profile/documents',
             builder: (_, __) => const ProfileDocumentsPage(),
