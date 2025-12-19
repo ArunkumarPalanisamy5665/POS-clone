@@ -679,6 +679,58 @@ class _OrderScreenState extends State<OrderScreen> {
     },
   ];
 
+
+  final List<OrderStatusCard> orderDetailList = [
+    const OrderStatusCard(
+      status: 'All Orders',
+      count: '98',
+      isPrefixIcon: true,
+      networkImageUrl: 'https://images.unsplash.com/photo-1525755662778-989d0524087e',
+      icon: Icons.bookmark,
+      iconColor: Colors.orange,
+      backgroundColor: Color(0xFFFFF3E0),
+    ),
+    const OrderStatusCard(
+      status: 'Pending',
+      count: '32',
+      isPrefixIcon: true,
+      networkImageUrl:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
+      icon: Icons.access_time,
+      iconColor: Colors.blue,
+      backgroundColor: Color(0xFFE3F2FD),
+    ),
+    const OrderStatusCard(
+      status: 'In Progress',
+      count: '66',
+      isPrefixIcon: true,
+      networkImageUrl:'https://images.unsplash.com/photo-1551218808-94e220e084d2',
+      icon: Icons.autorenew,
+      iconColor: Colors.orange,
+      backgroundColor: Color(0xFFFFF3E0),
+    ),
+    const OrderStatusCard(
+      status: 'Completed',
+      count: '45',
+      isPrefixIcon: true,
+      networkImageUrl:'https://images.unsplash.com/photo-1504674900247-0877df9cc836',
+      icon: Icons.pedal_bike,
+      iconColor: Colors.purple,
+      backgroundColor: Color(0xFFF3E5F5),
+    ),
+    const OrderStatusCard(
+      status: 'Cancelled',
+      count: '69',
+      icon: Icons.send,
+      isPrefixIcon: true,
+      networkImageUrl:'https://images.unsplash.com/photo-1473093295043-cdd812d0e601',
+      iconColor: Colors.green,
+      backgroundColor: Color(0xFFE8F5E9),
+    ),
+  ];
+
+
+
+
   List<Map<String, dynamic>> _getFilteredOrders() {
     // Tab indices: 0=All Orders, 1=Pending, 2=In Progress, 3=Completed, 4=Cancelled
     switch (selectedIndex) {
@@ -830,6 +882,7 @@ class _OrderScreenState extends State<OrderScreen> {
                 selectedIndex = index;
               });
             },
+            tabs: orderDetailList,
             allOrdersCount: _getOrderCount('All'),
             pendingCount: _getOrderCount('Pending'),
             inProgressCount: _getOrderCount('In Progress'),

@@ -3,7 +3,8 @@ import 'package:new_hrms_flutter/core/constants/app_export.dart';
 
 class OrderStatusCardOne extends StatelessWidget {
   final List<OrderCard> orderCards;
-  const OrderStatusCardOne({Key? key, required this.orderCards}) : super(key: key);
+  final ScrollController controller;
+  const OrderStatusCardOne({Key? key, required this.orderCards, required this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +20,7 @@ class OrderStatusCardOne extends StatelessWidget {
                 scrollbars: false,
               ),
               child: ListView.builder(
+                controller: controller,
                 scrollDirection: Axis.horizontal,
                 primary: false,
                 physics: const ClampingScrollPhysics(),

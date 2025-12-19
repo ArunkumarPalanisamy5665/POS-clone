@@ -82,6 +82,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'order_status_card.dart';
+
 class OrderStatusTab extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onTabSelected;
@@ -90,6 +92,8 @@ class OrderStatusTab extends StatelessWidget {
   final int inProgressCount;
   final int completedCount;
   final int cancelledCount;
+  final EdgeInsets? padding;
+  final List<OrderStatusCard> tabs;
 
   const OrderStatusTab({
     Key? key,
@@ -100,21 +104,22 @@ class OrderStatusTab extends StatelessWidget {
     required this.inProgressCount,
     required this.completedCount,
     required this.cancelledCount,
+    required this.tabs, this.padding,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> tabs = [
-      {'label': 'All Orders', 'count': allOrdersCount},
-      {'label': 'Pending', 'count': pendingCount},
-      {'label': 'In Progress', 'count': inProgressCount},
-      {'label': 'Completed', 'count': completedCount},
-      {'label': 'Cancelled', 'count': cancelledCount},
-    ];
+    // final List<Map<String, dynamic>> tabs = [
+    //   {'label': 'All Orders', 'count': allOrdersCount},
+    //   {'label': 'Pending', 'count': pendingCount},
+    //   {'label': 'In Progress', 'count': inProgressCount},
+    //   {'label': 'Completed', 'count': completedCount},
+    //   {'label': 'Cancelled', 'count': cancelledCount},
+    // ];
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.all(16),
+      padding: padding?? const EdgeInsets.all(16),
       child: Row(
         children: List.generate(tabs.length, (index) {
           final isSelected = selectedIndex == index;
@@ -143,22 +148,24 @@ class OrderStatusTab extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        tabs[index]['label'],
+                        tabs[index].status,
                         style: TextStyle(
                           color: isSelected ? Colors.white : Colors.black,
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
+                      if(!tabs[index].isPrefixIcon)...[
                       const SizedBox(width: 8),
                       Text(
-                        '(${tabs[index]['count']})',
+                        '(${tabs[index].count})',
                         style: TextStyle(
                           color: isSelected ? Colors.white : Colors.black,
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
+              ],
                     ],
                   ),
                 ),
