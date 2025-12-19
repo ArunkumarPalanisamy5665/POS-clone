@@ -212,7 +212,11 @@ class AppAssets {
   static const String averageIcon = 'assets/svg/menu/average_icon.svg';
   static const String dropDownIcon = 'assets/svg/menu/drop_down_icon.svg';
 
-
+  //order icons
+  static const String newOrderIcon = 'assets/svg/new_order.svg';
+  static const String inKitchenIcon = 'assets/svg/in_kitchen.svg';
+  static const String delayedIcon = 'assets/svg/delayed.svg';
+  static const String completedIcon = 'assets/svg/completed.svg';
 
   static const String icCamera = 'assets/images/ic_camera.png';
   static const String icMyLocation = 'assets/images/ic_my_location.png';

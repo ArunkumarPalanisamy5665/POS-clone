@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_hrms_flutter/views/widgets/common/custom_mouse_region.dart';
-
 import '../../../core/constants/app_colors.dart';
-
 
 class CustomContainer extends StatefulWidget {
   final VoidCallback? onTap;
@@ -19,7 +17,6 @@ class CustomContainer extends StatefulWidget {
   final Clip clipBehavior;
   final Color? hoverColor;
   final String? assetImage;
-
 
   const CustomContainer({
     super.key,
@@ -48,23 +45,30 @@ class _CustomContainerState extends State<CustomContainer> {
 
   @override
   Widget build(BuildContext context) {
-    final BoxDecoration effectiveDecoration =
-        widget.decoration ??
-            BoxDecoration(
-              color: isHovered ? widget.hoverColor?? AppColors.grey.withOpacity(0.1) : AppColors.white,
-              borderRadius: widget.borderRadius,
-              border: Border.all(
-                width: 1,
-                color: Colors.black.withAlpha((0.2 * 255).toInt()),
-              ),
-            );
+    final BoxDecoration baseDecoration = BoxDecoration(
+      color: widget.decoration?.color ?? AppColors.white,
+      borderRadius: widget.borderRadius,
+      border: widget.decoration?.border ??
+          Border.all(
+            width: 1,
+            color: Colors.black.withAlpha((0.2 * 255).toInt()),
+          ),
+      boxShadow: widget.decoration?.boxShadow,
+      image: widget.decoration?.image,
+    );
+
+    final Color resolvedColor = widget.isNeedHover && isHovered
+        ? widget.hoverColor ?? AppColors.grey.withOpacity(0.1)
+        : baseDecoration.color ?? AppColors.white;
 
     return Material(
       color: Colors.transparent,
       borderRadius: widget.borderRadius,
       child: CustomMouseRegion(
         onHoverChanged: (hovered) {
-          setState(() => isHovered = hovered);
+          if (widget.isNeedHover) {
+            setState(() => isHovered = hovered);
+          }
         },
         child: InkWell(
           borderRadius: widget.borderRadius,
@@ -77,17 +81,14 @@ class _CustomContainerState extends State<CustomContainer> {
             alignment: widget.alignment,
             constraints: widget.constraints,
             clipBehavior: widget.clipBehavior,
-            decoration: effectiveDecoration.copyWith(
-              color: widget.isNeedHover
-                  ? (isHovered ? AppColors.grey.withOpacity(0.1) : null)
-                  : null,
-              borderRadius: widget.borderRadius,
+            decoration: baseDecoration.copyWith(
+              color: resolvedColor,
               image: widget.assetImage != null
                   ? DecorationImage(
                 image: AssetImage(widget.assetImage!),
                 fit: BoxFit.cover,
               )
-                  : effectiveDecoration.image,
+                  : baseDecoration.image,
             ),
             child: widget.child,
           ),
@@ -96,7 +97,3 @@ class _CustomContainerState extends State<CustomContainer> {
     );
   }
 }
-
-
-
-

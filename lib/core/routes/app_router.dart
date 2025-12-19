@@ -18,6 +18,7 @@ import '../../views/screens/home/main_home.dart';
 import '../../views/screens/home/main/main_shell.dart';
 import '../../views/screens/home/main/pos_shell.dart';
 import '../../views/screens/home/profile_manager.dart';
+import '../../views/screens/kitchen/kitchen_kds_screen.dart';
 import '../../views/screens/orders/order_screen.dart';
 
 class AppRouter {
@@ -151,7 +152,7 @@ class AppRouter {
           GoRoute(
             path: '/kitchen',
             name: RouteNames.kitchen,
-            builder: (_, __) => const KitchenScreen(),
+            builder: (_, __) => const KitchenKdsScreen(),
           ),
           GoRoute(
             path: '/reservation',
