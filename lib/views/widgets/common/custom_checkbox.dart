@@ -18,6 +18,7 @@ class CustomCheckbox extends StatelessWidget {
   final String? label;
   final TextStyle? labelStyle;
   final double spacing;
+  final IconData? icon;
 
   const CustomCheckbox({
     super.key,
@@ -35,6 +36,7 @@ class CustomCheckbox extends StatelessWidget {
     this.label,
     this.labelStyle,
     this.spacing = 8,
+    this.icon,
   });
 
   @override
@@ -68,9 +70,9 @@ class CustomCheckbox extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: isCircular
-            ? backgroundColor
-            : (value ? activeColor : backgroundColor),
+        color: value
+            ? activeColor
+            : backgroundColor,
         shape: isCircular ? BoxShape.circle : BoxShape.rectangle,
         borderRadius:
         isCircular ? null : BorderRadius.circular(borderRadius),
@@ -79,17 +81,40 @@ class CustomCheckbox extends StatelessWidget {
           width: 1.6,
         ),
       ),
-      child: value && isCircular
+      child: value
       // 🔘 Circle → inside dot
           ? Center(
-        child: Container(
+        child: isCircular ?
+        Container(
           width: width * 0.45,
           height: height * 0.45,
           decoration: BoxDecoration(
             color: activeColor,
             shape: BoxShape.circle,
           ),
+
+        ):
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              width: width * 0.45,
+              height: height * 0.45,
+              decoration: BoxDecoration(
+                color: activeColor,
+                shape: BoxShape.rectangle,
+                borderRadius:
+                BorderRadius.circular(borderRadius / 2),
+              ),
+            ),
+            Icon(
+              icon ?? Icons.check,
+              size: width * 0.7,
+              color: checkColor,
+            ),
+          ],
         ),
+
       )
           : null,
     );

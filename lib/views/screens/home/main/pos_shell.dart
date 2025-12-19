@@ -7,6 +7,7 @@ import '../../../../core/constants/app_export.dart';
 import '../../../../domain/models/dashBoardModel/dashboard_item.dart';
 import '../../../../domain/models/food_item.dart';
 import '../../../widgets/common/custom_container.dart';
+import '../../../widgets/common/custom_textfield.dart';
 import '../../../widgets/mainWidgets/trending_food_menu.dart';
 import '../../../widgets/orders/order_item_widget.dart';
 import '../../../widgets/orders/order_status_card.dart';
@@ -625,12 +626,9 @@ import '../widgets/posWidgets/card_widget.dart';
 //   }
 // }
 
-
-
-
-
 class PosShell extends StatefulWidget {
   final Widget? child;
+
   const PosShell({super.key, this.child});
 
   @override
@@ -638,8 +636,12 @@ class PosShell extends StatefulWidget {
 }
 
 class _PosShellState extends State<PosShell> {
-  DashboardItem? selectedDashboardMenu =
-  DashboardItem(title: 'All Items');
+  bool isVegChecked = false;
+  bool isNonVegChecked = false;
+  bool isEggChecked = false;
+  final TextEditingController _searchController = TextEditingController();
+
+  DashboardItem? selectedDashboardMenu = DashboardItem(title: 'All Items');
 
   final dashboardMenuitems = [
     DashboardItem(title: 'All Items'),
@@ -650,10 +652,9 @@ class _PosShellState extends State<PosShell> {
 
   final List<FoodItem> foodItems = List.generate(
     28,
-        (i) => FoodItem(
+    (i) => FoodItem(
       name: 'Food Item $i',
-      imageUrl:
-      'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
+      imageUrl: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
       orders: i,
       isVegetarian: i % 2 == 0,
       category: i % 2 == 0 ? 'veg' : 'non-veg',
@@ -665,7 +666,8 @@ class _PosShellState extends State<PosShell> {
       status: 'All Menus',
       count: '200 Menus',
       isPrefixIcon: true,
-      networkImageUrl: 'https://images.unsplash.com/photo-1525755662778-989d0524087e',
+      networkImageUrl:
+          'https://images.unsplash.com/photo-1525755662778-989d0524087e',
       icon: Icons.bookmark,
       iconColor: Colors.orange,
       backgroundColor: Color(0xFFFFF3E0),
@@ -674,7 +676,8 @@ class _PosShellState extends State<PosShell> {
       status: 'Sea Food',
       count: '200 Menus',
       isPrefixIcon: true,
-      networkImageUrl:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
+      networkImageUrl:
+          'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
       icon: Icons.access_time,
       iconColor: Colors.blue,
       backgroundColor: Color(0xFFE3F2FD),
@@ -683,7 +686,8 @@ class _PosShellState extends State<PosShell> {
       status: 'Pizza',
       count: '180 Menus',
       isPrefixIcon: true,
-      networkImageUrl:'https://images.unsplash.com/photo-1551218808-94e220e084d2',
+      networkImageUrl:
+          'https://images.unsplash.com/photo-1551218808-94e220e084d2',
       icon: Icons.autorenew,
       iconColor: Colors.orange,
       backgroundColor: Color(0xFFFFF3E0),
@@ -692,7 +696,8 @@ class _PosShellState extends State<PosShell> {
       status: 'Salads',
       count: '120 Menus',
       isPrefixIcon: true,
-      networkImageUrl:'https://images.unsplash.com/photo-1504674900247-0877df9cc836',
+      networkImageUrl:
+          'https://images.unsplash.com/photo-1504674900247-0877df9cc836',
       icon: Icons.pedal_bike,
       iconColor: Colors.purple,
       backgroundColor: Color(0xFFF3E5F5),
@@ -702,7 +707,8 @@ class _PosShellState extends State<PosShell> {
       count: '150 Menus',
       icon: Icons.send,
       isPrefixIcon: true,
-      networkImageUrl:'https://images.unsplash.com/photo-1473093295043-cdd812d0e601',
+      networkImageUrl:
+          'https://images.unsplash.com/photo-1473093295043-cdd812d0e601',
       iconColor: Colors.green,
       backgroundColor: Color(0xFFE8F5E9),
     ),
@@ -710,7 +716,8 @@ class _PosShellState extends State<PosShell> {
       status: 'Soups',
       count: '170 Menus',
       isPrefixIcon: true,
-      networkImageUrl:'https://images.unsplash.com/photo-1525755662778-989d0524087e',
+      networkImageUrl:
+          'https://images.unsplash.com/photo-1525755662778-989d0524087e',
       icon: Icons.person_off,
       iconColor: Colors.red,
       backgroundColor: Color(0xFFFFEBEE),
@@ -768,12 +775,9 @@ class _PosShellState extends State<PosShell> {
 
   @override
   Widget build(BuildContext context) {
-
     return CustomDrawer(
       backgroundColor: const Color(0xFFF8F8F8),
-      child:
-
-      Row(
+      child: Row(
         children: [
           Expanded(
             flex: 6,
@@ -781,52 +785,67 @@ class _PosShellState extends State<PosShell> {
               behavior: ScrollBehavior().copyWith(overscroll: false),
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 30, right: 30, bottom: 20, top: 20),
+                  padding: const EdgeInsets.only(
+                    left: 30,
+                    right: 30,
+                    bottom: 20,
+                    top: 20,
+                  ),
                   child: Column(
                     children: [
+                      OrderStatusCardOne(orderCards: orderDeliveredList),
+                      SizedBox(height: 16),
 
-                      OrderStatusCardOne(orderCards: orderDeliveredList,),
-                      SizedBox(height: 16,),
+                      buildMenuCategories(),
+                      const SizedBox(height: 25),
                       SizedBox(
-                          height: 65,
-                          child: ScrollConfiguration(
-                            behavior: ScrollConfiguration.of(context).copyWith(
-                              scrollbars: false,
-                            ),
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              primary: false,
-                              shrinkWrap: true,
-                              physics: const ClampingScrollPhysics(),
-                              itemCount: _orderCards.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(right: 16),
-                                  child: OrderStatusCard(
-                                    status: _orderCards[index].status,
-                                    count:  _orderCards[index].count,
-                                     titleTextStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                       color: Colors.black,
+                        height: 65,
+                        child: ScrollConfiguration(
+                          behavior: ScrollConfiguration.of(
+                            context,
+                          ).copyWith(scrollbars: false),
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            primary: false,
+                            shrinkWrap: true,
+                            physics: const ClampingScrollPhysics(),
+                            itemCount: _orderCards.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 16),
+                                child: OrderStatusCard(
+                                  status: _orderCards[index].status,
+                                  count: _orderCards[index].count,
+                                  titleTextStyle: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.copyWith(
+                                        color: Colors.black,
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 13
-                                     ),
-                                    subtitleTextStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                        fontSize: 13,
+                                      ),
+                                  subtitleTextStyle: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.copyWith(
                                         color: Colors.black54,
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 10
-                                    ),
+                                        fontSize: 10,
+                                      ),
 
-                                    isPrefixIcon:  _orderCards[index].isPrefixIcon,
-                                    networkImageUrl:  _orderCards[index].networkImageUrl,
-                                    icon:  _orderCards[index].icon,
-                                    iconColor:  _orderCards[index].iconColor,
-                                    backgroundColor:  _orderCards[index].backgroundColor,
-                                  ),
-                                );
-                              },
-                            ),
+                                  isPrefixIcon: _orderCards[index].isPrefixIcon,
+                                  networkImageUrl:
+                                      _orderCards[index].networkImageUrl,
+                                  icon: _orderCards[index].icon,
+                                  iconColor: _orderCards[index].iconColor,
+                                  backgroundColor:
+                                      _orderCards[index].backgroundColor,
+                                ),
+                              );
+                            },
                           ),
                         ),
+                      ),
                       Row(
                         children: [
                           Expanded(
@@ -841,12 +860,20 @@ class _PosShellState extends State<PosShell> {
                               },
                               padding: EdgeInsets.only(top: 20),
                               innerPadding: EdgeInsets.zero,
-                              decoration: BoxDecoration(color: Colors.transparent),
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                              ),
 
                               crossAxisCount: ResponsiveTwo.gridCount(context),
-                              childAspectRatio: ResponsiveTwo.gridAspect(context),
-                              crossAxisSpacing: ResponsiveTwo.gridSpacing(context),
-                              mainAxisSpacing: ResponsiveTwo.gridSpacing(context),
+                              childAspectRatio: ResponsiveTwo.gridAspect(
+                                context,
+                              ),
+                              crossAxisSpacing: ResponsiveTwo.gridSpacing(
+                                context,
+                              ),
+                              mainAxisSpacing: ResponsiveTwo.gridSpacing(
+                                context,
+                              ),
 
                               dropdownChildBuilder: (item) => Row(
                                 children: [
@@ -876,7 +903,7 @@ class _PosShellState extends State<PosShell> {
           if (ResponsiveTwo.showRightPanel(context))
             Expanded(
               flex: 3,
-              child: CardWidget()
+              child: CardWidget(),
 
               // Container(
               //   width: 320,
@@ -896,11 +923,10 @@ class _PosShellState extends State<PosShell> {
       ),
     );
 
-      CustomDrawer(
+    CustomDrawer(
       backgroundColor: const Color(0xFFF8F8F8),
       child: CustomScrollView(
         slivers: [
-
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -973,15 +999,169 @@ class _PosShellState extends State<PosShell> {
         ],
       ),
     );
+  }
+  Widget buildMenuCategories(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            Text(
+              'Menu Categories',
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineMedium
+                  ?.copyWith(
+                fontSize: 17.5,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(width: 20),
 
+            CustomCheckbox(
+              icon: Icons.check,
+              value: isVegChecked,
+              width: 16,
+              height: 16,
+              backgroundColor: Colors.white,
+              isCircular: false,
+              borderRadius: 4,
+              borderColor: Colors.grey.shade200,
+              onChanged: (val) {
+                setState(() => isVegChecked = val);
+              },
+            ),
+            const SizedBox(width: 5),
+            const VegTag(isVeg: true),
 
+            const SizedBox(width: 15),
+            CustomCheckbox(
+              icon: Icons.check,
+              value: isNonVegChecked,
+              width: 16,
+              height: 16,
+              backgroundColor: Colors.white,
+              isCircular: false,
+              borderRadius: 4,
+              borderColor: Colors.grey.shade200,
+              onChanged: (val) {
+                setState(() => isNonVegChecked = val);
+              },
+            ),
+            const SizedBox(width: 5),
+            const VegTag(isVeg: false),
+            const SizedBox(width: 10),
+            CustomCheckbox(
+              icon: Icons.check,
+              value: isEggChecked,
+              width: 16,
+              height: 16,
+              backgroundColor: Colors.white,
+              isCircular: false,
+              borderRadius: 4,
+              borderColor: Colors.grey.shade200,
+              onChanged: (val) {
+                setState(() => isEggChecked = val);
+              },
+            ),
+            const SizedBox(width: 5),
+            const VegTag(isVeg: true),
+          ],
+        ),
 
+        Row(
+          children: [
+            SizedBox(
+              width: 200,
+              child: CustomTextField(
+                height: 48,
+                hint: 'Search',
+                hintStyle: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.grey,
+                ),
+                controller: _searchController,
+                borderColor: AppColors.grey.withAlpha((0.3 * 255).toInt()),
+                focusColor: AppColors.grey.withAlpha((0.3 * 255).toInt()),
+                cursorColor: Colors.black.withAlpha((0.7 * 255).toInt()),
+                borderWidth: 0.75,
+                fillColor: Colors.white,
+                suffixIcon: Icons.search,
+                iconSize: 14,
+                iconColor: Colors.black,
+                textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black87,
+                ),
+                isLabel: false,
+              ),
+            ),
 
+            const SizedBox(
+              width: 10,
+            ),
+            CustomContainer(
+              onTap: () {},
+              isNeedHover: true,
+              padding: const EdgeInsets.all(8),
+              borderRadius: BorderRadius.circular(50),
+              child: Image.asset(
+                'assets/images/refresh_icon.png',
+                height: 16,
+                width: 16,
+              ),
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            CustomContainer(
+              onTap: () {},
+              isNeedHover: true,
+              padding: const EdgeInsets.all(8),
+              borderRadius: BorderRadius.circular(50),
+              child: Image.asset(
+                'assets/images/refresh_icon.png',
+                height: 16,
+                width: 16,
+              ),
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            CustomContainer(
+              onTap: () {},
+              isNeedHover: true,
+              padding: const EdgeInsets.all(8),
+              borderRadius: BorderRadius.circular(50),
+              child: Image.asset(
+                'assets/images/refresh_icon.png',
+                height: 16,
+                width: 16,
+              ),
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            CustomContainer(
+              onTap: () {},
+              isNeedHover: true,
+              padding: const EdgeInsets.all(8),
+              borderRadius: BorderRadius.circular(50),
+              child: Image.asset(
+                'assets/images/refresh_icon.png',
+                height: 16,
+                width: 16,
+              ),
+            ),
 
+          ],
+        )
+      ],
+    );
   }
 }
-
-
 
 //CustomDrawer(
 //       backgroundColor: const Color(0xFFF8F8F8),
@@ -1070,9 +1250,9 @@ class _PosShellState extends State<PosShell> {
 //       ),
 //     )
 
-
 class FoodCard extends StatelessWidget {
   final FoodItem item;
+
   const FoodCard({super.key, required this.item});
 
   @override
@@ -1095,10 +1275,7 @@ class FoodCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(6),
             child: AspectRatio(
               aspectRatio: ResponsiveTwo.imageAspectRatio(context),
-              child: Image.network(
-                item.imageUrl,
-                fit: BoxFit.cover,
-              ),
+              child: Image.network(item.imageUrl, fit: BoxFit.cover),
             ),
           ),
 
@@ -1108,8 +1285,7 @@ class FoodCard extends StatelessWidget {
             children: [
               Text(
                 item.category.toUpperCase(),
-                style: const TextStyle(
-                    fontSize: 11, color: Colors.grey),
+                style: const TextStyle(fontSize: 11, color: Colors.grey),
               ),
               const Spacer(),
               VegTag(isVeg: item.isVegetarian),
@@ -1122,34 +1298,30 @@ class FoodCard extends StatelessWidget {
             item.name,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-                fontSize: 14, fontWeight: FontWeight.w600),
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
           ),
 
           // Spacer(),
-
           Row(
             children: [
               const Text(
                 '\$25',
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
               ),
               const Spacer(),
               _QtyControl(item.orders),
             ],
           ),
-          SizedBox(height: 5,)
+          SizedBox(height: 5),
         ],
       ),
     );
   }
 }
 
-
 class VegTag extends StatelessWidget {
   final bool isVeg;
+
   const VegTag({super.key, required this.isVeg});
 
   @override
@@ -1161,25 +1333,25 @@ class VegTag extends StatelessWidget {
         SvgPicture.asset(
           AppAssets.veg_nonVeg_Icon,
           height: 12,
-          colorFilter:
-          ColorFilter.mode(color, BlendMode.srcIn),
+          colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
         ),
         const SizedBox(width: 4),
         Text(
           isVeg ? 'Veg' : 'Non Veg',
           style: TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.w600,
-              color: color),
+            fontSize: 10,
+            fontWeight: FontWeight.w600,
+            color: color,
+          ),
         ),
       ],
     );
   }
 }
 
-
 class _QtyControl extends StatelessWidget {
   final int qty;
+
   const _QtyControl(this.qty);
 
   @override
@@ -1190,8 +1362,7 @@ class _QtyControl extends StatelessWidget {
         const SizedBox(width: 10),
         Text(
           '$qty',
-          style: const TextStyle(
-              fontSize: 14, fontWeight: FontWeight.w500),
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
         ),
         const SizedBox(width: 10),
         SvgPicture.asset(AppAssets.addIcon, width: 18),
@@ -1199,21 +1370,6 @@ class _QtyControl extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 class _ProfileSideMenu extends StatelessWidget {
   @override
