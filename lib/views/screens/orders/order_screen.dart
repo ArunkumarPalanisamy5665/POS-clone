@@ -514,6 +514,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/constants/app_export.dart';
 import '../../widgets/common/custom_container.dart';
+import '../../widgets/orders/order_management_view.dart' hide OrderItem;
 import '../../widgets/orders/order_status_card.dart';
 import '../../widgets/orders/order_status_tab.dart';
 import '../../widgets/orders/search_order_toggle.dart';
@@ -573,6 +574,7 @@ class _OrderScreenState extends State<OrderScreen> {
   ];
 
   int selectedIndex = 0;
+  bool isGridView = true;
 
   // Sample order data
   final List<Map<String, dynamic>> _allOrders = [
@@ -836,10 +838,18 @@ class _OrderScreenState extends State<OrderScreen> {
           ),
 
           // Search Order Toggle
-          const SearchOrderToggle(),
+          SearchOrderToggle(
+            onViewChanged: (isGrid){
+              setState(() {
+                isGridView=isGrid;
+              });
+            },
+          ),
 
           // Order Items Grid
-          _buildOrderItemsGrid(width),
+          isGridView
+              ? _buildOrderItemsGrid(width)
+              : const OrderManagementScreen(),
         ],
       ),
     );
