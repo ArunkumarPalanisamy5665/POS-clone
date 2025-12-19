@@ -7,6 +7,7 @@ class OrderStatusCard extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
   final String networkImageUrl;
+
   final Color backgroundColor;
   final bool isPrefixIcon;
   final bool isSuffixIcon;

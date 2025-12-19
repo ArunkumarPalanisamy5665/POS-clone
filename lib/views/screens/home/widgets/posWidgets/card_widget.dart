@@ -59,309 +59,311 @@ class _OrderScreenState extends State<CardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
+    return SafeArea(
+      child: Scaffold(
         backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          'Order #56998',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          title: const Text(
+            'Order #56998',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Center(
-              child: Text(
-                '08 Oct, 2025, 12:44 PM',
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 14,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Center(
+                child: Text(
+                  '08 Oct, 2025, 12:44 PM',
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 14,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 16),
-                  // Service Type Buttons
-                  Row(
-                    children: [
-                      ServiceTypeButton(
-                        label: 'Dine In',
-                        icon: Icons.restaurant,
-                        isSelected: selectedServiceType == 'Dine In',
-                        onTap: () {
-                          setState(() => selectedServiceType = 'Dine In');
-                        },
-                      ),
-                      const SizedBox(width: 12),
-                      ServiceTypeButton(
-                        label: 'Take Away',
-                        icon: Icons.shopping_bag,
-                        isSelected: selectedServiceType == 'Take Away',
-                        onTap: () {
-                          setState(() => selectedServiceType = 'Take Away');
-                        },
-                      ),
-                      const SizedBox(width: 12),
-                      ServiceTypeButton(
-                        label: 'Delivery',
-                        icon: Icons.check,
-                        isSelected: selectedServiceType == 'Delivery',
-                        onTap: () {
-                          setState(() => selectedServiceType = 'Delivery');
-                        },
-                      ),
-                      const SizedBox(width: 12),
-                      ServiceTypeButton(
-                        label: 'Table',
-                        icon: Icons.chair,
-                        isSelected: selectedServiceType == 'Table',
-                        onTap: () {
-                          setState(() => selectedServiceType = 'Table');
-                        },
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  // Waiter and Customer Selection
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey[300]!),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                selectedWaiter,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                              const Icon(Icons.expand_more, size: 20),
-                            ],
-                          ),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 16),
+                    // Service Type Buttons
+                    Row(
+                      children: [
+                        ServiceTypeButton(
+                          label: 'Dine In',
+                          icon: Icons.restaurant,
+                          isSelected: selectedServiceType == 'Dine In',
+                          onTap: () {
+                            setState(() => selectedServiceType = 'Dine In');
+                          },
                         ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey[300]!),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Text(
-                            'Select Customer',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
+                        const SizedBox(width: 12),
+                        ServiceTypeButton(
+                          label: 'Take Away',
+                          icon: Icons.shopping_bag,
+                          isSelected: selectedServiceType == 'Take Away',
+                          onTap: () {
+                            setState(() => selectedServiceType = 'Take Away');
+                          },
+                        ),
+                        const SizedBox(width: 12),
+                        ServiceTypeButton(
+                          label: 'Delivery',
+                          icon: Icons.check,
+                          isSelected: selectedServiceType == 'Delivery',
+                          onTap: () {
+                            setState(() => selectedServiceType = 'Delivery');
+                          },
+                        ),
+                        const SizedBox(width: 12),
+                        ServiceTypeButton(
+                          label: 'Table',
+                          icon: Icons.chair,
+                          isSelected: selectedServiceType == 'Table',
+                          onTap: () {
+                            setState(() => selectedServiceType = 'Table');
+                          },
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    // Waiter and Customer Selection
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey[300]!),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  selectedWaiter,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                                const Icon(Icons.expand_more, size: 20),
+                              ],
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(width: 12),
-                      Container(
-                        decoration: BoxDecoration(
-                          color:  AppColors.primaryColor,
-                          borderRadius: BorderRadius.circular(8),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey[300]!),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: const Text(
+                              'Select Customer',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
                         ),
-                        child: const Icon(Icons.add, color: Colors.white),
-                      ),
-                      const SizedBox(width: 8),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey[300]!),
-                          borderRadius: BorderRadius.circular(8),
+                        const SizedBox(width: 12),
+                        Container(
+                          decoration: BoxDecoration(
+                            color:  AppColors.primaryColor,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Icon(Icons.add, color: Colors.white),
                         ),
-                        child: const Icon(Icons.edit, size: 20),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  // Ordered Menus Header
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Ordered Menus',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                        const SizedBox(width: 8),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey[300]!),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Icon(Icons.edit, size: 20),
                         ),
-                      ),
-                      Text(
-                        'Total Menus : ${items.length}',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                ],
-              ),
-            ),
-            // Menu Items
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                final item = items[index];
-                return MenuItemCard(
-                  item: item,
-                  isFirst: index == 0,
-                );
-              },
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 16),
-                  // Payment Summary
-                  const Text(
-                    'Payment Summary',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  PaymentRow(label: 'Sub Total', amount: '\$267'),
-                  PaymentRow(label: 'Tax (18%)', amount: '\$26.7'),
-                  const SizedBox(height: 16),
-                  Container(
-                    padding:  EdgeInsets.symmetric(vertical: 12),
-                    decoration: BoxDecoration(
-                     border:  Border(
-                        top: BorderSide(color: Color(0xFFE0E0E0), width: 1),
-                      ),
-                    ) ,
-                    child: Row(
+                    const SizedBox(height: 24),
+                    // Ordered Menus Header
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          'Amount to be Paid',
+                          'Ordered Menus',
                           style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          '\$274',
-                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        Text(
+                          'Total Menus : ${items.length}',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey,
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                  const SizedBox(height: 24),
-                  // Place Order Button
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryColor,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+                    const SizedBox(height: 12),
+                  ],
+                ),
+              ),
+              // Menu Items
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  final item = items[index];
+                  return MenuItemCard(
+                    item: item,
+                    isFirst: index == 0,
+                  );
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 16),
+                    // Payment Summary
+                    const Text(
+                      'Payment Summary',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
-                      onPressed: () {},
-                      child: const Text(
-                        'Place an Order',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                    ),
+                    const SizedBox(height: 16),
+                    PaymentRow(label: 'Sub Total', amount: '\$267'),
+                    PaymentRow(label: 'Tax (18%)', amount: '\$26.7'),
+                    const SizedBox(height: 16),
+                    Container(
+                      padding:  EdgeInsets.symmetric(vertical: 12),
+                      decoration: BoxDecoration(
+                       border:  Border(
+                          top: BorderSide(color: Color(0xFFE0E0E0), width: 1),
+                        ),
+                      ) ,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Amount to be Paid',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '\$274',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    // Place Order Button
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primaryColor,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: const Text(
+                          'Place an Order',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  // Bottom Action Buttons
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ActionButton(
-                          label: 'Print',
-                          icon: Icons.print,
+                    const SizedBox(height: 16),
+                    // Bottom Action Buttons
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ActionButton(
+                            label: 'Print',
+                            icon: Icons.print,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: ActionButton(
-                          label: 'Invoice',
-                          icon: Icons.description,
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: ActionButton(
+                            label: 'Invoice',
+                            icon: Icons.description,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: ActionButton(
-                          label: 'Draft',
-                          icon: Icons.drafts,
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: ActionButton(
+                            label: 'Draft',
+                            icon: Icons.drafts,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ActionButton(
-                          label: 'Cancel',
-                          icon: Icons.close,
-                          isDestructive: true,
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ActionButton(
+                            label: 'Cancel',
+                            icon: Icons.close,
+                            isDestructive: true,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: ActionButton(
-                          label: 'Void',
-                          icon: Icons.flash_on,
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: ActionButton(
+                            label: 'Void',
+                            icon: Icons.flash_on,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: ActionButton(
-                          label: 'Tranactions',
-                          icon: Icons.receipt,
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: ActionButton(
+                            label: 'Tranactions',
+                            icon: Icons.receipt,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
