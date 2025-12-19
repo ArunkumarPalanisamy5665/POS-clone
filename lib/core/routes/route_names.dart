@@ -23,6 +23,8 @@ class RouteNames {
   static const printSettings = '/print-settings';
   static const taxSettings = '/tax-settings';
   static const storeSettings = '/store-settings';
+  static const table = '/table';
+
 
 
   // Settings
