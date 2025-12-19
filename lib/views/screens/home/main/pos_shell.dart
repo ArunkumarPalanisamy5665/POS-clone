@@ -646,7 +646,7 @@ class _PosShellState extends State<PosShell> {
   DashboardItem? selectedDashboardMenu = DashboardItem(title: 'All Items');
   int selectedIndex = 0;
 
-  DashboardItem? selectedDashboardMenu = DashboardItem(title: 'All Items');
+  final ScrollController _scrollController = ScrollController();
 
   final dashboardMenuitems = [
     DashboardItem(title: 'All Items'),
@@ -985,8 +985,6 @@ class _PosShellState extends State<PosShell> {
     }
   }
 
-  final ScrollController _scrollController = ScrollController();
-
   @override
   Widget build(BuildContext context) {
     var filteredOrderList = _getFilteredOrders();
@@ -1010,11 +1008,6 @@ class _PosShellState extends State<PosShell> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      OrderStatusCardOne(orderCards: orderDeliveredList),
-                      SizedBox(height: 16),
-
-                      buildMenuCategories(),
-                      const SizedBox(height: 25),
                       Row(
                         children: [
                           CustomText(
@@ -1064,6 +1057,8 @@ class _PosShellState extends State<PosShell> {
                       SizedBox(height: 16),
                       OrderStatusCardOne(orderCards: filteredOrderList,  controller: _scrollController,),
                       SizedBox(height: 16),
+                      buildMenuCategories(),
+                      const SizedBox(height: 25),
                       SizedBox(
                         height: 65,
                         child: ScrollConfiguration(
@@ -1298,7 +1293,7 @@ class _PosShellState extends State<PosShell> {
               padding: const EdgeInsets.all(8),
               borderRadius: BorderRadius.circular(50),
               child: Image.asset(
-                'assets/images/refresh_icon.png',
+                'assets/images/notifications.png',
                 height: 16,
                 width: 16,
               ),
@@ -1306,31 +1301,24 @@ class _PosShellState extends State<PosShell> {
             const SizedBox(
               width: 5,
             ),
-            CustomContainer(
-              onTap: () {},
-              isNeedHover: true,
-              padding: const EdgeInsets.all(8),
-              borderRadius: BorderRadius.circular(50),
-              child: Image.asset(
-                'assets/images/refresh_icon.png',
-                height: 16,
-                width: 16,
-              ),
+            CustomArrow(
+              borderRadius: 50,
+              onLeftTap: () {
+                _scrollController.animateTo(
+                  _scrollController.offset - 200,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeOut,
+                );
+              },
+              onRightTap: () {
+                _scrollController.animateTo(
+                  _scrollController.offset + 200,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeOut,
+                );
+              },
             ),
-            const SizedBox(
-              width: 5,
-            ),
-            CustomContainer(
-              onTap: () {},
-              isNeedHover: true,
-              padding: const EdgeInsets.all(8),
-              borderRadius: BorderRadius.circular(50),
-              child: Image.asset(
-                'assets/images/refresh_icon.png',
-                height: 16,
-                width: 16,
-              ),
-            ),
+
 
           ],
         )
