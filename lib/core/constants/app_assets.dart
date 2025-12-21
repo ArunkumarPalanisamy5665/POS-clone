@@ -197,6 +197,10 @@ class AppAssets {
   static const String subIcon = 'assets/svg/menu/sub_icon.svg';
   static const String addIcon = 'assets/svg/menu/add_icon.svg';
 
+
+
+
+
   //sub menu icons
   static const String subPosIcon = 'assets/svg/menu/subMenus/pos_icon.svg';
   static const String subOderIcon = 'assets/svg/menu/subMenus/order_icon.svg';
@@ -205,6 +209,14 @@ class AppAssets {
   static const String exportFileIcon = 'assets/svg/menu/subMenus/export_file_icon.svg';
   static const String calendarIcon = 'assets/svg/menu/subMenus/calendar_icon.svg';
  static const String refreshIcon = 'assets/svg/menu/subMenus/refresh_icon.svg';
+  static const String storeSettingsIcon = 'assets/svg/menu/subMenus/store_settings.svg';
+  static const String taxIcon = 'assets/svg/menu/subMenus/tax.svg';
+  static const String printIcon = 'assets/svg/menu/subMenus/print.svg';
+  static const String paymentTypesIcon = 'assets/svg/menu/subMenus/payment_types.svg';
+  static const String deliveryIcon = 'assets/svg/menu/subMenus/delivery.svg';
+  static const String notificationSettingsIcon = 'assets/svg/menu/subMenus/notifications.svg';
+  static const String intergrationApiIcon = 'assets/svg/menu/subMenus/integration_api.svg';
+
 
  //dashboard icons
   static const String orderDashIcon = 'assets/svg/menu/dash_order_icon.svg';
@@ -218,6 +230,7 @@ class AppAssets {
   static const String inKitchenIcon = 'assets/svg/in_kitchen.svg';
   static const String delayedIcon = 'assets/svg/delayed.svg';
   static const String completedIcon = 'assets/svg/completed.svg';
+
 
   static const String icCamera = 'assets/images/ic_camera.png';
   static const String icMyLocation = 'assets/images/ic_my_location.png';

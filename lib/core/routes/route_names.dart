@@ -16,7 +16,13 @@ class RouteNames {
   static const order = '/order';
   static const kitchen = '/kitchen';
   static const reservation = '/reservation';
-
+  static const integrationApi = '/integration-api';
+  static const notificationSettings = '/notification-settings';
+  static const delivery = '/delivery';
+  static const paymentTypes = '/payment-types';
+  static const printSettings = '/print-settings';
+  static const taxSettings = '/tax-settings';
+  static const storeSettings = '/store-settings';
 
 
   // Settings

@@ -7,6 +7,13 @@ import 'package:new_hrms_flutter/views/screens/auth/resetPassword/reset_password
 import 'package:new_hrms_flutter/views/screens/dashboard/dashboard_screen.dart' hide DashboardScreen;
 import 'package:new_hrms_flutter/views/screens/home/home_screen.dart';
 import 'package:new_hrms_flutter/views/screens/home/home_screen_two.dart' hide MainHome;
+import 'package:new_hrms_flutter/views/screens/settings/delivery_screen.dart';
+import 'package:new_hrms_flutter/views/screens/settings/integration_api_screen.dart';
+import 'package:new_hrms_flutter/views/screens/settings/notification_settings_screen.dart';
+import 'package:new_hrms_flutter/views/screens/settings/payment_types.dart';
+import 'package:new_hrms_flutter/views/screens/settings/print_settings_screen.dart';
+import 'package:new_hrms_flutter/views/screens/settings/store_settings.dart';
+import 'package:new_hrms_flutter/views/screens/settings/tax_settings_screen.dart';
 import 'package:new_hrms_flutter/views/screens/splashScreen/splash_screen.dart';
 import 'package:new_hrms_flutter/views/screens/app_shell.dart';
 import '../../main.dart';
@@ -70,6 +77,10 @@ class AppRouter {
         name: RouteNames.otp,
         builder: (context, state) => const OtpScreen(),
       ),
+
+
+
+
       // GoRoute(
       //   path: '/dashboard',
       //   name: RouteNames.dashboard,
@@ -158,6 +169,41 @@ class AppRouter {
             path: '/reservation',
             name: RouteNames.reservation,
             builder: (_, __) => const ReservationScreen(),
+          ),
+          GoRoute(
+            path: '/integration-api',
+            name: RouteNames.integrationApi,
+            builder: (_, __) => const IntegrationApiScreen(),
+          ),
+          GoRoute(
+            path: '/notification-settings',
+            name: RouteNames.notificationSettings,
+            builder: (_, __) => const NotificationSettingsScreen(),
+          ),
+          GoRoute(
+            path: '/delivery',
+            name: RouteNames.delivery,
+            builder: (_, __) => const DeliveryScreen(),
+          ),
+          GoRoute(
+            path: '/payment-types',
+            name: RouteNames.paymentTypes,
+            builder: (_, __) => const PaymentTypes(),
+          ),
+          GoRoute(
+            path: '/print-settings',
+            name: RouteNames.printSettings,
+            builder: (_, __) => const PrintSettingsScreen(),
+          ),
+          GoRoute(
+            path: '/tax-settings',
+            name: RouteNames.taxSettings,
+            builder: (_, __) => const TaxSettingsScreen(),
+          ),
+          GoRoute(
+            path: '/store-settings',
+            name: RouteNames.storeSettings,
+            builder: (_, __) => const StoreSettings(),
           ),
         ],
       ),

@@ -229,24 +229,30 @@ class _KitchenKdsScreenState extends State<KitchenKdsScreen> {
                     width: 16,
                   ),
                 ),
+
+                SizedBox(width: 10,),
+
+                // Order Status Cards Grid
+                Expanded(
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: _orderCardsKds.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: crossAxisCount,
+                      mainAxisSpacing: 16,
+                      crossAxisSpacing: 16,
+                      mainAxisExtent: 46,
+                    ),
+                    itemBuilder: (_, index) => _orderCardsKds[index],
+                  ),
+                ),
+
               ],
             ),
 
-          const SizedBox(height: 16),
 
-          // Order Status Cards Grid
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: _orderCardsKds.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: crossAxisCount,
-              mainAxisSpacing: 16,
-              crossAxisSpacing: 16,
-              mainAxisExtent: 46,
-            ),
-            itemBuilder: (_, index) => _orderCardsKds[index],
-          ),
+
 
           const SizedBox(height: 20),
 

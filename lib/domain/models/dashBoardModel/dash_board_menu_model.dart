@@ -47,7 +47,7 @@ class DashboardItemSub {
 
 
 final List<DashboardItemSub> dashboardIcons = [
-  DashboardItemSub(
+  const DashboardItemSub(
     title: 'Main',
     svgIcon: AppAssets.mainMenuIcon,
     dashboardItem: [
@@ -78,7 +78,7 @@ final List<DashboardItemSub> dashboardIcons = [
       ),
     ],
   ),
-  DashboardItemSub(
+  const DashboardItemSub(
     title: 'Menu Management',
     svgIcon: AppAssets.manageIcon,
     dashboardItem: [
@@ -94,7 +94,7 @@ final List<DashboardItemSub> dashboardIcons = [
       ),
     ],
   ),
-  DashboardItemSub(
+  const DashboardItemSub(
     title: 'Operations',
     svgIcon: AppAssets.operationIcon,
     dashboardItem: [
@@ -110,7 +110,7 @@ final List<DashboardItemSub> dashboardIcons = [
       ),
     ],
   ),
-  DashboardItemSub(
+  const DashboardItemSub(
     title: 'Administration',
     svgIcon: AppAssets.adminIcon,
     dashboardItem: [
@@ -126,7 +126,7 @@ final List<DashboardItemSub> dashboardIcons = [
       ),
     ],
   ),
-  DashboardItemSub(
+  const DashboardItemSub(
     title: 'Pages',
     svgIcon: AppAssets.authIcon,
     dashboardItem: [
@@ -143,26 +143,51 @@ final List<DashboardItemSub> dashboardIcons = [
     ],
   ),
 
-  DashboardItemSub(
+  const DashboardItemSub(
     title: 'Settings',
     svgIcon: AppAssets.settingsIcon,
     dashboardItem: [
       DashboardItem(
-        title: 'Order List',
-        svgIcon: AppAssets.dropMenu2,
-        route: '/orders',
+        title: 'Store Settings',
+        svgIcon: AppAssets.storeSettingsIcon,
+        route: '/store-settings',
       ),
       DashboardItem(
-        title: 'Overview',
-        svgIcon: AppAssets.dropMenu2,
-        route: '/dashboard',
+        title: 'Tax',
+        svgIcon: AppAssets.taxIcon,
+        route: '/tax-settings',
+      ),
+      DashboardItem(
+        title: 'Print',
+        svgIcon: AppAssets.printIcon,
+        route: '/print-settings',
+      ),
+      DashboardItem(
+        title: 'Payment Types',
+        svgIcon: AppAssets.paymentTypesIcon,
+        route: '/payment-types',
+      ),
+      DashboardItem(
+        title: 'Delivery',
+        svgIcon: AppAssets.deliveryIcon,
+        route: '/delivery',
+      ),
+      DashboardItem(
+        title: 'Notifications',
+        svgIcon: AppAssets.notificationSettingsIcon,
+        route: '/notification-settings',
+      ),
+      DashboardItem(
+        title: 'Integrations / API',
+        svgIcon: AppAssets.intergrationApiIcon,
+        route: '/integration-api',
       ),
     ],
   ),
 ];
 
 final List<DashboardItem> toolList = [
-  DashboardItem(
+  const DashboardItem(
     title: 'POS',
     svgIcon: AppAssets.handePOSIcon,
     route: '/pos',
