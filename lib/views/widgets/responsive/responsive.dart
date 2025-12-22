@@ -101,6 +101,28 @@ class ResponsiveTwo extends StatelessWidget {
     return 0.85;
   }
 
+  static double gridAspectItems(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    if (w < 600) return 1.4;
+    if (w < 650) return 1.350;
+    if (w < 700) return 1.4;
+    if (w < 780) return 1.4;
+    if (w < 850) return 1.3;
+    if (w < 950) return 1.350;
+    if (w < 1000) return 1.4;
+    if (w < 1024) return 1.4;
+    if (w < 1050) return 1.240;
+    if (w < 1080) return 1.250;
+    if (w < 1100) return 1.20;
+    if (w < 1120) return 1.10;
+    if (w < 1150) return 1.10;
+    if (w < 1200) return 1.160;
+    if (w < 1300) return 1.2;
+    if (w < 1440) return 2.060;
+    // if (w < 1600) return 0.80;
+    return 2.0;
+  }
+
 
   static double imageAspectRatio(BuildContext context) {
     final w = MediaQuery.of(context).size.width;

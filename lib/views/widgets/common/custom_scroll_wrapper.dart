@@ -1,31 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
 
-class CustomScrollViewWrapper extends StatelessWidget {
+class CustomScrollWrapper extends StatelessWidget {
   final Widget child;
-  final Axis direction;
-  final bool enableOverscroll;
-  final bool showScrollbar;
+  final Axis scrollDirection;
   final ScrollController? controller;
   final EdgeInsetsGeometry? padding;
   final ScrollPhysics? physics;
+  final bool enableOverscroll; // Enable / disable overscroll glow
+  final bool showScrollbar;
+  final bool alwaysShowScrollbar; //Always show scrollbar thumb
 
-  const CustomScrollViewWrapper({
+  const CustomScrollWrapper({
     super.key,
     required this.child,
-    this.direction = Axis.vertical,
-    this.enableOverscroll = false,
-    this.showScrollbar = false,
+    this.scrollDirection = Axis.vertical,
     this.controller,
     this.padding,
     this.physics,
+    this.enableOverscroll = false,
+    this.showScrollbar = false,
+    this.alwaysShowScrollbar = false,
   });
 
   @override
   Widget build(BuildContext context) {
     Widget scrollView = SingleChildScrollView(
       controller: controller,
-      scrollDirection: direction,
+      scrollDirection: scrollDirection,
       padding: padding,
       physics: physics ??
           (enableOverscroll
@@ -37,40 +38,18 @@ class CustomScrollViewWrapper extends StatelessWidget {
     if (showScrollbar) {
       scrollView = Scrollbar(
         controller: controller,
-        thumbVisibility: true,
+        thumbVisibility: alwaysShowScrollbar,
         child: scrollView,
       );
     }
 
     return ScrollConfiguration(
-      behavior: CustomScrollBehavior(
-        enableOverscroll: enableOverscroll,
+      behavior: const ScrollBehavior().copyWith(
+        scrollbars: showScrollbar,
+        overscroll: enableOverscroll,
       ),
       child: scrollView,
     );
   }
 }
-
-class CustomScrollBehavior extends ScrollBehavior {
-  final bool enableOverscroll;
-
-  const CustomScrollBehavior({required this.enableOverscroll});
-
-  @override
-  Widget buildOverscrollIndicator(
-      BuildContext context,
-      Widget child,
-      ScrollableDetails details,
-      ) {
-    return enableOverscroll ? child : child;
-  }
-
-  @override
-  Set<PointerDeviceKind> get dragDevices => {
-    PointerDeviceKind.mouse,
-    PointerDeviceKind.touch,
-    PointerDeviceKind.trackpad,
-  };
-}
-
 

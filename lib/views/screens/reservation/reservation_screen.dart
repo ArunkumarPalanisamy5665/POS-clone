@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:new_hrms_flutter/core/constants/app_export.dart';
 import 'package:new_hrms_flutter/views/widgets/common/custom_button2.dart';
 
+import '../../widgets/common/custom_edit_delete_btn.dart';
 import '../../widgets/common/custom_pagination_widget.dart';
 import '../../widgets/common/custom_textfield.dart';
 import '../../widgets/common/section_header.dart';
+import '../../widgets/subHeader/sub_header_top_widget.dart';
 
 class ReservationScreen extends StatefulWidget {
   const ReservationScreen({Key? key}) : super(key: key);
@@ -140,87 +142,30 @@ class _ReservationsScreenState extends State<ReservationScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SectionHeader(
-                    title: 'Reservations',
-                    titleStyle: Theme.of(context).textTheme.headlineMedium
-                        ?.copyWith(fontWeight: FontWeight.w700, fontSize: 24),
-                    iconAsset: AppAssets.refreshMainIcon,
-                    onIconTap: () {},
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 200,
-                        child: CustomTextField(
-                          height: 48,
-                          hint: 'Search',
-                          hintStyle: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.grey,
-                          ),
-                          controller: _searchController,
-                          borderColor: AppColors.grey.withAlpha(
-                            (0.3 * 255).toInt(),
-                          ),
-                          focusColor: AppColors.grey.withAlpha(
-                            (0.3 * 255).toInt(),
-                          ),
-                          cursorColor: Colors.black.withAlpha(
-                            (0.7 * 255).toInt(),
-                          ),
-                          borderWidth: 0.75,
-                          fillColor: Colors.white,
-                          suffixIcon: Icons.search,
-                          iconSize: 14,
-                          iconColor: Colors.black,
-                          textStyle: Theme.of(context).textTheme.labelLarge
-                              ?.copyWith(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black87,
-                              ),
-                          isLabel: false,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
+            SubHeaderTopWidget(
+            title: 'Reservations',
+            headerIcon: AppAssets.refreshMainIcon,
+            onHeaderIconTap: () {
+              // refresh logic
+            },
+            searchController: _searchController,
+            onSearchChanged: (value) {
+              // search logic
+            },
+            buttonKey: googleKey,
+            buttonText: 'Add New',
+            onButtonPressed: () {
+              // add new logic
+            },
+            buttonIcon: SvgPicture.asset(
+              AppAssets.plusIcon,
+              width: 20,
+              height: 20,
+            ),
+          ),
 
-                      CustomButton2(
-                        key: googleKey,
-                        onPressed: () {},
-                        btnName: 'Add New',
-                        isDisable: false,
-                        isAnimate: true,
-                        isBold: true,
-                        buttonHeight: 35,
-                        buttonWidth: 130,
-                        size: ButtonSize.medium,
-                        textSize: 14,
-                        textColor: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                        buttonColor: AppColors.primaryColor,
-                        borderColor: Colors.black.withAlpha(
-                          (0.2 * 255).toInt(),
-                        ),
-                        hideBackground: false,
-                        icon: SvgPicture.asset(
-                          AppAssets.plusIcon,
-                          width: 20,
-                          height: 20,
-                        ),
-                        iconNeed: true,
-                        showBorder: false,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
 
-              GridView.builder(
+          GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -497,42 +442,15 @@ class ReservationCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 8),
-                Row(
-                  children: [
-                    CustomContainer(
-                      onTap: onEdit,
-                      borderRadius: BorderRadius.circular(50),
-                      decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black.withAlpha(
-                          (0.7 * 255).toInt(),
-                        ),
-                        width: 0.30
-                      )
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(6),
-                        child: Icon(Icons.edit, size: 14, color: Colors.grey),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    CustomContainer(
-                      onTap: onDelete,
-                      borderRadius: BorderRadius.circular(50),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Colors.black.withAlpha(
-                                (0.7 * 255).toInt(),
-                              ),
-                              width: 0.30
-                          )
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(6),
-                        child: Icon(Icons.delete, size: 14, color: Colors.red),
-                      ),
-                    ),
-                  ],
+
+                CustomEditDeleteBtn(
+                  onDelete: (){
+
+                  },
+                  onEdit: (){
+
+                  },
+
                 ),
               ],
             ),
