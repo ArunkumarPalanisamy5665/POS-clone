@@ -3,6 +3,7 @@ import 'package:new_hrms_flutter/core/constants/app_export.dart';
 
 import '../../../../domain/models/dashBoardModel/dashboard_item.dart';
 import '../../../../domain/models/food_item.dart';
+import '../../../widgets/common/section_header.dart';
 import '../../../widgets/foodCard/food_card.dart';
 import '../../../widgets/mainWidgets/trending_food_menu.dart';
 import '../../../widgets/subHeader/sub_header_top_widget.dart';
@@ -2936,7 +2937,7 @@ class AuditLogsTab extends StatelessWidget {
  */
 
 
-/*
+
 //categories
 class AddOnsScreen extends StatefulWidget {
   const AddOnsScreen({Key? key}) : super(key: key);
@@ -2963,56 +2964,19 @@ class _CategoriesScreenState extends State<AddOnsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return CustomDrawer(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          'Categories',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.download, color: Colors.black),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6),
-                ),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.0),
-                child: Row(
-                  children: [
-                    Icon(Icons.add, color: Colors.white, size: 18),
-                    SizedBox(width: 6),
-                    Text(
-                      'Add New',
-                      style: TextStyle(color: Colors.white, fontSize: 14),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-      body: Padding(
+      child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // Search and Filter Row
+            SectionHeader(
+              title: 'Categories',
+              titleStyle: Theme.of(context).textTheme.headlineMedium
+                  ?.copyWith(fontWeight: FontWeight.w700, fontSize: 24),
+              iconAsset: AppAssets.refreshMainIcon,
+              onIconTap: () {},
+            ),
             Row(
               children: [
                 Expanded(
@@ -3238,123 +3202,8 @@ class CategoryRow extends StatelessWidget {
   }
 }
 
-*/
 
 
-class AddOnsScreen extends StatefulWidget {
-  const AddOnsScreen({super.key});
-
-  @override
-  State<AddOnsScreen> createState() => _AddOnsScreenState();
-}
-
-class _AddOnsScreenState extends State<AddOnsScreen> {
-  DashboardItem? selectedDashboardMenu = DashboardItem(title: 'All Items');
-  final dashboardMenuitems = [
-    DashboardItem(title: 'All Items'),
-    DashboardItem(title: 'Sea Food'),
-    DashboardItem(title: 'Pizza'),
-    DashboardItem(title: 'Salads'),
-  ];
-
-
-  final List<FoodItem> foodItems = List.generate(
-    28,
-        (i) => FoodItem(
-      name: 'Food Item $i',
-      imageUrl: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
-      orders: i,
-      isVegetarian: i % 2 == 0,
-      category: i % 2 == 0 ? 'veg' : 'non-veg',
-    ),
-  );
-
-
-  final googleKey = GlobalKey<State<StatefulWidget>>();
-
-  final TextEditingController _searchController = TextEditingController();
-
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(children: [
-        SizedBox(height: 20,),
-        SubHeaderTopWidget(
-        title: 'Items',
-        headerIcon: AppAssets.refreshMainIcon,
-        onHeaderIconTap: () {
-          // refresh logic
-        },
-        searchController: _searchController,
-        onSearchChanged: (value) {
-          // search logic
-        },
-        buttonKey: googleKey,
-        buttonText: 'Add New',
-        onButtonPressed: () {
-          // add new logic
-        },
-        buttonIcon: SvgPicture.asset(
-          AppAssets.plusIcon,
-          width: 20,
-          height: 20,
-        ),
-      ),
-
-      Row(
-          children: [
-            Expanded(
-              child: TrendingGridSection<DashboardItem>(
-                title: 'Trending Menus',
-                isHeader: false,
-      
-                selectedValue: selectedDashboardMenu,
-                dropdownItems: dashboardMenuitems,
-                onDropdownChanged: (v) {
-                  setState(() => selectedDashboardMenu = v);
-                },
-                padding: EdgeInsets.only(top: 20),
-                innerPadding: EdgeInsets.zero,
-                decoration: const BoxDecoration(
-                  color: Colors.transparent,
-                ),
-      
-                crossAxisCount: ResponsiveTwo.gridCount(
-                  context,
-                ),
-                childAspectRatio: ResponsiveTwo.gridAspectItems(
-                  context,
-                ),
-                crossAxisSpacing: ResponsiveTwo.gridSpacing(
-                  context,
-                ),
-                mainAxisSpacing: ResponsiveTwo.gridSpacing(
-                  context,
-                ),
-      
-                dropdownChildBuilder: (item) => Row(
-                  children: [
-                    Text(item?.title ?? ''),
-                    const Icon(Icons.keyboard_arrow_down),
-                  ],
-                ),
-      
-                dropdownItemBuilder: (item, _) => Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Text(item?.title ?? ''),
-                ),
-      
-                itemCount: foodItems.length,
-                itemBuilder: (_, i) => FoodCard(item: foodItems[i], isCart: false,isSwapTitle: true,),
-              ),
-            ),
-          ],
-        ),
-      ],),
-    );
-  }
-}
 
 
 
