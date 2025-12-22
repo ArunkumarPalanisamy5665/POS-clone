@@ -278,7 +278,8 @@ class AppAssets {
   static const String subReservationIcon = 'assets/svg/menu/subMenus/reservation_icon.svg';
   static const String exportFileIcon = 'assets/svg/menu/subMenus/export_file_icon.svg';
   static const String calendarIcon = 'assets/svg/menu/subMenus/calendar_icon.svg';
- static const String refreshIcon = 'assets/svg/menu/subMenus/refresh_icon.svg';
+  static const String refreshIcon = 'assets/svg/menu/subMenus/refresh_icon.svg';
+  static const String plusIcon = 'assets/svg/menu/subMenus/plus_icon.svg';
   static const String storeSettingsIcon = 'assets/svg/menu/subMenus/store_settings.svg';
   static const String taxIcon = 'assets/svg/menu/subMenus/tax.svg';
   static const String printIcon = 'assets/svg/menu/subMenus/print.svg';
@@ -287,7 +288,6 @@ class AppAssets {
   static const String notificationSettingsIcon = 'assets/svg/menu/subMenus/notifications.svg';
   static const String intergrationApiIcon = 'assets/svg/menu/subMenus/integration_api.svg';
 
-  static const String plusIcon = 'assets/svg/menu/subMenus/plus_icon.svg';
 
   //dashboard icons
   static const String orderDashIcon = 'assets/svg/menu/dash_order_icon.svg';

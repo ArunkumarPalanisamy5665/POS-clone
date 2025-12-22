@@ -28,6 +28,7 @@ import '../../views/screens/home/main/main_shell.dart';
 import '../../views/screens/home/pos/pos_shell.dart';
 import '../../views/screens/home/profile_manager.dart';
 import '../../views/screens/kitchen/kitchen_kds_screen.dart';
+import '../../views/screens/menuManagement/addOns/add_ons_screen.dart';
 import '../../views/screens/orders/order_screen.dart';
 import '../../views/screens/reservation/reservation_screen.dart';
 import '../../views/screens/table/table_screen.dart';
@@ -80,6 +81,7 @@ class AppRouter {
         name: RouteNames.otp,
         builder: (context, state) => const OtpScreen(),
       ),
+
 
 
 
@@ -145,10 +147,12 @@ class AppRouter {
           return MainShell(child: child);
         },
         routes: [
+
           GoRoute(
             path: '/dashboard',
             name: RouteNames.dashboard,
-            builder: (context, state) => MainHome(),
+            // builder: (context, state) => MainHome(),
+            builder: (context, state) => AddOnsScreen(),
           ),
 
           // GoRoute(
@@ -225,6 +229,7 @@ class AppRouter {
             name: RouteNames.pos,
             builder: (_, __) => const PosScreen(),
           ),
+
           // GoRoute(
           //   path: '/pos',
           //   name: RouteNames.pos,
@@ -239,6 +244,7 @@ class AppRouter {
           //     );
           //   },
           // ),
+
           GoRoute(
             path: '/profile/documents',
             builder: (_, __) => const ProfileDocumentsPage(),

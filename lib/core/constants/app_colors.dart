@@ -7,6 +7,7 @@ class AppColors {
 
   static const  greySide =  Color(0xFFf8f8f8);
   static const  greyTF =  Color(0xFF0F172A);
+  static const  greyShade =  Color(0xFF475569);
 
   static const Color orange = Color(0xFFffa80b);
   static const Color lightOrange = Color(0xFFfff3de);
@@ -14,6 +15,8 @@ class AppColors {
   static const Color appGreen = Color(0xFF22b92b);
   static const Color lightSecondaryGg = Color(0xFF4dc654);
   static const Color lightGg = Color(0xFFeef9f1);
+
+  static const Color borderLineColor = Color(0xFFE2E8F0);
 
 
   static const Color transparent = Colors.transparent;

@@ -160,7 +160,7 @@ fontWeight: FontWeight.w700,
                     ),
                     const SizedBox(height: 8),
                     DropdownButtonFormField<String>(
-                      initialValue: selectedFormat,
+                      value:selectedFormat ,
                       decoration: InputDecoration(
                         hintText: 'Select',
                         hintStyle: TextStyle(color: Colors.grey),

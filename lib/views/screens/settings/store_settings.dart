@@ -491,7 +491,7 @@ class _StoreSettingsState extends State<StoreSettings> {
     required Function(String?) onChanged,
   }) {
     return DropdownButtonFormField<String>(
-      initialValue: value,
+      value: value,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,

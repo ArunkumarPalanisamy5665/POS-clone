@@ -24,6 +24,7 @@ class RouteNames {
   static const taxSettings = '/tax-settings';
   static const storeSettings = '/store-settings';
   static const table = '/table';
+  static const addOns = '/add_ons';
 
 
 

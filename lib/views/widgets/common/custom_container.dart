@@ -45,6 +45,16 @@ class _CustomContainerState extends State<CustomContainer> {
 
   @override
   Widget build(BuildContext context) {
+    final BoxDecoration effectiveDecoration =
+        widget.decoration ??
+            BoxDecoration(
+              color: isHovered ? widget.hoverColor?? AppColors.grey.withOpacity(0.1) : AppColors.white,
+              borderRadius: widget.borderRadius,
+              border: Border.all(
+                width: 0.50,
+                color: Colors.black.withAlpha((0.2 * 255).toInt()),
+              ),
+            );
     final BoxDecoration baseDecoration = BoxDecoration(
       color: widget.decoration?.color ?? AppColors.white,
       borderRadius: widget.borderRadius,
