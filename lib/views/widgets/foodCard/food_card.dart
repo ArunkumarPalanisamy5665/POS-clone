@@ -36,6 +36,8 @@ class FoodCard extends StatelessWidget {
 
           const SizedBox(height: 8),
 
+          Spacer(),
+
           if(isSwapTitle)...[
             Text(
               item.name,
